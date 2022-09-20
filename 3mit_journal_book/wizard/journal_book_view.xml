@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="wizard_journal_book" model="ir.ui.view">
+            <field name="name">Wizard journal book report</field>
+            <field name="model">journal.book.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Reporte de Libro diario">
+                    <field name="state" invisible="True"/>
+                    <div states="choose">
+                        <group>
+                            <group>
+                                <field name="filter_wizard" string="Filtrar por:" required="True" widget="radio" options="{'horizontal': true}"/>
+                            </group>
+                        </group>
+                        <group attrs="{'required': [('filter_wizard', '=', 'fecha')], 'invisible': [('filter_wizard', '!=', 'fecha')]}">
+                            <group>
+                                <field name="date_init"/>
+                            </group>
+                            <group>
+                                <field name="date_end"/>
+                            </group>
+                        </group>
+                        <group attrs="{'required': [('filter_wizard', '=', 'mes_anio')], 'invisible': [('filter_wizard', '!=', 'mes_anio')]}">
+                            <group>
+                                <field name="month"/>
+                            </group>
+                            <group>
+                                <field name="year" widget="char"/>
+                            </group>
+                        </group>
+                    </div>
+                    <div states="get">
+                        <group>
+                            <field name="name" colspan="4" invisible="True"/>
+                            <field name="report" filename="name" colspan="4"/>
+                        </group>
+                    </div>
+                    <footer states="choose">
+                        <button name="print_jb_pdf" string="Imprimir pdf" type="object" class="btn-primary"/>
+                        <button name="print_jb_xls" string="Imprimir xls" type="object" class="btn-primary"/>
+                        <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    </footer>
+                    <footer states="get">
+                        <button string="Cerrar" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!-- Action para llamar desde menu -->
+        <record id="action_open_journal_wizard" model="ir.actions.act_window">
+            <field name="name">Reporte de Libro diario</field>
+            <field name="res_model">journal.book.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_journal_book"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

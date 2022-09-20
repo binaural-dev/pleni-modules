@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+
+        <record id="view_wh_group_iva_tree" model="ir.ui.view">
+            <field name="name">wh.iva.group.tree</field>
+            <field name="model">wh.iva.group</field>
+            <field name="arch" type="xml">
+                <tree string="Retención de IVA" create="false">
+                    <field name="partner_id" readonly="1" force_save="1"/>
+                    <field name="fecha_contable"/>
+                    <field name="number_ret"  string='Número retención' readonly="1" force_save="1"/>
+                    <field name="state"/>
+                    <field name="invoice_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_wh_group_iva_form" model="ir.ui.view">
+            <field name="name">wh.iva.group.form</field>
+            <field name="model">wh.iva.group</field>
+            <field name="arch" type="xml">
+                <form string="Retención de IVA Proveedores" options="{'no_quick_create': True}" create="false">
+                    <header>
+                        <button name="action_confirm" type="object" states="draft" string="Confirmar"/>
+                        <button name="update_lines" type="object" states="draft" string="Actualizar lineas retención"/>
+                        <button name="set_to_draft" type="object" states="done" string="Volver a Borrador"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done" statusbar_colors="{&quot;confirmed&quot;:&quot;blue&quot;}"/>
+                    </header>
+                    <group colspan="4" col="6">
+                        <field name="invoice_ids" widget="many2many">
+                       <tree>
+                          <field name="supplier_invoice_number"/>
+                       </tree>
+                    </field>
+                        <field name="partner_id" readonly="1" force_save="1"/>
+                        <field name="fecha_contable"/>
+                        <field name="number_ret"  readonly="1" force_save="1"/>
+                    </group>
+                    <group>
+                        <field name="retentions" nolabel="1"/>
+                    </group>
+
+
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_account_wh_group_iva_supplier">
+            <field name="name">Comprobante de IVA Proveedores</field>
+            <field name="res_model">wh.iva.group</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help">Con el Proveedor de retención de IVA puede crear y administrar la retención de documentos emitidos a sus clientes. Odoo también puede generar retenciones de documentos automáticamente de las facturas. Para la retención debe agregar las facturas, procesarlas y luego validar el documento.</field>
+        </record>
+
+        <menuitem id="menu_action_account_wh_group_iva_supplier" name="Comprobante de IVA al Proveedor (VE)" parent="3mit_iva_withholding.menu_iva_retention_suppliers" action="action_account_wh_group_iva_supplier" sequence="2" groups="3mit_grupo_localizacion.group_localizacion"/>
+
+    </data>
+</odoo>

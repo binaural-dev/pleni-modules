@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_sale_order_line_innherit" model="ir.ui.view">
+            <field name="name">sale.order.innherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
+                         <field name="price_unit_usd" string="Precio Bs" readonly="1" force_save="1"/>
+                    </xpath>
+                    <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="before">
+                        <field name="price_subtotal_usd" string="Subtotal Bs" readonly="1" force_save="1"/>
+                    </xpath>
+                    <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="replace">
+                        <field name="price_unit" force_save="1" />
+                    </xpath>
+
+                    <xpath expr="//group[@name='note_group']/group[1]" position="replace">
+                        <group invisible="1">
+
+                        </group>
+                    </xpath>
+
+<!--                    <xpath expr="//group[@name='sale_total']" position="before">-->
+                    <xpath expr="//group[@name='note_group']" position="inside">
+                        <group class="oe_subtotal_footer oe_right" name="hola" attrs="{'invisible': [('currency_id', '=', 3)]}">
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount_untaxed_usd"  widget='monetary' options="{'currency_field': 'self.price_list.currency_id'}" force_save="1" attrs="{'invisible': [('currency_id', '=', 3)]}" />
+                            <field name="amount_tax_usd" widget='monetary' options="{'currency_field': 'self.price_list.currency_id'}" force_save="1" attrs="{'invisible': [('currency_id', '=', 3)]}"/> <!--attrs="{'invisible': [('currency_id', '=', 4)]}" readonly="1" force_save="1"/-->
+                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                <label for="amount_total" string="Total Bs" attrs="{'invisible': [('currency_id', '=', 3)]}" />
+                            </div>
+                            <field name="amount_total_usd" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' force_save="1" options="{'currency_field': 'self.price_list.currency_id'}" attrs="{'invisible': [('currency_id', '=', 3)]}"/>
+
+                        </group>
+                    </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
+

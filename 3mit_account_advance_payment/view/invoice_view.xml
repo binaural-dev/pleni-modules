@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!--Incluye pestaña de anticipo en la facturas-->
+        <record id="account_invoice_supplier_advanced_id" model="ir.ui.view">
+            <field name="name">account.invoice.advanced</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[@name='other_info']" position="after">
+                    <page string="Anticipos Proveedor" attrs="{'invisible': ['|', ('move_type', 'in', ('out_invoice', 'out_refund', 'out_receipt')), ('loc_ven', '=', False)]}">
+                        <field name="account_advance_ids"
+                               mode="tree"
+                        />
+                    </page>
+                    <page string="Anticipos Cliente" attrs="{'invisible': ['|', ('move_type', 'in', ('in_invoice', 'in_refund', 'in_receipt')), ('loc_ven', '=', False)]}">
+                        <field name="account_advance_ids"
+                               mode="tree"
+                        />
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <!--Incluye campos de anticiipos en la facturas-->
+        <record id="account_invoice_after_rate" model="ir.ui.view">
+            <field name="name">account.invoice.after.rate</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="3mit_rates.account_move_form_add_rate_usd"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_bs_rate']" position="after">
+                    <field name="loc_ven" invisible="1"/>
+                    <field name="company_currency" invisible="1"/>
+                    <field name="foreign_currency" invisible="1"/>
+
+                    <field name="anticipo_ref" string="N° referencia de anticipo" readonly="1"
+                           attrs="{'invisible': ['|', '|', ('state', '!=', 'posted'), ('move_type', '=', 'entry'), ('loc_ven', '=', False)]}"/>
+                    <field name="sum_amount_available" string="Anticipo Disponible" readonly="1" widget='monetary'
+                           options="{'currency_field': 'company_currency'}"
+                           attrs="{'invisible': ['|', ('move_type', '=', 'entry'), ('loc_ven', '=', False)]}"/>
+                    <field name="sum_amount_available_dolares" string="Anticipo Disponible ($)" readonly="1" widget='monetary'
+                           options="{'currency_field': 'foreign_currency'}"
+                           attrs="{'invisible': ['|', ('move_type', '=', 'entry'), ('loc_ven', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

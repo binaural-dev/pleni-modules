@@ -1,1 +1,1 @@
-# pleni-demo
+# pleni

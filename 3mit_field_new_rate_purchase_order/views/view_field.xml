@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="adding-new-field-currency-rate-bs" model="ir.ui.view">
+            <field name="name">Agregando el nuevo campo para modificar la tasa de Bs</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="active_new_currency_bs_rate" invisible="1"/>
+                    <field name="fixed_rate_boolean" invisible = "1" />
+                    <field name="loc_ven" invisible="1"/>
+                    <field name="new_currency_bs_rate" readonly="1" force_save="1" attrs="{'invisible': ['|','|',('active_new_currency_bs_rate', '=', False),('fixed_rate_boolean', '=', True),('loc_ven', '=', False)],'required':[('active_new_currency_bs_rate', '=', True),('loc_ven', '=', True)]}" string="Establecer Tasa"/>
+                </xpath>
+                <xpath expr="//field[@name='currency_id']" position="replace" >
+                    <field name="currency_id" readonly="0" required="1" string="Moneda"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

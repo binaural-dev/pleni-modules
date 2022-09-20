@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Vista que agrega una pestaña de configuracion de la compañia -->
+	<data>
+        <record id="config_res_company_page" model="ir.ui.view">
+            <field name="name">config_res_company_page</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='config_cont_ven']" position="inside">
+                    <group name="advance_config" string="Anticipos" priority="1" attrs="{'invisible':[('loc_ven', '=', False)]}">
+                        <group name="Diario de anticipos">
+                            <field name="advance_journal_id"/>
+                            <field name="advance_account_purchase_id"/>
+                            <field name="advance_account_sale_id"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

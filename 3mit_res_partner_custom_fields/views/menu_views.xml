@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem
+                id="action_open_how_find_us"
+                parent="contacts.res_partner_menu_config"
+                action="act_open_how_find_us"
+                name="¿Cómo llegó a nosotros?"
+                sequence="2"
+        />
+        <menuitem
+                id="action_open_urbanization_area"
+                parent="contacts.res_partner_menu_config"
+                action="act_open_urbanization_area"
+                name="Zona/Urbanización"
+                sequence="3"
+        />
+
+    </data>
+</odoo>

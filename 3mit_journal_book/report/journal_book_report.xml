@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="journal_book_report">
+            <t t-call="web.html_container">
+                <div class="header">
+                    <table style="width:100%">
+                        <tr>
+                            <td style="width:80%">
+                                <b><h2 t-esc="actual_company.name"/></b>
+                                <p>
+                                    <span t-esc="actual_company.street"/>, <span t-if="actual_company.street2" t-esc="actual_company.street2"/><br/>
+                                    <span t-if="actual_company.city" t-esc="actual_company.city"/> <span t-if="actual_company.state_id" t-esc="actual_company.state_id.name"/> <span t-if="actual_company.zip" t-esc="actual_company.zip"/><br/>
+                                    R.I.F.: <span t-esc="actual_company.vat"/><br/>
+                                    <b>Diario Legal</b><br/>
+                                    Período: <span t-esc="period"/>
+                                </p>
+                            </td>
+                            <td style="width:20%">
+                                <p>
+                                    Fecha: <span t-esc="print_date"/><br/>
+                                    Hora: <span t-esc="print_hour"/><br/>
+                                    Página: <span class="page"/>
+                                </p>
+                                <br/>
+                                <p>
+                                    Ejercicio actual<br/>
+                                    Desde: <span t-esc="date_init"/><br/>
+                                    Hasta: <span t-esc="date_end"/>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="page">
+                    <table style="width:100%;">
+                        <tr style="background-color:gray; font-size:16px; color:blue;">
+                            <td style="width:15%"><span style="margin-left:10px;">Código</span></td>
+                            <td style="width:40%"><span style="margin-left:10px;">Descripción</span></td>
+                            <td style="width:20%"><span style="margin-left:10px;">Débitos</span></td>
+                            <td style="width:20%"><span style="margin-left:10px;">Créditos</span></td>
+                        </tr>
+                        <tr style="line-height:25px; font-size:14px;" t-foreach="lines" t-as="o">
+                            <td><span t-esc="o['code']"/></td>
+                            <td><span t-esc="o['name']"/></td>
+                            <td><span t-esc="o['debit']"/></td>
+                            <td><span t-esc="o['credit']"/></td>
+                        </tr>
+                        <tr style="line-height:25px; font-size:14px;">
+                            <td/>
+                            <td><p style="font-weight:bold">Total de Diario Legal</p></td>
+                            <td style="border-top:1px solid black;"><span style="font-weight:bold" t-esc="total_debit"/></td>
+                            <td style="border-top:1px solid black;"><span style="font-weight:bold" t-esc="total_credit"/></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <p class="text-right">
+                        Total registros: <span t-esc="register_total"/>
+                    </p>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

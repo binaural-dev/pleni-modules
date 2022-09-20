@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- <template id="3mit_custom_signup_ecommerce.login_custom" inherit_id="auth_signup.fields" name="Custom ecommerce fields">             
+    </template> -->
+
+    <template id="3mit_custom_signup_ecommerce.login_form_custom" inherit_id="auth_signup.signup">
+        <xpath expr="." position="replace">
+            <t t-call="web.login_layout">
+                <style>
+                    @media(max-width: 1199px){
+                        .custom-grid{
+                            display: grid;
+                            grid-template-columns: 1fr 3fr;
+                            grid-template-rows: repeat(2, 1fr);
+                        }
+                        .custom-nty-label{
+                            grid-row: 1;
+                            grid-column: 1 / 3;
+                        }
+                        .custom-dni{
+                            grid-row: 2;
+                            grid-column: 1 / 3;
+                            display: grid;
+                            grid-template-columns: 1fr 3fr;
+                        }
+                        .custom-dni-nty{
+                            grid-column: 1;
+                        }
+                        .custom-dni-dni{
+                            grid-column: 2;
+                        }
+                    }
+                </style>
+                <form role="form" class="needs-validation" method="post" style="margin-left: 32px; margin-right: 32px;" t-if="not message" >
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="row mt32 mb32">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                <div t-if="error_message" class="alert alert-danger" role="alert">
+                                    <t t-foreach="error_message" t-as="err"><t t-esc="err"/><br /></t>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <label class="text-center col-form-label" style="font-weight: bold; font-size: large;">Registra tus datos</label>
+                            </div>
+
+                            <div class="form-group col-xl-4 custom-grid">
+                                <div class="row custom-nty-label container_nationality_field">
+                                    <label class="col-form-label" for="name" id="label_nationality" style="padding-top: 0px; margin-top: 0px; margin-left: 15px;">Identification document (I.D.)</label>
+                                </div>
+                                <div class="row custom-dni">
+                                    <div class="col-xl-3 pr-1 custom-dni-nty">
+                                        <select name="new_nationality" class="form-control" id="new_nationality">
+                                            <option value="V">V</option>
+                                            <option value="E">E</option>
+                                            <option value="P">P</option>
+                                            <option value="J">J</option>
+                                            <option value="G">G</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xl pl-0 custom-dni-dni">
+                                        <label for="name" id="label_identification_id" class="d-none">Identification document (I.D.)</label>
+                                        <input type="text" name="new_identification_id" class="form-control" id="new_identification_id" placeholder="Ej. 01234567" required="required"/>
+                                        <div id="validationIdentification" class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-none">
+                                <div id="container_nationality_field" class="col-xl-3 pr-0">
+                                    <select name="nationality" class="form-control" id="nationality">
+                                        <option value="V">V</option>
+                                        <option value="E">E</option>
+                                        <option value="P">P</option>
+                                    </select>
+                                </div>
+                                <div id="container_dni_field" class="col-xl pl-0">
+                                    <label for="identification_id" id="label_identification_id" class="d-none">Identification document (I.D.)</label>
+                                    <input type="text" name="identification_id" class="form-control" id="identification_id"/>
+                                </div>
+                            </div>
+
+                            <div id="container_rif_id" style="display: none;">
+                                <label for="name" id="label_rif">RIF</label>
+                                <input type="text" name="rif" t-att-value="rif" id="rif" class="form-control" placeholder="J-123456789" />
+                            </div>
+
+                            <div class="form-group field-name col-xl-4">
+                                <label for="name" id="label_company" style="display: none;">Razón Social</label>
+                                <label for="name" id="label_person">Nombre</label>
+                                <input type="text" name="name" t-att-value="name" id="name" class="form-control" placeholder="Ej. John Doe"
+                                    required="required" t-att-readonly="'readonly' if only_passwords else None"
+                                    t-att-autofocus="'autofocus' if login and not only_passwords else None" />
+                                <div id="validationName" class="invalid-feedback"></div>
+                            </div>
+
+                            <div id="field_commercial_name" class="form-group col-xl-4" style="display: none;">
+                                <label for="name">Nombre Comercial</label>
+                                <input type="text" name="commercial_name" t-att-value="commercial_name" id="commercial_name" class="form-control" placeholder="Ej. Deli Planta"
+                                    t-att-readonly="'readonly' if only_passwords else None"
+                                    t-att-autofocus="'autofocus' if login and not only_passwords else None" />
+                                <div id="validationCommercialName" class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="form-group col-xl-4">
+                                <label for="name">Telephone</label>
+                                <input type="tel" class="form-control" name="mobile" placeholder="+1 (650) 691-3277" id="telephone" required="required"/>
+                                <div id="validationTelephone" class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="form-group field-login col-xl-4">
+                                <label for="login">Correo Electrónico</label>
+                                <input type="text" name="login" t-att-value="login" id="login" class="form-control" autofocus="autofocus"
+                                    autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None" placeholder="Ej. ejemplo@pleni.app"/>
+                                <div id="validationEmail" class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="form-group field-password col-xl-4">
+                                <label for="password">Password</label>
+                                 <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password"></span>
+                                <input type="password" name="password" id="password" class="form-control"
+                                    required="required" t-att-autofocus="'autofocus' if only_passwords else None"/>
+                            </div>
+
+                            <div class="form-group field-confirm_password col-xl-4">
+                                <label for="confirm_password">Confirm Password</label>
+                                <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-confirm-password"></span>
+                                <input type="password" name="confirm_password" id="confirm_password" class="form-control" required="required"/>
+                                <div id="validationConfirmPassword" class="invalid-feedback"></div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="row">
+
+                                <div class="col-lg-12">
+                                    <label class="text-center col-form-label" style="font-weight: bold; font-size: large; margin-top: 32px;">Registra tu dirección de entrega</label>
+                                </div>
+
+                                    <div class="form-group col-xl-4 d-none">
+                                        <label for="name">Company type</label>
+                                        <select class="form-control" name="company_type" id="company_type">
+                                            <option value='person'>Individual</option>
+                                            <option value='company'>Company</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Company type: person -->
+                                <div id="container_people_type_individual" class="form-group col-xl-4" style="display: none;">
+                                    <label class="col-form-label" for="people_type_individual">Person type</label>
+                                    <select name="people_type_individual" class="form-control" id="people_type_individual">
+                                        <option value="pnre" selected="">PNRE Persona Natural Residente</option>
+                                        <option value="pnnr">PNNR Persona Natural No Residente</option>
+                                    </select>
+                                </div>
+
+                                <!-- Company type: company -->
+                                <div id="container_people_type_company_field" class="form-group col-xl-4" style="display: none;">
+                                    <label class="col-form-label" for="people_type_company">Person type</label>
+                                    <select name="people_type_company" class="form-control">
+                                        <option value="pjdo" selected="">PJDO Persona Jurídica Domiciliada</option>
+                                        <option value="pjnd">PJND Persona Jurídica No Domiciliada</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-xl-4" style="display: none;">
+                                    <t t-set="countries" t-value="request.env['res.country'].search([], order='name ASC')"/>
+                                    <label for="name" style="display: none;">Country</label>
+                                    <select class="form-control" name="country_id" id="country_select" required="" style="display: none;">
+                                        <t t-foreach="countries" t-as="country">
+                                            <option t-att-value="country.id">
+                                                <t t-esc="country.name" />
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-xl-4">
+                                    <label class="col-form-label" for="state">Estado</label>
+                                    <select name="state_id" class="form-control" id="state_select" required="">
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-xl-4">
+                                    <label class="col-form-label" for="city">Ciudad</label>
+                                    <input type="text" name="city" class="form-control" id="city" required="" placeholder="Ej. Caracas"/>
+                                </div>
+
+                                <div id="municipality_div" class="col-xl-4">
+                                    <label class="col-form-label" for="state">Municipio</label>
+                                    <select name="municipality_id" class="form-control" id="municipality_select" required=""/>
+                                </div>
+
+                                <div class="form-group col-xl-4">
+                                    <label class="col-form-label" for="state">Parroquia</label>
+                                    <select name="parish_id" class="form-control" id="parish_select" required=""/>
+                                </div>
+
+                                    <div class="form-group col-xl-4">
+                                    <label class="col-form-label" for="street">Calle</label>
+                                    <input type="text" name="street" class="form-control" id="street" required="" placeholder="Ej. Calle 1"/>
+                                    </div>
+
+                                <div class="form-group col-xl-4">
+                                    <label class="col-form-label" for="street2">Complemento de calle</label>
+                                    <input type="text" name="street2" class="form-control" id="street_2" placeholder="Ej. Esquina con calle 2"/>
+                                </div>
+
+                                <div class="form-group col-xl-4" style="display: none;">
+                                    <label class="col-form-label" for="zip">ZIP</label>
+                                    <input type="text" name="zip" class="form-control" id="zip" value="1050"/>
+                                    <!--Default= 1050-->
+                                </div>
+
+                                <div class="form-group col-xl-4">
+                                    <label class="col-form-label" for="reference_point">Punto de referencia</label>
+                                    <input type="text" name="ref_point" t-att-value="ref_point" id="reference_point" class="form-control" placeholder="Ej. CC San Ignacio"/>
+                                </div>
+
+                                <div class="form-group col-xl-4">
+                                    <label class="col-form-label" for="name">Instrucciones al despachador</label>
+                                    <input type="text" name="dispatcher_instructions" t-att-value="dispatcher_instructions" id="dispatcher_instructions" class="form-control" placeholder="Pasando el colegio San Ignacio"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="alert alert-danger" t-if="error" role="alert">
+                        <t t-esc="error"/>
+                    </p>
+                    <input type="hidden" name="redirect" t-att-value="redirect"/>
+                    <input type="hidden" name="token" t-att-value="token"/>
+                    <div class="text-center oe_login_buttons p-4 col">
+                        <button type="submit" class="btn btn-primary btn-block" style="max-width:300px" id="signUpButton"> Sign up</button>
+                        <a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link btn-sm mt-3" role="button">Already have an account?</a>
+                        <div class="o_login_auth"/>
+                    </div>
+                    <script src="/3mit_custom_signup_ecommerce/static/src/js/libphonenumber-js-1.9.6.js"></script>
+                </form>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="3mit_custom_signup_ecommerce.login_custom_second" inherit_id="web.login">
+        <xpath expr="//input[@id='password']" position="before">
+            <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password"></span>
+        </xpath>
+
+        <xpath expr="//input[@name='redirect']" position="before">
+            <t t-set='redirect' t-value="'/shop'"></t>
+        </xpath>
+    </template>
+
+    <template id="reset_password_extend_redirect" inherit_id="auth_signup.reset_password">
+        <xpath expr="//input[@name='redirect']" position="before">
+            <t t-set='redirect' t-value="'/shop'"></t>
+        </xpath>
+    </template>
+
+
+    <template id="signup_extend_redirect" inherit_id="auth_signup.signup">
+        <xpath expr="//input[@name='redirect']" position="before">
+            <t t-set='redirect' t-value="'/shop'"></t>
+        </xpath>
+    </template>
+
+    <template id="fields_reset_password_show_eyes" inherit_id="auth_signup.fields">
+        <xpath expr="//input[@id='password']" position="before">
+            <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password"></span>
+        </xpath>
+        <xpath expr="//input[@id='confirm_password']" position="before">
+            <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-confirm-password"></span>
+        </xpath>
+    </template>
+
+</odoo>

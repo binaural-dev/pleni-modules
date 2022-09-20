@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="3mit_custom_sale_order_portal.custom_portal_my_orders" inherit_id="sale.portal_my_orders"> 
+		<xpath expr="//thead/tr" position="replace">
+			<tr class="active">
+                <th>
+                    <span># Pedido</span>
+                </th>
+                <th style="margin: auto; text-align: center;">Estatus</th>
+                <th style="margin: auto; text-align: right;">Total</th>
+                <th style="margin: auto; text-align: center;">Order Date</th>
+                <th style="margin: auto; text-align: center;">Fecha de Entrega</th>
+            </tr>
+		</xpath>
+
+		<xpath expr="//t[@t-as='order']" position="replace">
+			<t t-foreach="orders" t-as="order">
+                <tr>
+                    <td><a t-att-href="order.get_portal_url()"><t t-esc="order.name"/></a></td>
+                    <td style="margin: auto; text-align: center;">
+						<!-- ORDERS_DELIVERY_STATUS = ['draft', 'waiting', 'confirmed', 'assigned', 'done', 'cancel'] -->
+						<t t-set="status" t-value="order._get_delivery_status()"/>
+                        <t t-set="status_order" t-value="order.state"/>
+                        
+                        <span t-if="status in ['draft'] and status_order not in ['cancel']" class="small badge badge-info orders_label_text_align"><i class="fa fa-fw fa-edit"/> <b>Pedido realizado</b></span>
+                        <span t-if="status in ['waiting', 'confirmed']" class="small badge badge-info orders_label_text_align"><i class="fa fa-fw fa-clock-o"/> <b>Preparación</b></span>
+                        <span t-if="status in ['assigned']" class="small badge badge-success orders_label_text_align"><i class="fa fa-fw fa-check-circle"/> <b>Preparado</b></span>
+                        <span t-if="status in ['done']" class="small badge badge-success orders_label_text_align"><i class="fa fa-fw fa-truck"/> <b>Enviado</b></span>
+                        <span t-if="status in ['cancel']" class="small badge badge-danger orders_label_text_align"><i class="fa fa-fw fa-times"/> <b>Cancelado</b></span>
+                        <span t-if="status_order in ['cancel']" class="small badge badge-danger orders_label_text_align"><i class="fa fa-fw fa-times"/> <b>Cancelado</b></span>
+                    </td>
+                    <td style="margin: auto; text-align: right;"><span t-field="order.amount_total"/></td>
+                    <td style="margin: auto; text-align: center;">
+                        <span t-field="order.date_order" t-options="{'widget': 'date'}"/>&amp;nbsp;
+                        <span class='d-none d-md-inline' t-field="order.date_order" t-options="{'time_only': True}"/>
+                    </td>
+                    <td style="margin: auto; text-align: center;">
+                        <span t-field="order.scheduled_date_view" t-options="{'widget': 'date'}"/>&amp;nbsp;
+                        <span t-field="order.am_pm"/>
+                    </td>
+
+                </tr>
+            </t>
+		</xpath>
+    </template>
+</odoo>

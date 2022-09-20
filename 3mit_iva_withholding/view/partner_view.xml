@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+        <record id="res_partner_wh_iva" model="ir.ui.view">
+            <field name="name">res.partner.wh.iva</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="3mit_base_withholdings.wh_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//separator[@name='isep']" position="replace">
+                     <xpath expr="//separator[@name='isep']" position="attributes">
+                         <attribute name="string"><h3><a><b><center>Retención de IVA</center></b></a></h3></attribute>
+                     </xpath>
+                    <newline/>
+                        <group col="6" colspan="2">
+                            <field name="wh_iva_agent" />
+                            <field name="wh_iva_rate" attrs="{'required': [('wh_iva_agent', '=', True), ('loc_ven', '=', True)]}"/>
+                            <field name="tax_percentage" attrs="{'required': [('wh_iva_agent', '=', True), ('loc_ven', '=', True)]}"/>
+                        </group>
+                        <field name="loc_ven" invisible="1"/>
+                        <group string="Diarios de Retención de IVA" attrs="{'invisible': [('loc_ven', '=', False)]}">
+                            <separator string="Venta" name="sales_journal" attrs="{'invisible': [('loc_ven', '=', False)]}"/>
+                            <field name="purchase_sales_id" attrs="{'invisible': [('loc_ven', '=', False)], 'required': [('wh_iva_agent', '=', True), ('loc_ven', '=', True)]}" />
+                        </group>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

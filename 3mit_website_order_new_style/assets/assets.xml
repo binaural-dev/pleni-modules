@@ -1,0 +1,7 @@
+<odoo>
+    <template id="assets_frontend_website_click_functions" name="assets_frontend_website_click_functions" inherit_id="web.assets_frontend">
+            <xpath expr="//script[last()]" position="after">
+                <script type="text/javascript" src="3mit_website_order_new_style/static/src/js/click_functions_button_payments.js"></script>
+            </xpath>
+    </template>
+</odoo>

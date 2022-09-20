@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@class='page']/h2[1]" position="attributes">
+            <attribute name="style">font-size: x-large;</attribute>
+        </xpath>
+        <xpath expr="//p[@id='fiscal_position_remark']" position="after">
+            <br/>
+            <p t-if="doc.payment_methods" style="font-size: 15px;">
+                <span><strong>Instrucciones de Pago:</strong></span>
+                <div class="row mt32 mb32" style="margin-left: 0px;">
+                    <t t-foreach="doc.payment_methods" t-as="methods">
+                        <p t-if="methods.pending_msg">
+                            <div class="col-xs">
+                                <div>
+                                    <strong><t t-esc="methods.name"/></strong>
+                                </div>
+                                <span t-raw="methods.pending_msg"/>
+                            </div>
+                        </p>
+                    </t>
+                </div>
+            </p>
+        </xpath>
+        <xpath expr="//t[1]/t[2]" position="replace">
+            <t t-set="partner" t-value="doc.partner_id"/>
+            <div id="client_data" class="container p-0" style="font-size: medium; margin: 0; margin-bottom: 32px;">
+                <div class="row w-50 p-0 m-0">
+                    <div class="col p-0 m-0">
+                        <t t-if="partner.commercial_name">
+                            <div style="white-space: nowrap; margin-right: 0px;">
+                                <strong t-field="partner.commercial_name"></strong>
+                            </div>
+                        </t>
+                        <div style="white-space: nowrap; margin-right: 0px;">
+                            <span t-field="partner.name"/>
+                            <t t-if="partner.rif">
+                                <span t-field="partner.rif" style="white-space: nowrap; margin-left: 5px; padding: 0;"/>
+                            </t>
+                            <t t-else="">
+                                <span style="white-space: nowrap;">
+                                    <span class="m-0" t-field="partner.document_type">-</span>
+                                    <span t-field="partner.identification_document"/>
+                                </span>
+                            </t>
+                        </div>
+                        <div style="margin: 0; padding: 0; white-space: nowrap;">
+                            <span t-if="partner.phone">Teléfono: </span>
+                            <span t-field="partner.phone" style="margin: 0; padding: 0;"/>
+                        </div>
+                        <div style="margin: 0; padding: 0; white-space: nowrap;">
+                            <span t-if="partner.mobile">Teléfono Móvil: </span>
+                            <span t-field="partner.mobile" style="margin: 0; padding: 0;"/>
+                        </div>
+                        <t t-if="partner.fiscal_invoice_needed">
+                            <div style="margin: 0; padding: 0; white-space: nowrap;">
+                                <p style="margin: 0; padding: 0;">FF</p>
+                            </div>
+                        </t>
+                        <strong>Dirección Fiscal:</strong>
+                        <div t-field="doc.partner_invoice_id.street"/>
+                        <div t-field="doc.partner_invoice_id.street2"/>
+                        <div>
+                            <span t-field="doc.partner_invoice_id.city"/>
+                            <span t-field="doc.partner_invoice_id.state_id.code"/>
+                            <span>,</span>
+                            <span t-field="doc.partner_invoice_id.country_id"/>
+                            <span t-field="doc.partner_invoice_id.zip"/>
+                        </div>
+                    </div>
+                    <div class="col p-0 m-0">
+                        <strong class="d-flex justify-content-end">Dirección de Entrega:</strong>
+                        <div class="d-flex justify-content-end" style="margin: 0; padding: 0; white-space: nowrap;">
+                            <span t-field="partner.street"/>
+                        </div>
+                        <div class="d-flex justify-content-end" style="margin: 0; padding: 0; white-space: nowrap;">
+                            <p t-field="partner.street2" style="margin: 0; padding: 0;"/>
+                        </div>
+                        <div class="d-flex justify-content-end" style="margin: 0; padding: 0; white-space: nowrap;">
+                            <span t-field="partner.city"/>
+                            <span t-field="partner.state_id.code" style="margin-left: 3px;"/>
+                            <span>,</span>
+                            <span t-field="partner.country_id" style="margin-left: 3px;"/>
+                            <span t-field="partner.zip" style="margin-left: 3px;"/>
+                        </div>
+                        <div class="d-flex justify-content-end" style="margin: 0; padding: 0; white-space: nowrap;">
+                            <span t-field="partner.ref_point"/>
+                        </div>
+                        <div class="d-flex justify-content-end" style="margin: 0; padding: 0; white-space: nowrap;">
+                            <span t-field="partner.dispatcher_instructions"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='informations']/div[2]" position="after">
+            <div class="col-auto col-2 mw-100 mb-2" style="font-size: small">
+                <p t-if="doc.client_notes">
+                    <strong>Notas del cliente:</strong><span t-field="doc.client_notes" />
+                </p>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='informations']/div[2]" position="replace">
+            <div t-if="doc.scheduled_date_view and doc.am_pm and doc.state not in ['draft','sent']" class="col-auto col-3 mw-100 mb-2 ml-3" style="font-size: small;">
+                <div class="row">
+                    <strong>Fecha de Entrega Programada</strong>
+                </div>
+                <div class="row">
+                    <p t-field="doc.scheduled_date_view"/>
+                    <p t-field="doc.am_pm" style="margin-left: 5px;"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@t-if='doc.user_id.name']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+        <xpath expr="//div[@id='informations']" position="attributes">
+            <attribute name="style">font-size: small;</attribute>
+        </xpath>
+        <xpath expr="//table[@class='table table-sm o_main_table']" position="attributes">
+            <attribute name="style">font-size: small;</attribute>
+        </xpath>
+        <xpath expr="//div[@name='so_total_summary']" position="attributes">
+            <attribute name="style">font-size: small;</attribute>
+        </xpath>
+        <xpath expr="//div[@name='so_total_summary']/div[@name='total']" position="after">
+            <div class="col-xs ml-1">
+                <p t-field="doc.note" id="note"/>
+                <p t-if="doc.payment_term_id.note">
+                    <span t-field="doc.payment_term_id.note"/>
+                </p>
+                <p t-if="doc.payment_methods" style="font-size: small;">
+                    Método(s) de pago: <span t-field="doc.payment_methods"/>
+                </p>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='page']/p[@t-field='doc.note']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+        <xpath expr="//div[@class='page']/p[@t-if='doc.payment_term_id.note']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+        <xpath expr="//td[@name='td_taxes']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+    </template>
+    <template id="client_notes_addition_move" inherit_id="3mit_so_client_notes.client_notes_addition">
+        <xpath expr="//p[@t-if='doc.client_notes']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--Configurar el margin_top en 50 y el header_spacing en 35,
+    esto desde la ventana de paperFormat en la configuracion en tecnico-->
+    <template id="external_layout_header" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[1]" position="replace">
+            <div t-attf-class="header o_company_#{company.id}_layout" style="font-size: small;">
+                <div class="row">
+                    <div class="col-3 mb4">
+                        <img t-if="company.logo" src="/3mit_purchase_report_style/static/img/logo_largo.png" style="max-height: 45px;" alt="Logo"/>
+                    </div>
+                    <div class="col-9 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>
+                </div>
+                <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                    <div class="col-12">
+                        <div style="border-bottom: 1px solid black;"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6" name="company_address">
+                        <div t-field="company.partner_id"
+                            t-options='{"widget": "contact", "fields": ["name"], "no_marker": true}'
+                        />
+                        <div t-field="company.partner_id"
+                            t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'
+                        style="font-size: x-small"/>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    <template id="report_purchaseorder_document_inherit" inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//div[@class='page']" position="before">
+            <div style="font-size: small; margin-top: 10px;">
+                <strong>Fecha Acordada de Recepción:</strong>
+                <p t-field="o.date_planned"/>
+            </div>
+        </xpath>
+        <xpath expr="//t[1]/t[2]/div[1]" position="before">
+            <strong style="font-size: small;">Información del Proveedor:</strong>
+        </xpath>
+        <xpath expr="//t[1]/t[2]/div[1]" position="attributes">
+            <attribute name="style">font-size: small;</attribute>
+        </xpath>
+        <xpath expr="//t[1]/t[2]/p[1]" position="attributes">
+            <attribute name="style">font-size: small;</attribute>
+        </xpath>
+        <xpath expr="//div[@class='page']" position="attributes">
+            <attribute name="style">margin-top: 35px; font-size: small;</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_date_req']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+        <xpath expr="//td[@class='text-center']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+        <xpath expr="//td[@name='td_taxes']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+        <xpath expr="//div[@id='total']" position="before">
+            <div class="col-xs ml-1">
+                <p t-if="o.payment_term_id.note">
+                    <span t-field="o.payment_term_id.note"/>
+                </p>
+            </div>
+        </xpath>
+    </template>
+</odoo>

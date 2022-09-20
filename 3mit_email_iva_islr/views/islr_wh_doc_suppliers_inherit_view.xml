@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="islr_wh_suppliers_doc_inherit_view_group" model="ir.ui.view">
+            <field name="name">islr.wh.suppliers.doc.inherit.view</field>
+            <field name="model">wh.islr.group</field>
+            <field name="inherit_id" ref="3mit_withholding_islr.view_wh_group_islr_form" />
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="res_partner_email"
+                           readonly="True"
+                           widget="email"
+                    />
+                    <field name="user_id"
+                           readonly="True"
+                           invisible="True"
+                    />
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+        <record id="il_company_invoice_damaged" model="ir.ui.view">
+            <field name="name">il_company_invoice_damaged</field>
+            <field name="model">res.company</field>
+            <field name="priority">24</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='phone']" position="after">
+                    <field name="loc_ven" invisible="1"/>
+                    <field name="fax" attrs="{'invisible':[('loc_ven', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//sheet/notebook/page/group/group[@name='social_media']" position="before">
+                    <group name="fr2_grp" string="¿Esta empresa utiliza impresora fiscal?" attrs="{'invisible':[('loc_ven', '=', False)]}">
+                        <field name="printer_fiscal" string="Impresora Fiscal" required="1" force_save="1"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

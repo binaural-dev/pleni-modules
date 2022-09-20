@@ -1,0 +1,17 @@
+<odoo>
+    <!--Configurar el margin_top en 50 y el header_spacing en 35,
+    esto desde la ventana de paperFormat en la configuracion en tecnico-->
+    <template id="report_purchase_address" inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//t[@t-else='']" position="replace">
+            <t t-else="">
+                <t t-set="information_block">
+                    <strong style="font-size: small;">Dirección de Envío:</strong>
+                    <div t-if="o.picking_type_id and o.picking_type_id.warehouse_id" style="font-size: small;">
+                        <span t-field="o.picking_type_id.warehouse_id.name"/>
+                        <div t-field="o.picking_type_id.warehouse_id.partner_id" t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'/>
+                    </div>
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>

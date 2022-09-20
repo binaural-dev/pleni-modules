@@ -1,0 +1,35 @@
+<odoo>
+  <data>
+      <record id="view_group_retention_islr" model="ir.ui.view">
+            <field name="name">wizard.group.retention.islr.form</field>
+                <field name="model">wizard.group.retention.islr</field>
+                <field name="arch" type="xml">
+                    <form string="Registro de retencion grupal de ISLR Proveedor">
+                        <div >
+                            <group colspan="2" col="2">
+                                <group>
+                                    <field name="start_date" string="Desde" required="1"/>
+                                    <field name="final_date" string="Hasta" required="1"/>
+                                </group>
+                            </group>
+                        </div>
+                        <footer>
+                            <button name="generate_retention_islr" string="Generar Retención" type="object" class="btn-primary"/>
+                            <button string="Cancel" class="btn-default" special="cancel" />
+                        </footer>
+                    </form>
+                </field>
+        </record>
+
+        <record id="action_group_retention_islr" model="ir.actions.act_window">
+        	<field name="name">Registro de retenciones de ISLR de proveedor</field>
+        	<field name="res_model">wizard.group.retention.islr</field>
+        	<field name="binding_view_types">form</field>
+        	<field name="view_mode">form</field>
+        	<field name="view_id" ref="view_group_retention_islr"/>
+        	<field name="target">new</field>
+    	</record>
+
+        <menuitem id="menu_action_record_group_retention_islr" name="Registrar Retención de ISLR (VE)" parent="3mit_withholding_islr.menu_islr_retention_suppliers" action="action_group_retention_islr" sequence="1"/>
+  </data>
+</odoo>

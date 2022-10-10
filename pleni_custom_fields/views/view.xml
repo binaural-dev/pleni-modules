@@ -1,0 +1,77 @@
+<odoo>
+  <data>
+    <record id="view_sale_date_delivery" model="ir.ui.view">
+      <field name="name">view.sale.date.delivery</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='date_deadline']" position="before">
+          <label for="scheduled_date_stock" />
+          <div class="o_row">
+            <field name="scheduled_date_stock" attrs="{'readonly': [('backorder_id', '=', False)]}" />
+            <field name="am_pm" attrs="{'readonly': [('backorder_id', '=', False)]}" />
+            <field name="json_popover" widget="stock_rescheduling_popover" attrs="{'invisible': [('json_popover', '=', False)]}" />
+          </div>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="view_account_move_date_delivery" model="ir.ui.view">
+      <field name="name">view.account.move.date.delivery</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="3mit_account_advance_payment.account_invoice_after_rate" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='sum_amount_available_dolares']" position="after">
+          <label for="scheduled_date_account" />
+          <div class="o_row">
+            <field name="scheduled_date_account" readonly='1' />
+            <field name="am_pm" readonly='1' />
+          </div>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="view_sale_order_custom_fields" model="ir.ui.view">
+      <field name="name">view.sale.order.custom.fields</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_shipping_id']" position="after">
+          <label for="date_delivery_view" string="Fecha de Entrega" />
+          <div class="o_row">
+            <field name="date_delivery_view" attrs="{'readonly': False}" required="1" />
+            <span class="text-muted" attrs="{'invisible': [('effective_date', '!=', False), ('commitment_date', '!=', False)]}">
+              Esperado:
+              <field name="expected_date" widget="date" />
+            </span>
+          </div>
+          <field name="am_pm" required="1" />
+        </xpath>
+        <xpath expr="//label[@for='commitment_date']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//group[@name='sale_shipping']/div[hasclass('o_row')]" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//sheet/group/group[2]/div[2]/label[@for='date_order']" position="attributes">
+          <attribute name="string">Fecha de Presupuesto</attribute>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- TODO: Improve -->
+    <record id="inherit_view_picking_form" model="ir.ui.view">
+      <field name="name">inherit.view.picking.form</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='scheduled_date']" position="attributes">
+          <attribute name="style">display: none;</attribute>
+        </xpath>
+        <xpath expr="//label[@for='scheduled_date']" position="attributes">
+          <attribute name="style">display: none;</attribute>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

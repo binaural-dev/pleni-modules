@@ -1,0 +1,7 @@
+<odoo>
+  <data>
+    <menuitem id="action_open_find_us_menu" name="¿Cómo llegó a nosostros?" action="find_us_action" parent="contacts.res_partner_menu_config" sequence="2" />
+
+    <menuitem id="action_open_urbanization_area_menu" name="Zona/Urbanización" action="urbanization_area_action" parent="contacts.res_partner_menu_config" sequence="3" />
+  </data>
+</odoo>

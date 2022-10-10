@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="products_item" name="Ajax Add to cart" inherit_id="website_sale.products_add_to_cart" customize_show="True" active="False">
+        <xpath expr="//t[@t-if='product_variant_id']" position="replace">
+            <t t-if="request.website.viewref('website_sale.products_add_to_cart').active">
+                <t t-set="product_variant_id" t-value="product._get_first_possible_variant_id()"/>
+                <t t-if="product_variant_id">
+                <t t-if="product.product_variant_count > 1">
+                    <a type="button" t-att-href="product_href" role="button" t-attf-class="a_custom text-decoration-none bg-transparent custom-plus-button"
+                       aria-label="Shopping cart" title="Shopping cart" style="justify-self: flex-end;filter: contrast(80%);"/>
+                </t>
+                <t t-else="">
+                    <input type="hidden" name="product-id" t-att-data-product-id="product_variant_id"/>
+                    <a href="#" role="button" type="button" t-attf-class="a_custom text-decoration-none bg-transparent js_cart custom-plus-button"
+                       aria-label="Shopping cart" title="Shopping cart" style="margin-left: auto;filter: contrast(80%);"/>
+                </t>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="ajax_cart_button_color" name="Cart Button Color" inherit_id="atharva_theme_base.products_item" customize_show="True" active="False">
+        <xpath expr="//t[@t-if='product_variant_id']" position="replace">
+            <!--<style type="text/css">
+                .a_custom{
+                    width: 32px !important;
+                    height: 32px !important;
+                }
+                .custom-plus-button{
+                    background-image: url('/atharva_theme_base/static/src/img/shop/plus_transparent.png') !important;
+                }
+                .custom-plus-button:hover{
+                    background-image: url('/atharva_theme_base/static/src/img/shop/plus_pleni.png') !important;
+                }
+                .custom-plus-button:not(:hover){
+                    background-image: url('/atharva_theme_base/static/src/img/shop/plus_transparent.png') !important;
+                }
+                .custom-heart-button{
+                    background-image: url('/3mit_website_products_view/static/src/img/love.png') !important;
+                }
+                .custom-heart-button:hover{
+                    background-image: url('/3mit_website_products_view/static/src/img/love_red.png') !important;
+                }
+                .button-none{
+                    border: none !important;
+                    text-decoration: none !important;
+                    background-color: transparent !important;
+                }
+                button:disabled{
+                    background-image: url('/3mit_website_products_view/static/src/img/love_red.png') !important;
+                }
+            </style>-->
+            <t t-if="request.website.viewref('atharva_theme_base.products_item').active">
+                <t t-if="product_variant_id">
+                    <t t-if="product.product_variant_count > 1">
+                        <a type="button" t-att-href="product_href" role="button" t-attf-class="a_custom text-decoration-none bg-transparent custom-plus-button"
+                           aria-label="Shopping cart" title="Shopping cart" style="justify-self: flex-end"/>
+                    </t>
+                    <t t-else="">
+                        <input type="hidden" name="product-id" t-att-data-product-id="product_variant_id"/>
+                        <a href="#" role="button" type="button" t-attf-class="a_custom text-decoration-none bg-transparent js_cart custom-plus-button"
+                           aria-label="Shopping cart" title="Shopping cart" style="margin-left: auto;"/>
+                    </t>
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>

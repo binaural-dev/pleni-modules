@@ -1,0 +1,22 @@
+<odoo>
+
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">view.sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="after">
+                <div class="alert alert-danger text-center o_form_header" role="status"
+                     attrs="{'invisible': [('amount_due', '&lt;=', 0)]}">
+                    <a class="close" data-dismiss="alert" href="#" aria-label="Close">x</a>
+                    <div>
+                        <strong>Customer Due Amount is
+                            <field name="amount_due"/>
+                        </strong>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    o
+</odoo>

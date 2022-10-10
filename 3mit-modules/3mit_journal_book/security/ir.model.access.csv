@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_3mit_journal_book_journal_book_wizard,3mit_journal_book.journal_book_wizard,model_journal_book_wizard,base.group_user,1,1,1,1

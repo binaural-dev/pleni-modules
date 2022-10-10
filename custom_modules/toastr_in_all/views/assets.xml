@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets_frontend" name="toastr assets" inherit_id="web.assets_frontend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" type="text/css" href="/toastr_in_all/static/toastr.min.css"/>
+                <script type="text/javascript" src="/toastr_in_all/static/toastr.min.js"></script>
+            </xpath>
+        </template>
+
+        <template id="assets_backend" name="toastr backend" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" type="text/css" href="/toastr_in_all/static/toastr.min.css"/>
+                <script type="text/javascript" src="/toastr_in_all/static/toastr.min.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

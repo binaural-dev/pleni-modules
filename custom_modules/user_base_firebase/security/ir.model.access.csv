@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_user_firebase,user.firebase,model_user_firebase,0,1,1,1,1
+access_user_firebase_browser,user.firebase.browser,model_user_firebase_browser,0,1,1,1,1
+access_user_firebase_platform,user.firebase.platform,model_user_firebase_platform,0,1,1,1,1
+access_push_notification_wizard,push.notification.wizard,model_push_notification_wizard,0,1,1,1,1
+access_user_firebase_message,user.firebase.message,model_user_firebase_message,0,1,1,1,1

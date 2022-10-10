@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+  <data noupdate="1">
+    <record id="find_us_data_1" model="find.us">
+      <field name="type_name">Instagram Publicidad</field>
+    </record>
+
+    <record id="find_us_data_2" model="find.us">
+      <field name="type_name">Instagram Ventas</field>
+    </record>
+
+    <record id="find_us_data_3" model="find.us">
+      <field name="type_name">Venta de Calle</field>
+    </record>
+
+    <record id="find_us_data_4" model="find.us">
+      <field name="type_name">Boca a Boca (Referido)</field>
+    </record>
+
+    <record id="find_us_data_5" model="find.us">
+      <field name="type_name">Interno</field>
+    </record>
+
+    <record id="find_us_data_6" model="find.us">
+      <field name="type_name">Otro</field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_frontend" inherit_id="website_sale.assets_frontend" name="Ecommerce custom refresh searchbar">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/3mit_refresh_searchbar/static/src/js/custom_refresh_searchbar.js"/>
+        </xpath>
+    </template>
+
+     <template id="website_sale_products_search_box_action" 
+        inherit_id="website_sale.website_sale_products_search_box">
+        <xpath expr="//form[1]" position="before">
+            <t t-set='action' t-value="'/shop'"></t>
+        </xpath>
+    </template>
+
+</odoo>

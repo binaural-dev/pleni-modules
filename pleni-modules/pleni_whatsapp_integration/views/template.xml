@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="whatsapp_sales_template" model="mail.template">
+        <field name="name">WhatsApp Sale template</field>
+        <field name="subject">Sales template</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="body_html">
+            <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+         <div>
+            Hola *${object.partner_id.name or ''}*,
+         </div>
+         % if object.state == 'draft' or object.state == 'sent':
+            Su pedido *${object.name}* con el monto *${format_amount(object.amount_total, object.currency_id)}* ha sido recibido.
+            <div>
+                La fecha y hora de entrega es "${object.schedule_date_order}"
+            </div>
+         % else:
+            <div>
+                Su pedido *${object.name}* con el monto *${format_amount(object.amount_total, object.currency_id)}* ha sido confirmado.
+            </div>
+            <div>
+                La fecha y hora de entrega es "${object.schedule_date_order}"
+            </div>
+         % endif
+        <div>
+            Si tiene alguna pregunta, no dude en escribirnos, con gusto le atenderemos.
+        </div>
+        ]]>
+        </field>
+    </record>
+
+    <record id="whatsapp_inventory_template" model="mail.template">
+        <field name="name">Whatsapp Inventory template</field>
+        <field name="subject">Inventory Template</field>
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="body_html">
+            <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+         <p style="margin: 0px; padding: 0px; font-size: 13px;">
+         <div>
+            Hola *${object.partner_id.name or ''}*,
+         </div>
+         <div>
+             % if object.state == 'draft':
+                Hemos recibido su pedido *${object.name}* el cual será enviado pronto.
+             % endif
+             % if object.state == 'confirmed':
+                Su pedido *${object.name}* se está procesando.
+
+                <!-- FALLAS -->
+             % endif
+             % if object.state == 'assigned':
+                Su orden *${object.name}* está lista y será enviada pronto
+             % endif
+             % if object.state == 'done':
+                Su orden *${object.name}* ha sido enviada.
+             % endif
+         </div>
+         <div>
+            Si tiene alguna pregunta, siéntase comodo de escribirnos, con gusto le atenderemos.
+         </div>
+            </p>
+        ]]>
+        </field>
+    </record>
+
+    <record id="whatsapp_invoice_template" model="mail.template">
+        <field name="name">Whatsapp Invoice template</field>
+        <field name="subject">Invoice Template</field>
+        <field name="model_id" ref="account.model_account_move" />
+        <field name="body_html">
+            <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                <div>
+                    Saludos *${object.partner_id.name}*
+                </div>
+                <div>
+                    Aquí está su Nota de Entrega *${object.name}* con el monto *${format_amount(object.amount_total, object.currency_id)}*
+                    de ${object.company_id.name}.
+                </div>
+                <div>
+                    % if object.payment_state == 'paid':
+                        Esta Nota de Entrega ya ha sido pagada. El monto adeudado es *${format_amount(object.amount_residual,object.currency_id)}*
+                    % else:
+                        Por favor envienos el pago de su pedido lo más pronto posible. El monto a pagar es *${format_amount(object.amount_residual,object.currency_id)}*
+                    % endif
+                </div>
+                La Nota de Entrega tiene fecha y hora de "${object.invoice_date}"
+                
+                Si tiene alguna pregunta, siéntase comodo de escribirnos, con gusto le atenderemos.
+        ]]>
+        </field>
+    </record>
+
+    <record id="whatsapp_purchase_template" model="mail.template">
+        <field name="name">Whatsapp Purchase template</field>
+        <field name="subject">Purchase Template</field>
+        <field name="model_id" ref="purchase.model_purchase_order" />
+        <field name="body_html">
+            <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+             <p style="margin: 0px; padding: 0px; font-size: 13px;">
+             <div>
+                Hola *${object.partner_id.name or ''}*,
+             </div>
+            % if object.state == 'draft' or object.state == 'sent':
+                Le escribimos porque se trata de la cotización *${object.name}* con el monto de *${format_amount(object.amount_total, object.currency_id)}*
+                <div>
+                    Estamos esperando la recepción de sus productos el "${object.date_planned}"
+                </div>
+                <div>
+                    Los detalles de la cotización: <br>
+                    % for each in object:
+                        % for id in each.order_line:
+                            *Producto: ${id.product_id.name}* <br>
+                            *Cantidad: ${id.product_qty}* <br>
+                            *Precio: ${id.price_subtotal}*<br>
+                        % endfor
+                    % endfor
+                </div>
+            % else:
+                <div>
+                    La orden de compra *${object.name}* con el monto de *${format_amount(object.amount_total, object.currency_id)}* is Confirmed.
+                </div>
+                <div>
+                    La fecha y hora de confirmación del pedido es "${object.date_approve}"
+                </div>
+                <div>
+                    Detalles: <br>
+                    % for each in object:
+                        % for id in each.order_line:
+                            *Producto: ${id.product_id.name}* <br>
+                            *Cantidad: ${id.product_qty}* <br>
+                            *Precio: ${id.price_subtotal}*<br>
+                        % endfor
+                    % endfor
+                </div>
+            % endif
+            <div>
+              Esperamos recibir los productos en la fecha programada.
+            </div>
+        ]]>
+        </field>
+    </record>
+
+    <record id="whatsapp_contacts_template" model="mail.template">
+        <field name="name">Whatsapp Contact template</field>
+        <field name="subject">Contact Message Template</field>
+        <field name="model_id" ref="model_res_partner" />
+        <field name="body_html"></field>
+    </record>
+</odoo>

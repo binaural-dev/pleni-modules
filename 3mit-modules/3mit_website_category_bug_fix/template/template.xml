@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="3mit_website_products_categories_inherit" inherit_id="website_sale.products_categories">
+        <xpath expr="//div[@id='wsale_products_categories_collapse']/ul[1]/li[1]" position="replace">
+            <li class="nav-item d-flex">
+                <a t-att-href="keep('/shop', category=0)" t-attf-class="nav-link #{'' if category else 'active'} o_not_editable" style="flex: 1; z-index: 1;">
+                    <span style="width: 100%; white-space: nowrap;">Todos los productos</span>
+                </a>
+            </li>
+        </xpath>
+    </template>
+    <template id="3mit_website_option_collapse_categories_recursive_inherit" inherit_id="website_sale.option_collapse_categories_recursive">
+        <xpath expr="." position="replace">
+            <li class="nav-item d-flex flex-column pl-0 text-nowrap">
+                <t t-set="children" t-value="not search and c.child_id or c.child_id.filtered(lambda c: c.id in search_categories_ids)"/>
+                <i t-if="children" t-attf-class="text-primary fa #{'fa-chevron-down' if c.id in category.parents_and_self.ids else 'fa-chevron-right'}"
+                   t-attf-title="#{'Unfold' if c.id in category.parents_and_self.ids else 'Fold'}"
+                   t-attf-aria-label="#{'Unfold' if c.id in category.parents_and_self.ids else 'Fold'}" role="img"/>
+                <a t-att-href="keep('/shop/category/' + slug(c), category=0)" t-attf-class="nav-link #{'active' if c.id == category.id else ''}" style="flex: 1; z-index: 1;">
+                    <span t-field="c.name" style="width: 100%; white-space: nowrap;"/>
+                </a>
+                <ul t-if="children" class="nav nav-pills flex-column nav-hierarchy" t-att-style="'display:flex; flex-direction: column; ' if c.id in category.parents_and_self.ids else 'display:none;'">
+                    <t t-foreach="children" t-as="c">
+                        <t t-call="website_sale.option_collapse_categories_recursive"/>
+                    </t>
+                </ul>
+            </li>
+        </xpath>
+    </template>
+</odoo>

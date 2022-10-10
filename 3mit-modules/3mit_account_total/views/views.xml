@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+        <record id="3mit_amount_total_inovice" model="ir.ui.view">
+            <field name="name">3mit.amount.move.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form" />
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[@id='invoice_tab']/field[@name='invoice_line_ids']" position="after">
+                    <group class="oe_subtotal_footer oe_right" name="total_bs" attrs="{'invisible':[('conversion', '=', False)]}">
+                        <field name="conversion" invisible="1" />
+                        <field name="loc_ven" invisible="1" />
+                        <field name="conversion_currency_id" invisible="1" />
+                        <field name="amount_untaxed_conversion" widget='monetary' readonly="1" force_save="1" attrs="{'invisible':['|', ('conversion', '=', False), ('loc_ven', '=', False)]}" />
+                        <field name="amount_tax_conversion" widget="tax-group-custom-field" nolabel="1" colspan="2" attrs="{'invisible':[('loc_ven', '=', False)]}" />
+                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                            <label for="amount_total_conversion" string="Total Bs." attrs="{'invisible':[('loc_ven', '=', False)]}" />
+                        </div>
+                        <field name="amount_total_conversion" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' readonly="1" force_save="1" attrs="{'invisible':['|', ('conversion', '=', False), ('loc_ven', '=', False)]}" />
+                    </group>
+                </xpath>
+                <xpath expr="//page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="after">
+                    <field name="conversion" invisible="1" />
+                    <field name="loc_ven" invisible="1" />
+                    <field name="price_unit_conversion" readonly="1" force_save="1" optional="show" attrs="{'column_invisible':[('parent.loc_ven', '=', False)]}" />
+                </xpath>
+                <xpath expr="//page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']" position="after">
+                    <field name="loc_ven" invisible="1" />
+                    <field name="price_subtotal_conversion" readonly="1" force_save="1" optional="show" attrs="{'column_invisible':[('parent.loc_ven', '=', False)]}" />
+                </xpath>
+            </field>
+        </record>
+        <record id="pleni_amount_total_view_tree" model="ir.ui.view">
+            <field name="name">pleni.amount.move.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_invoice_tree"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_total_signed']" position="replace">
+                    <field name="amount_total" string="Total" optional="show" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

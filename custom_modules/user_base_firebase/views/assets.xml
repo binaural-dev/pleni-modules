@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_frontend" name="toastr assets" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/user_base_firebase/static/src/js/website.js"></script>
+        </xpath>
+    </template>
+
+    <template id="assets_common" name="assets common" inherit_id="web.assets_common">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+            <script type="text/javascript" src="https://www.gstatic.com/firebasejs/7.15.0/firebase-messaging.js"></script>
+            <script type="text/javascript" src="/user_base_firebase/static/src/js/jquery.cookie.js"></script>
+            <script type="text/javascript" src="/user_base_firebase/static/src/js/notification.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

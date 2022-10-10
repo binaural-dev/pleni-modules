@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="kits_multi_uom_product" inherit_id="website_sale.product">
+        <xpath expr="//form//div[hasclass('css_quantity')]" position="after">
+            <t t-if="product.type == 'product'">   
+                <div class="uom_measure" style="margin-top: 8px;width: 50%">
+                    <div class="mb-1 form-group">
+                        <div class="input-icon">
+                            <select class="form-control js_uom_change" name="uom_id" id="uom_id">
+                                <t t-foreach='product.product_uom_ids' t-as='uom'>
+                                    <option t-att-data-uom_id="uom.id">
+                                        <t t-esc='uom.name'/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="kits_multi_uom_cart_lines" inherit_id="website_sale.cart_lines">
+        <xpath expr="//thead//th[hasclass('td-qty')]" position="after">
+            <th class="text-center">Presentación</th>
+
+        </xpath>
+        <xpath expr="//tbody//td[hasclass('td-qty')]" position="after">
+            <td class="text-center">
+                <span t-field="line.product_uom.name"/>
+                <t t-esc="'x'"/>
+                <t t-esc="line.product_uom_qty"/>
+            </td>
+        </xpath>
+        <xpath expr="//input[@type='text'][hasclass('quantity')]" position="attributes">
+            <attribute name="t-att-data-max">(line.product_uom._compute_quantity(line.product_uom_qty,line.product_id.uom_id)+(line.product_id.virtual_available - line.product_id.cart_qty)) if line.product_id.type == 'product' and line.product_id.inventory_availability in ['always', 'threshold'] else None</attribute>
+        </xpath>
+        
+        <xpath expr="//tbody//td[hasclass('td-price')]" position="replace">
+            <td class="text-center td-price" name="price">
+                <t t-set="prices" t-value="line.product_id.product_tmpl_id._get_combination_info_display(line=line, pricelist=website_sale_order.pricelist_id)"/>
+                <t t-if="prices['has_discount']" name="order_line_discount">
+                    <del t-attf-class="#{'text-danger mr8'}" style="white-space: nowrap;" t-esc="prices['discounted_price']" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}" />
+                </t>
+                <t t-esc="prices['real_price']" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+            </td>
+        </xpath>
+    </template>
+
+    <template id="kits_multi_uom_cart_total" inherit_id="website_sale.total">
+        <xpath expr="//table" position="replace">
+            <table class="table">
+                <t t-set="prices" t-value="website_sale_order._get_ecomerce_total(pricelist=website_sale_order.pricelist_id)"/>
+                <tr id="empty">
+                    <t t-if='not no_rowspan'><td rowspan="10" class="border-0"/></t>
+                    <td class="col-md-2 col-3 border-0"></td>
+                    <td class="col-md-2 col-3 border-0" ></td>
+                </tr>
+                <tr id="order_total_untaxed">
+                    <td class="text-right border-0">Subtotal productos:</td>
+                    <td class="text-xl-right border-0" >
+                        <span t-esc='prices["subtotal"]' class="monetary_field" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+                    </td>
+                </tr>
+                <tr id="order_total_taxes">
+                    <td class="text-right border-0">Impuestos:</td>
+                    <td class="text-xl-right border-0">
+                        <span t-esc='prices["taxes"]' class="monetary_field" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}" />
+                    </td>
+                </tr>
+                <tr id="order_delivery" t-if="website_sale_order and website_sale_order.amount_delivery != 0">
+                  <td class="text-right border-0 text-muted"  title="Delivery will be updated after choosing a new delivery method">Costo de envío:</td>
+                  <td class="text-xl-right border-0 text-muted" >
+                       <span t-field="website_sale_order.amount_delivery" class="monetary_field" style="white-space: nowrap;" t-options='{
+                          "widget": "monetary",
+                          "display_currency": website_sale_order.currency_id,
+                      }'/>
+                  </td>
+                </tr>
+                <tr id="order_total">
+                    <td class="text-right">
+                        <strong>Total:</strong>
+                        <!-- <br/> -->
+                        <!-- <strong>Total Bs:</strong> -->
+                        </td>
+                    <td class="text-xl-right">
+                        <strong t-esc='prices["total"]' class="monetary_field"
+                            t-options='{"widget": "monetary", "display_currency": website_sale_order.pricelist_id.currency_id}'/>
+                        <!-- <br/>
+                        <strong t-esc='prices["main_currency_total"]' class="monetary_field"
+                            t-options='{"widget": "monetary", "display_currency": website_sale_order.company_id.currency_id}'/> -->
+                    </td>                                               
+                </tr>
+            </table>
+        </xpath>
+    </template>
+
+    <template id="kits_multi_uom_product_price" inherit_id="website_sale.product_price">
+        <xpath expr="//h4[hasclass('oe_price_h4')]/b[hasclass('oe_price')]" position="after">
+            <span>/</span>
+            <span id="uom_name" style="white-space: nowrap;">
+                <t t-esc="product.product_uom_ids[0].name"/>
+            </span>
+        </xpath>
+    </template>
+
+
+    <template id="kits_multi_uom_product_price_unit" inherit_id="website_sale.cart_summary">
+        <xpath expr="//td[hasclass('td-price')]" position="replace">
+            <td class="text-center td-price">
+                <t t-esc="line.price_unit" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+            </td>
+        </xpath>
+    </template>
+
+    <template id="kits_multi_uom_product_mini_cart" inherit_id="atharva_theme_base.cart_lines_popup_content">
+        <xpath expr="//a[hasclass('js_delete_product')]" position="before">
+            <div align="center" style="justify-content: center; align-items: center; margin: auto;">
+                <span t-field="line.product_uom.name"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

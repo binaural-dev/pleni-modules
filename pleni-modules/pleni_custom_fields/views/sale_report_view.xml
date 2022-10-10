@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="view_order_product_search_inherit_sale_report" model="ir.ui.view">
+    <field name="name">sale.report.view.search.inherit</field>
+    <field name="model">sale.report</field>
+    <field name="inherit_id" ref="sale.view_order_product_search" />
+    <field name="arch" type="xml">
+      <data>
+        <xpath expr="//filter[@name='filter_date']" position="replace">
+          <filter name="Scheduled Date Report" string="Fecha Programada de Entrega" date="scheduled_date_report" />
+        </xpath>
+      </data>
+    </field>
+  </record>
+</odoo>

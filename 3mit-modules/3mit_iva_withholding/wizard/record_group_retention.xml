@@ -1,0 +1,34 @@
+<odoo>
+  <data>
+      <record id="view_group_retention_iva" model="ir.ui.view">
+            <field name="name">wizard.group.retention.form</field>
+                <field name="model">wizard.group.retention</field>
+                <field name="arch" type="xml">
+                    <form string="Registro de retencion grupal de IVA Proveedor">
+                        <div >
+                            <group colspan="2" col="2">
+                                <group>
+                                    <field name="start_date" string="Desde" required="1"/>
+                                    <field name="final_date" string="Hasta" required="1"/>
+                                </group>
+                            </group>
+                        </div>
+                        <footer>
+                            <button name="generate_retention_iva" string="Generar Retención" type="object" class="btn-primary"/>
+                            <button string="Cancel" class="btn-default" special="cancel" />
+                        </footer>
+                    </form>
+                </field>
+        </record>
+
+        <record id="action_group_retention_iva" model="ir.actions.act_window">
+        	<field name="name">Registro de retenciones de proveedor</field>
+        	<field name="res_model">wizard.group.retention</field>
+        	<field name="binding_view_types">form</field>
+        	<field name="view_mode">form</field>
+        	<field name="view_id" ref="view_group_retention_iva"/>
+        	<field name="target">new</field>
+    	</record>
+        <menuitem id="menu_action_record_group_retention" name="Registrar Retención de IVA (VE)" parent="3mit_iva_withholding.menu_iva_retention_suppliers" action="action_group_retention_iva" sequence="1" groups="3mit_grupo_localizacion.group_localizacion"/>
+  </data>
+</odoo>

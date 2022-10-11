@@ -13,7 +13,7 @@ class ResPartnerRif(models.Model):
     def create(self, values):
 
         for val in values:
-            if val.get("name"):
+            if val.get("name") and not val.get("commercial_name"):
                 val["commercial_name"] = val.get("name")
             if val.get('rif'):
                 if not self.validate_rif_er(val.get('rif')):
@@ -41,7 +41,7 @@ class ResPartnerRif(models.Model):
                     if values.get("email"):
                         if not s.validate_email_addrs(values.get("email"), 'email'):
                             raise UserError('El email es incorrecto. Ej: cuenta@dominio.xxx. Por favor intente de nuevo')
-                    if values.get("name"):
+                    if values.get("name") and not values.get("commercial_name"):
                         values["commercial_name"] = values.get("name")
             return super(ResPartnerRif, s).write(values)
     

@@ -63,9 +63,7 @@
             </div>
             <script type="text/javascript">
                 let today = new Date().toLocaleString("en-US", {timeZone: "America/Caracas"});
-                console.log("today", today)
                 let todayTimeZone = new Date(today);
-                console.log("hour", todayTimeZone.getHours(), todayTimeZone.getMinutes());
                 let todayHour = todayTimeZone.getHours();
                 let todayMinutes = todayTimeZone.getMinutes();
                 let tomorrow;
@@ -73,21 +71,20 @@
                 if (todayHour > 16 ) {
                     if (todayMinutes > 0) {
                         tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 2);
-                        tomorrow_date = new Date(tomorrow).toISOString().split('T')[0];
+                        tomorrow_date = new Date(tomorrow).toLocaleDateString("en-US", {timeZone: "America/Caracas"}).split("/")
+                        tomorrow_date = tomorrow_date[2]+"-"+tomorrow_date[0]+"-"+ tomorrow_date[1]
                         let dateName = new Date(tomorrow);
                         let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         document.getElementById("date-name").innerHTML = dateName.toLocaleDateString('es-MX', options)
                     }
                 } else {
                     tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 1);
-                    tomorrow_date = new Date(tomorrow).toISOString().split('T')[0];
+                    tomorrow_date = new Date(tomorrow).toLocaleDateString("en-US", {timeZone: "America/Caracas"}).split("/")
+                    tomorrow_date = tomorrow_date[2]+"-"+tomorrow_date[0]+"-"+ tomorrow_date[1]
                     let dateName = new Date(tomorrow);
                     let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                     document.getElementById("date-name").innerHTML = dateName.toLocaleDateString('es-MX', options)
                 }
-                console.log("newdATE", new Date())
-                console.log("tomorrow_date", tomorrow_date)
-                console.log("tomorrow_date2", tomorrow)
 
                 document.getElementsByName("delivery_date")[0].setAttribute('min', tomorrow_date);
                 document.getElementsByName("delivery_date")[0].value = tomorrow_date

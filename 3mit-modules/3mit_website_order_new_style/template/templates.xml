@@ -252,7 +252,7 @@
             <div class="o_portal_my_details">
                 <h4>Resumen <a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil fa-2x"/></a></h4>
                 <hr class="mt-1 mb-0"/>
-                <div t-field="user_id.partner_id" t-options='{"widget": "contact", "fields": ["email", "phone", "address", "name"]}'/>
+                <div t-field="user_id.partner_id" t-options='{"widget": "contact", "fields": ["email", "mobile", "address", "name"]}'/>
             </div>
         </xpath>
         <xpath expr="//t[1]/div[2]/div[1]/t[1]/div[1]/div[2]/div[3]" position="replace">

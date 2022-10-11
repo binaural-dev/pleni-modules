@@ -20,7 +20,7 @@ class SaleOrderInherit(models.Model):
         taxes = 0
         discount = 0
         price_dict = {
-            'discount': cd models
+            'discount': 0
         }
         for line in self.order_line:
             price_list_items = self.env['product.pricelist.item'].search([('pricelist_id','=',pricelist.id),'|',('product_tmpl_id','=',line.product_id.product_tmpl_id.id),('product_id','=',line.product_id.id)], order= 'min_quantity asc')

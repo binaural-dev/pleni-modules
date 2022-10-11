@@ -254,12 +254,26 @@
             </div>
         </xpath>
     </template>
-     <template id="portal_breadcrumbs_new_style_inherit" inherit_id="portal.portal_breadcrumbs">
+    <template id="portal_breadcrumbs_new_style_inherit" inherit_id="portal.portal_breadcrumbs">
          <xpath expr="//ol[1]" position="before">
             <span class="breadcrumb-item" style="margin-left: 0px; font-size: medium;">Mis Pedidos</span>
         </xpath>
         <xpath expr="//ol[1]" position="attributes">
             <attribute name="style">display: none;</attribute>
+        </xpath>
+    </template>
+
+    <template id="sale_order_portal_template_block_button" inherit_id="sale.sale_order_portal_template">
+         <xpath expr="//div[@class='row justify-content-center text-center d-print-none pt-1 pb-4']" position="inside">
+            <script type="text/javascript">
+                setTimeout(function(){
+                    let collection = document.getElementsByClassName('col-sm-auto mt8')
+                    if (collection.length > 0) {
+                        document.getElementsByClassName('col-sm-auto mt8')[0].style.display = "none";
+                    }
+                }, 3000);
+
+            </script>
         </xpath>
     </template>
 </odoo>

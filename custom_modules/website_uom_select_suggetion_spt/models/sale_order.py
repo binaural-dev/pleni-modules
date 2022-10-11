@@ -60,7 +60,7 @@ class SaleOrderInherit(models.Model):
             'taxes': self.amount_tax,
             'total': self.amount_total,
             'main_currency_total': total / rate,
-            'main_currency': self.env['website'].search([('id','=',self.env.context.get('website_id'))]).company_id.currency_id
+            'main_currency': self.env['website'].search([('id','=',self.env.context.get('website_id'))]).company_id.currency_id,
             'discount': discount
         }
 

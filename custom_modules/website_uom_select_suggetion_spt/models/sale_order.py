@@ -18,13 +18,25 @@ class SaleOrderInherit(models.Model):
         subtotal = 0
         total = 0
         taxes = 0
+        discount = 0
+        price_dict = {
+            'discount': cd models
+        }
         for line in self.order_line:
             price_list_items = self.env['product.pricelist.item'].search([('pricelist_id','=',pricelist.id),'|',('product_tmpl_id','=',line.product_id.product_tmpl_id.id),('product_id','=',line.product_id.id)], order= 'min_quantity asc')
             real_qty = line.product_uom_qty / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else line.product_uom_qty * line.product_uom.factor
             real_price = line.price_unit
+            product_id = line.product_id.id
+            if real_price < 0: price_dict['discount'] += real_price * -1
             for item in price_list_items:
                 if real_qty >= item.min_quantity:
                     real_price = item.fixed_price
+                    if product_id in price_dict:
+                        price_dict[product_id]['promotion_price'] = real_price
+                    else:
+                        price_dict[product_id] = {}
+                        price_dict[product_id]['baseline_price'] = real_price
+                        price_dict[product_id]['quantity'] = real_qty
             total += real_price * real_qty
             subtotal += real_price * real_qty
         
@@ -32,12 +44,24 @@ class SaleOrderInherit(models.Model):
         
         rate = self.currency_rate
 
+
+        for key in price_dict:
+            if key == 'discount':
+                discount += price_dict['discount']
+            else:
+                if 'promotion_price' in price_dict[key]:
+                    difference = (price_dict[key]['baseline_price'] - price_dict[key]['promotion_price']) * price_dict[key]['quantity']
+                    discount += difference
+
+        discount = round(discount,2)
+
         return {
             'subtotal': subtotal,
             'taxes': self.amount_tax,
             'total': self.amount_total,
             'main_currency_total': total / rate,
             'main_currency': self.env['website'].search([('id','=',self.env.context.get('website_id'))]).company_id.currency_id
+            'discount': discount
         }
 
 

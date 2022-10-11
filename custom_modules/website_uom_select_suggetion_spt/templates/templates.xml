@@ -62,6 +62,12 @@
                         <span t-esc='prices["subtotal"]' class="monetary_field" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
                     </td>
                 </tr>
+                <tr t-if="prices['discount']" id="order_total_discount">
+                    <td class="text-right border-0">Ahorro:</td>
+                    <td class="text-xl-right border-0">
+                        <span t-esc='prices["discount"]' class="monetary_field" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}" />
+                    </td>
+                </tr>
                 <tr id="order_total_taxes">
                     <td class="text-right border-0">Impuestos:</td>
                     <td class="text-xl-right border-0">

@@ -103,6 +103,14 @@
         <xpath expr="//div[@class='toggle_summary d-xl-none']/span[2]" position="attributes">
             <attribute name="style">display: none;</attribute>
         </xpath>
+        <xpath expr="//div[@class='toggle_summary d-xl-none']" position="inside">
+            <span id="exchange-bs" style="padding-left:20px">
+                <t t-esc="website_sale_order.amount_total * website_sale_order.currency_bs_rate" />
+            </span>
+            <script type="text/javascript">
+                document.getElementById('exchange-bs').innerHTML = "Bs. " + parseFloat(document.getElementById('exchange-bs').innerHTML).toFixed(2).replace(".", ",")
+            </script>
+        </xpath>
     </template>
 
     <template id="payment_confirmation_status_new_style_checkout" inherit_id="website_sale.payment_confirmation_status">

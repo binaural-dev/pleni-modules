@@ -22,28 +22,29 @@ if (elem.value) {
 
 setTimeout(function(){
     //Ordenes de Entrega - scheduled date
-    let dateDelivery = document.querySelectorAll('.date-delivery')
-    dateDelivery.forEach(date => {
-        let dateValue = date.value.split("*");
-        let order = dateValue[0];
-        let hour = dateValue[1].split(" ")[0];
-        let indexFor = -1
+    // let dateDelivery = document.querySelectorAll('.date-delivery')
+    // dateDelivery.forEach(date => {
+    //     let dateValue = date.value.split("*");
+    //     let order = dateValue[0];
+    //     let hour = dateValue[1].split(" ")[0];
+    //     let indexFor = -1
 
-        //Ordenes de Entrega - change
-        let selector = document.querySelectorAll('.o_sale_stock_picking')
-        selector.forEach( (item, index) => {
-            if(item.innerText.includes(order)) {
-                indexFor = index;
-            }
-        })
-
-        let selectorInner = document.querySelectorAll('.o_sale_stock_picking div .small span')
-        selectorInner.forEach((item, index) => {
-            if (index === indexFor) {
-                item.innerHTML = hour;
-            }
-        })
+    //     //Ordenes de Entrega - change
+    let selector = document.querySelectorAll('.o_sale_stock_picking')
+    selector.forEach( (item, index) => {
+        item.style.opacity = 0;
     })
+
+    let delivery_child = document.getElementById('informations').children
+    let delivery_child_length = delivery_child.length
+    let delivery_child_count = 0
+
+    for(delivery_child_count ; delivery_child_count < delivery_child_length ; delivery_child_count++){
+        let child = delivery_child[delivery_child_count]
+        if (child.innerHTML.includes("Órdenes de Entrega")) {
+            child.style.display = "none";
+        }
+    }  
 
     // Invoices
     let dateDeliveryInvoice = document.querySelectorAll('.date-delivery-invoice')
@@ -72,4 +73,4 @@ setTimeout(function(){
 
 
     
-}, 5000);
+}, 3000);

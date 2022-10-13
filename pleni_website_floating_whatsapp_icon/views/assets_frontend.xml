@@ -3,7 +3,7 @@
     <data>
         <template id="whatsapp_assets_frontend" name="Whatsapp Assets" inherit_id="website.assets_frontend">
             <xpath expr="." position="inside">
-                <link rel="stylesheet" type="text/scss" href="/pleni_website_floating_whatsapp_icon/static/src/scss/whatsapp.scss" />
+                <link rel="stylesheet" type="text/css" href="/pleni_website_floating_whatsapp_icon/static/src/css/whatsapp.css" />
             </xpath>
         </template>
     </data>

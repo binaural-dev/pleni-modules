@@ -9,7 +9,7 @@
     'depends': ['website'],
     'data': [
         'views/assets_frontend.xml',
-        'views/portal_whatsapp_view.xml',
-        'views/website_inherited.xml',
+        'views/footer_custom.xml',
+        'views/website_view.xml',
     ],
 }

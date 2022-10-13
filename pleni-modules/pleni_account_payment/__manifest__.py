@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Pleni - Account Payment",
+    'name': "[DEPRECATED] Pleni - Account Payment",
     'version': '0.1',
     'category': 'Accounting/Accounting',
     'author': "Manuel Escalante",

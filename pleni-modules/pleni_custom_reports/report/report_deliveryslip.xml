@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+  <!-- Reference: odoo/addons/stock/report/report_deliveryslip.xml -->
   <template id="report_delivery_document" name="report_delivery_document_inherit" inherit_id="stock.report_delivery_document">
     <xpath expr="." position="replace">
       <t t-call="web.html_container">
@@ -71,7 +72,7 @@
               <div class="" style="font-size: medium;">
                 <strong>Fecha de Programada de Entrega</strong>
                 <p>
-                  <span t-field="o.scheduled_date_stock"/>
+                  <span t-field="o.scheduled_date_stock" />
                   <span t-field="o.am_pm" />
                 </p>
               </div>
@@ -79,6 +80,9 @@
             <table class="table table-sm" t-if="o.state!='done'" name="stock_move_table">
               <thead>
                 <tr>
+                  <th name="th_num" class="text-left">
+                    <span>#</span>
+                  </th>
                   <th name="th_sm_product">
                     <strong>Producto</strong>
                   </th>
@@ -88,8 +92,10 @@
                 </tr>
               </thead>
               <tbody>
-                <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)" />
+                <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty).sorted(key=lambda l: l.product_id.name)" />
                 <tr t-foreach="lines" t-as="move">
+                  <t t-set="item_index" t-value="item_index + 1" />
+                  <td t-esc="item_index" />
                   <td>
                     <span t-field="move.product_id" />
                     <p t-if="move.description_picking != move.product_id.name">
@@ -165,19 +171,19 @@
                     </t>
                     <!-- If not printing lots/serial numbers => merge lines with same product+description+uom -->
                     <t t-else="">
-                      <t t-set="aggregated_lines" t-value="package_move_lines._get_aggregated_product_quantities()" />
+                      <t t-set="aggregated_lines" t-value="sorted(o.move_line_ids._get_aggregated_product_quantities().items(), key=lambda l: l[1]['name'])" />
                       <tr t-foreach="aggregated_lines" t-as="line">
                         <t t-set="item_index" t-value="item_index + 1" />
                         <td t-esc="item_index" />
                         <td>
-                          <span t-esc="aggregated_lines[line]['name']" />
-                          <p t-if="aggregated_lines[line]['description']">
-                            <span t-esc="aggregated_lines[line]['description']" />
+                          <span t-esc="aggregated_lines[item_index - 1][1]['name']" />
+                          <p t-if="aggregated_lines[item_index - 1][1]['description']">
+                            <span t-esc="aggregated_lines[item_index - 1][1]['description']" />
                           </p>
                         </td>
                         <td class="text-center" name="move_line_aggregated_qty_done">
-                          <span t-esc="aggregated_lines[line]['qty_done']" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}" />
-                          <span t-esc="aggregated_lines[line]['product_uom']" />
+                          <span t-esc="aggregated_lines[item_index - 1][1]['qty_done']" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}" />
+                          <span t-esc="aggregated_lines[item_index - 1][1]['product_uom']" />
                         </td>
                       </tr>
                     </t>
@@ -214,20 +220,20 @@
                       </tr>
                     </t>
                     <t t-else="">
-                      <t t-set="aggregated_lines" t-value="move_lines._get_aggregated_product_quantities()" />
+                      <t t-set="aggregated_lines" t-value="sorted(o.move_line_ids._get_aggregated_product_quantities().items(), key=lambda l: l[1]['name'])" />
                       <t t-if="aggregated_lines">
                         <tr t-foreach="aggregated_lines" t-as="line">
                           <t t-set="item_index" t-value="item_index + 1" />
                           <td t-esc="item_index" />
                           <td>
-                            <span t-esc="aggregated_lines[line]['name']" />
-                            <p t-if="aggregated_lines[line]['description']">
-                              <span t-esc="aggregated_lines[line]['description']" />
+                            <span t-esc="aggregated_lines[item_index - 1][1]['name']" />
+                            <p t-if="aggregated_lines[item_index - 1][1]['description']">
+                              <span t-esc="aggregated_lines[item_index - 1][1]['description']" />
                             </p>
                           </td>
                           <td class="text-center" name="move_line_aggregated_qty_done">
-                            <span t-esc="aggregated_lines[line]['qty_done']" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}" />
-                            <span t-esc="aggregated_lines[line]['product_uom']" />
+                            <span t-esc="aggregated_lines[item_index - 1][1]['qty_done']" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}" />
+                            <span t-esc="aggregated_lines[item_index - 1][1]['product_uom']" />
                           </td>
                         </tr>
                       </t>

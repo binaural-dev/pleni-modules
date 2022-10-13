@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Pleni - Product Template",
+    'name': "[DEPRECATED] Pleni - Product Template",
     'version': '0.1',
     'category': 'Sales/Sales',
     'author': "Manuel Escalante",

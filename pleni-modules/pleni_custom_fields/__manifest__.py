@@ -12,6 +12,7 @@
         'stock',
         'sale',
         'sale_stock',
+        'product',
         '3mit_account_advance_payment'
     ],
     'data': [

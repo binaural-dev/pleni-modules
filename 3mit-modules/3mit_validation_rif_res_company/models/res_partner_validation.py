@@ -41,7 +41,7 @@ class ResPartnerRif(models.Model):
                     if values.get("email"):
                         if not s.validate_email_addrs(values.get("email"), 'email'):
                             raise UserError('El email es incorrecto. Ej: cuenta@dominio.xxx. Por favor intente de nuevo')
-                    if values.get("name") and not values.get("commercial_name"):
+                    if values.get("name") and not s.commercial_name:
                         values["commercial_name"] = values.get("name")
             return super(ResPartnerRif, s).write(values)
     

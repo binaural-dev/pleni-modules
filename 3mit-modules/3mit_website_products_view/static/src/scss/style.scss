@@ -42,3 +42,7 @@
         pointer-events: none !important;
     }
 }
+
+#o_comparelist_table > tbody > tr > td > a {
+    pointer-events: none !important;
+}

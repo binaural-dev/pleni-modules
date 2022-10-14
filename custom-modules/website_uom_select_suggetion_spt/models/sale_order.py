@@ -19,6 +19,7 @@ class SaleOrderInherit(models.Model):
         total = 0
         taxes = 0
         discount = 0
+        subtotal_without_taxes = 0
         price_dict = {
             'discount': 0
         }
@@ -52,6 +53,8 @@ class SaleOrderInherit(models.Model):
                 if 'promotion_price' in price_dict[key]:
                     difference = (price_dict[key]['baseline_price'] - price_dict[key]['promotion_price']) * price_dict[key]['quantity']
                     discount += difference
+                if 'baseline_price' in price_dict[key]:
+                    subtotal_without_taxes += price_dict[key]['baseline_price'] * price_dict[key]['quantity']
 
         discount = round(discount,2)
 
@@ -61,7 +64,8 @@ class SaleOrderInherit(models.Model):
             'total': self.amount_total,
             'main_currency_total': total / rate,
             'main_currency': self.env['website'].search([('id','=',self.env.context.get('website_id'))]).company_id.currency_id,
-            'discount': discount
+            'discount': discount,
+            'subtotal_without_taxes': subtotal_without_taxes
         }
 
 

@@ -32,7 +32,8 @@ setTimeout(function(){
     //     //Ordenes de Entrega - change
     let selector = document.querySelectorAll('.o_sale_stock_picking')
     selector.forEach( (item, index) => {
-        item.style.opacity = 0;
+        item.classList.remove("d-flex")
+        item.style.display = "none";
     })
 
     let delivery_child = document.getElementById('informations').children
@@ -69,8 +70,5 @@ setTimeout(function(){
             }
         })
     })
-
-
-
     
-}, 3000);
+}, 1000);

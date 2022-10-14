@@ -48,27 +48,27 @@ setTimeout(function(){
     }  
 
     // Invoices
-    let dateDeliveryInvoice = document.querySelectorAll('.date-delivery-invoice')
-    dateDeliveryInvoice.forEach(date => {
-        let dateValue = date.value.split("*");
-        let order = dateValue[0];
-        let hour = dateValue[1].split(" ")[0];
-        let indexFor = -1
+    // let dateDeliveryInvoice = document.querySelectorAll('.date-delivery-invoice')
+    // dateDeliveryInvoice.forEach(date => {
+    //     let dateValue = date.value.split("*");
+    //     let order = dateValue[0];
+    //     let hour = dateValue[1].split(" ")[0];
+    //     let indexFor = -1
 
-        //Ordenes de Entrega - change
-        let selector = document.querySelectorAll('.list-group.mb-4')
-        selector.forEach((item, index) => {
-            if(item.innerText.includes(order)) {
-                indexFor = index;
-            }
-        })
+    //     //Ordenes de Entrega - change
+    //     let selector = document.querySelectorAll('.list-group.mb-4')
+    //     selector.forEach((item, index) => {
+    //         if(item.innerText.includes(order)) {
+    //             indexFor = index;
+    //         }
+    //     })
 
-        let selectorInner = document.querySelectorAll('.list-group.mb-4 div div .small span')
-        selectorInner.forEach((item, index) => {
-            if (index === indexFor) {
-                item.innerHTML = hour;
-            }
-        })
-    })
+    //     let selectorInner = document.querySelectorAll('.list-group.mb-4 div div .small span')
+    //     selectorInner.forEach((item, index) => {
+    //         if (index === indexFor) {
+    //             item.innerHTML = hour;
+    //         }
+    //     })
+    // })
     
 }, 1000);

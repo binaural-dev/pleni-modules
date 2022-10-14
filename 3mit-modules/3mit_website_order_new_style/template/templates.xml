@@ -279,7 +279,11 @@
                     if (collection.length > 0) {
                         document.getElementsByClassName('col-sm-auto mt8')[0].style.display = "none";
                     }
-                }, 3000);
+
+                    if (collection.length > 2) {
+                        document.getElementsByClassName('col-sm-auto mt8')[2].style.display = "none";
+                    }
+                }, 1000);
 
             </script>
         </xpath>

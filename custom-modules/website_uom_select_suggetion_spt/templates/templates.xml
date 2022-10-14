@@ -59,7 +59,7 @@
                 <tr id="order_total_untaxed">
                     <td class="text-right border-0">Subtotal productos:</td>
                     <td class="text-xl-right border-0" >
-                        <span t-esc='prices["subtotal"]' class="monetary_field" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+                        <span t-esc='prices["subtotal_without_taxes"]' class="monetary_field" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
                     </td>
                 </tr>
                 <tr t-if="prices['discount']" id="order_total_discount">

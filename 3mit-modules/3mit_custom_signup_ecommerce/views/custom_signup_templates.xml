@@ -250,6 +250,22 @@
         <xpath expr="//input[@name='redirect']" position="before">
             <t t-set='redirect' t-value="'/shop'"></t>
         </xpath>
+
+        <xpath expr="//input[@name='redirect']" position="after">
+            <t t-set='user_logged_in' t-value="request.session.uid"></t>
+            <input type="hidden" name="user_logged_in" id="user_logged_in" t-att-value="user_logged_in"/>
+
+            <script type="text/javascript">
+                setTimeout(function(){
+                    let user_logged_in = document.getElementById('user_logged_in').value
+
+                    if (user_logged_in) {
+                        window.location.href = '/shop';
+                    }
+                }, 1000);
+    
+            </script>
+        </xpath>
     </template>
 
     <template id="reset_password_extend_redirect" inherit_id="auth_signup.reset_password">

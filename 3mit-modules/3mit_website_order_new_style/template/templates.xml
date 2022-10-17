@@ -67,9 +67,6 @@
                     </span>
                 </div>
             </strong>
-            <script type="text/javascript">
-                document.getElementById('exchange-bs').innerHTML = "Bs. " + parseFloat(document.getElementById('exchange-bs').innerHTML).toFixed(2).replace(".", ",")
-            </script>
         </xpath>
 
 

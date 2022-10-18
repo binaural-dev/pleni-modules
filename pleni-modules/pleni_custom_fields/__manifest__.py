@@ -9,14 +9,17 @@
     'depends': [
         'base',
         'account',
+        'account_payment',
         'stock',
         'sale',
         'sale_stock',
+        'product',
         '3mit_account_advance_payment'
     ],
     'data': [
         'security/ir.model.access.csv',
         'data/find_us_data.xml',
+        'views/account_payment_view.xml',
         'views/find_us_view.xml',
         'views/res_partner_view.xml',
         'views/urbanization_area_view.xml',

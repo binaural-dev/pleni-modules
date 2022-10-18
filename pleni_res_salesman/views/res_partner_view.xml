@@ -6,7 +6,7 @@
       <field name="inherit_id" ref="base.view_partner_form" />
       <field name="arch" type="xml">
         <xpath expr="//field[@name='function']" position="before">
-          <field name="hunter_id" options="{'no_create': True}" attrs="{'readonly': [('hunter_id', '!=', False)]}" />
+          <field name="hunter_id" force_save="1" options="{'no_create': True}" />
           <field name="salesman_id" options="{'no_create': True}" />
         </xpath>
       </field>

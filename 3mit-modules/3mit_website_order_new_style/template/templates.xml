@@ -67,9 +67,6 @@
                     </span>
                 </div>
             </strong>
-            <script type="text/javascript">
-                document.getElementById('exchange-bs').innerHTML = "Bs. " + parseFloat(document.getElementById('exchange-bs').innerHTML).toFixed(2).replace(".", ",")
-            </script>
         </xpath>
 
 
@@ -279,7 +276,11 @@
                     if (collection.length > 0) {
                         document.getElementsByClassName('col-sm-auto mt8')[0].style.display = "none";
                     }
-                }, 3000);
+
+                    if (collection.length > 2) {
+                        document.getElementsByClassName('col-sm-auto mt8')[2].style.display = "none";
+                    }
+                }, 1000);
 
             </script>
         </xpath>

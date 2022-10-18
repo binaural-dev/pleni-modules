@@ -38,6 +38,8 @@ def send_firebase_notification(serverToken, tokens, notification):
             'priority': 'high',
             'data': notification,
         }
+        print("data1", body)
+        print("data2", json.dumps(body))
         try:
             requests.post("https://fcm.googleapis.com/fcm/send",headers=headers, data=json.dumps(body))
         except Exception:

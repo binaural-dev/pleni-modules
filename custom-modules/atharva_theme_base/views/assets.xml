@@ -2,14 +2,14 @@
 <odoo>
     <template id="pwa_info" name="PWA Information" inherit_id="portal.frontend_layout">
         <xpath expr="//head" position="inside">
-            <t t-if="request.website and request.website.is_pwa_active">
+            <!-- <t t-if="request.website and request.website.is_pwa_active">
                 <link rel="manifest" t-attf-href="/manifest/webmanifest/?web_id={{request.website.id}}"/>
                 <meta name="apple-mobile-web-app-capable" content="yes"/>
                 <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
                 <meta name="apple-mobile-web-app-title" t-att-content="request.website.pwa_name"/>
                 <link rel="apple-touch-icon" t-att-href="website.image_url(request.website,'pwa_big_image')"/>
                 <meta name="theme-color" t-att-content="request.website.pwa_theme_color" />
-            </t>
+            </t> -->
         </xpath>
     </template>
     <template id="assets_frontend" name="Frontend Asset Atharva Base" inherit_id="website.assets_frontend">

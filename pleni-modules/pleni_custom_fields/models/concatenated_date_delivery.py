@@ -53,10 +53,23 @@ class StockPickingInherit(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+
+        INCOMING_PICKING = 1
+        OUTCOMING_PICKING = 2
+
         for element in vals_list:
             sale = self.env['sale.order'].search(
                 [('name', '=', element['origin'])])
-            element['scheduled_date_stock'] = sale.date_delivery_view
+            # When a backorder is created, an extra day is added to the scheduled delivery date.
+            if (self and 'backorder_id' in element):
+                element['scheduled_date_stock'] = sale.date_delivery_view + \
+                    timedelta(days=1)
+            # When a return is created, an extra day is added to the scheduled delivery date.
+            elif (self and 'picking_type_id' in element and element['picking_type_id'] == INCOMING_PICKING):
+                element['scheduled_date_stock'] = element['scheduled_date_stock'] + \
+                    timedelta(days=1)
+            else:
+                element['scheduled_date_stock'] = sale.date_delivery_view
             element['am_pm'] = sale.am_pm
         res = super(StockPickingInherit, self).create(vals_list)
         return res

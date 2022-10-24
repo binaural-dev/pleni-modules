@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Pleni - Custom Fields",
-    'version': '0.2',
+    'version': '0.3',
     'category': 'Uncategorized',
     'license': 'GPL-3',
     'author': "Manuel Escalante",

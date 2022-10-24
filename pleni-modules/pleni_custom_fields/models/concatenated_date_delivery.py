@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 from datetime import timedelta
+from re import search
 
 
 class SaleOrderInherit(models.Model):
@@ -60,17 +61,24 @@ class StockPickingInherit(models.Model):
         for element in vals_list:
             sale = self.env['sale.order'].search(
                 [('name', '=', element['origin'])])
+
             # When a backorder is created, an extra day is added to the scheduled delivery date.
             if (self and 'backorder_id' in element):
                 element['scheduled_date_stock'] = sale.date_delivery_view + \
                     timedelta(days=1)
+                element['am_pm'] = sale.am_pm
             # When a return is created, an extra day is added to the scheduled delivery date.
             elif (self and 'picking_type_id' in element and element['picking_type_id'] == INCOMING_PICKING):
-                element['scheduled_date_stock'] = element['scheduled_date_stock'] + \
+                element['scheduled_date_stock'] = element['scheduled_date_stock']
+                element['am_pm'] = element['am_pm']
+            # When a re-return is created, an extra day is added to scheduled delivert date based into date field.
+            elif (self and ('picking_type_id' in element and element['picking_type_id'] == OUTCOMING_PICKING) and search('IN', element['origin'])):
+                element['scheduled_date_stock'] = element['date'] + \
                     timedelta(days=1)
+                element['am_pm'] = element['am_pm']
             else:
                 element['scheduled_date_stock'] = sale.date_delivery_view
-            element['am_pm'] = sale.am_pm
+                element['am_pm'] = sale.am_pm
         res = super(StockPickingInherit, self).create(vals_list)
         return res
 
@@ -99,16 +107,9 @@ class SaleReportInherit(models.Model):
     _inherit = 'sale.report'
 
     scheduled_date_report = fields.Date(
-        string='Fecha Programada de Entrega')
-    am_pm = fields.Selection(
-        [('am', 'AM'), ('pm', 'PM')], string="Bloque de Hora de Entrega")
+        string='Fecha Programada de Entrega', readonly=True)
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        for element in vals_list:
-            sale = self.env['sale.order'].search(
-                [('id', '=', element['order_id'])])
-            element['scheduled_date_report'] = sale.date_delivery_view
-            element['am_pm'] = sale.am_pm
-        res = super(SaleReportInherit, self).create(vals_list)
-        return res
+    def _query(self, with_clause='', fields={}, groupby='', from_clause=''):
+        fields['scheduled_date_report'] = ", s.date_delivery_view as scheduled_date_report"
+        groupby += ', s.date_delivery_view'
+        return super(SaleReportInherit, self)._query(with_clause, fields, groupby, from_clause)

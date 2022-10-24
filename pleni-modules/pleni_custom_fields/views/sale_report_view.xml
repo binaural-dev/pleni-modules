@@ -6,9 +6,7 @@
     <field name="inherit_id" ref="sale.view_order_product_search" />
     <field name="arch" type="xml">
       <data>
-        <xpath expr="//filter[@name='filter_date']" position="replace">
-          <filter name="Scheduled Date Report" string="Fecha Programada de Entrega" date="scheduled_date_report" />
-        </xpath>
+        <xpath expr="//filter[@name='filter_date']" position="replace" />
       </data>
     </field>
   </record>

@@ -70,7 +70,7 @@ class StockPickingInherit(models.Model):
                     timedelta(days=1)
             else:
                 element['scheduled_date_stock'] = sale.date_delivery_view
-            element['am_pm'] = sale.am_pm or element['am_pm']
+            element['am_pm'] = sale.am_pm
         res = super(StockPickingInherit, self).create(vals_list)
         return res
 

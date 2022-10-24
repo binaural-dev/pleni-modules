@@ -7,7 +7,7 @@
       <field name="arch" type="xml">
         <xpath expr="//field[@name='function']" position="before">
           <field name="hunter_id" force_save="1" options="{'no_create': True}" />
-          <field name="salesman_id" options="{'no_create': True}" />
+          <field name="salesman_id" options="{'no_create': True}" attrs="{'required': True}" />
         </xpath>
       </field>
     </record>

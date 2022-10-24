@@ -5,7 +5,7 @@ class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
 
     salesman_id = fields.Many2one(
-        'res.salesman', string='Vendedor', required=True)
+        'res.salesman', string='Vendedor')
 
     @api.onchange('partner_id')
     def _set_salesman(self):

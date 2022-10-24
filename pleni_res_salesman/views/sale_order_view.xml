@@ -8,7 +8,7 @@
         <xpath expr="//field[@name='date_order']" position="after">
           <label for='salesman_id' string='Vendedor' />
           <div class="o_row">
-            <field name="salesman_id" />
+            <field name="salesman_id" attrs="{'required': True}" />
             <span class="text-muted" attrs="{'invisible': [('salesman_id', '!=', False)]}">
             Sin vendedor asignado
           </span>

@@ -6,7 +6,7 @@ class ResPartnerInherit(models.Model):
 
     hunter_id = fields.Many2one('res.salesman', string='Hunter',
                                 domain="[('saleman_role', '=', 'hunter'), ('active', '=', True)]")
-    salesman_id = fields.Many2one('res.salesman', string='Farmer', required=True,
+    salesman_id = fields.Many2one('res.salesman', string='Farmer',
                                   domain="[('saleman_role', '=', 'farmer'), ('active', '=', True)]")
 
     @api.onchange('salesman_id')

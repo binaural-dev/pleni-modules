@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Pleni Custom Fields",
+    'name': "Pleni - Custom Fields",
     'version': '0.1',
     'category': 'Uncategorized',
     'license': 'GPL-3',

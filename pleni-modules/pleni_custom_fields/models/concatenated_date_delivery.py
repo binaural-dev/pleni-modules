@@ -24,13 +24,17 @@ class SaleOrderInherit(models.Model):
         date_delivery_view = vals['date_delivery_view'] if 'date_delivery_view' in vals else self.date_delivery_view
         am_pm = vals['am_pm'] if 'am_pm' in vals else self.am_pm
         vals['commitment_date'] = date_delivery_view
-        res = super(SaleOrderInherit, self).write(vals)
-        for picking in self.picking_ids:
-            picking.scheduled_date_stock = date_delivery_view
-            picking.am_pm = am_pm
+
+        if (len(self.picking_ids) < 1):
+            for picking in self.picking_ids:
+                picking.scheduled_date_stock = date_delivery_view
+                picking.am_pm = am_pm
+
         for invoice in self.invoice_ids:
             invoice.scheduled_date_account = date_delivery_view
             invoice.am_pm = am_pm
+
+        res = super(SaleOrderInherit, self).write(vals)
         return res
 
 
@@ -40,17 +44,6 @@ class StockPickingInherit(models.Model):
     scheduled_date_stock = fields.Date(string='Fecha Programada de Entrega')
     am_pm = fields.Selection(
         [('am', 'AM'), ('pm', 'PM')], string="Bloque de Hora de Entrega")
-
-    # def _compute_scheduled_date(self):
-    #     res = super(StockPickingInherit, self)._compute_scheduled_date()
-    #     for record in self:
-    #         if record.fecha_concatenada_stock:
-    #             day_hour = record.fecha_concatenada_stock.split(' ')[-1]
-    #             if day_hour == 'am':
-    #                 record.scheduled_date += timedelta(hours=12)
-    #             elif day_hour == 'pm':
-    #                 record.scheduled_date += timedelta(hours=17)
-    #     return res
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -79,6 +72,7 @@ class StockPickingInherit(models.Model):
             else:
                 element['scheduled_date_stock'] = sale.date_delivery_view
                 element['am_pm'] = sale.am_pm
+
         res = super(StockPickingInherit, self).create(vals_list)
         return res
 

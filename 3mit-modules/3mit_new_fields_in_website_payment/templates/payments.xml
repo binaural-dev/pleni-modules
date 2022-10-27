@@ -48,8 +48,8 @@
                         <div class="col-lg-4">
                             <div><b> Bloque horario de preferencia:</b></div>
                             <select id="delivery_hour" name="delivery_hour" class="form-control s_website_form_input">
-                                <option value="am" selected="True">AM</option>
-                                <option value="pm">PM</option>
+                                <option id="select-am" value="am" selected="True">AM</option>
+                                <option id="select-pm" value="pm">PM</option>
                             </select>
                         </div>
                     </div>
@@ -68,6 +68,11 @@
                 let todayMinutes = todayTimeZone.getMinutes();
                 let tomorrow;
                 let tomorrow_date;
+                if (todayHour > 12) {
+                    document.getElementById("select-am").setAttribute('selected', false);
+                    document.getElementById("select-am").setAttribute('disabled', true);
+                    document.getElementById("select-pm").setAttribute('selected', true);
+                }
                 if (todayHour > 16 ) {
                     if (todayMinutes > 0) {
                         tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 2);

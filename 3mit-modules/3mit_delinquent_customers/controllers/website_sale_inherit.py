@@ -8,6 +8,21 @@ from odoo.addons.website_sale.controllers.main import WebsiteSale
 
 
 class WebsiteSaleInherit(WebsiteSale):
+	@http.route(['/my/orders/fault/<int:order_id>'], type='http', auth="public", website=True, csrf=False)
+	def faults(self, order_id, access_token=None, **kw):
+
+		not_delivered = []
+		pickings = request.env['sale.order.line'].search([('order_id', '=', order_id)])
+		for p in pickings:
+			if (p.invoice_status == 'no' and p.state == 'sale' and not p.is_delivery):
+				not_delivered.append(p)
+		
+		values = {
+            'pickings': not_delivered
+        }
+
+		return request.render("3mit_website_order_new_style.faults_new_style", values)
+
 	@http.route(['/shop/checkout'], type='http', auth="user", website=True, sitemap=False)
 	def checkout(self, **post):
 		order = request.website.sale_get_order()

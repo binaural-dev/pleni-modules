@@ -20,4 +20,17 @@ class SaleOrderInherit(models.Model):
             if delivery_status in lines_status:
                 return delivery_status
         return ''
+
+    def _get_order_fails(self):
+        to_invoice = False
+        not_delivered = []
+        pickings = self.env['sale.order.line'].search([('order_id', '=', self.id)])
+
+        for p in pickings:
+            if p.invoice_status == 'to invoice' and p.state == 'sale':
+                to_invoice = True
+            if p.invoice_status == 'no' and p.state == 'sale':
+                not_delivered.append(p)
+     
+        return True if to_invoice and not_delivered else False
         

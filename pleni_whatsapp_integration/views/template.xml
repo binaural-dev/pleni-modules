@@ -6,22 +6,38 @@
         <field name="model_id" ref="sale.model_sale_order" />
         <field name="body_html">
             <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
-         <div>
+        <div>
             Hola *${object.partner_id.name or ''}*,
-         </div>
-         % if object.state == 'draft' or object.state == 'sent':
-            Su pedido *${object.name}* con el monto *${format_amount(object.amount_total, object.currency_id)}* ha sido recibido.
-            <div>
-                La fecha y hora de entrega es "${object.schedule_date_order}"
-            </div>
-         % else:
-            <div>
+        </div>
+        <div>
+            % set guard = namespace(iteration=False)
+
+            % for line in object.order_line:
+                % if line.state == 'sale' and line.invoice_status == 'no':
+                    % set guard.iteration = True
+                % endif
+            % endfor
+
+            % if object.state == 'draft' or object.state == 'sent':
+                Su pedido *${object.name}* con el monto *${format_amount(object.amount_total, object.currency_id)}* ha sido recibido.
+            % elif guard.iteration:
+                Lamentamos informarle que los siguientes productos no los va a poder recibir en el bloque en el que usted pidió:
+                % for line in object.order_line:
+                    % if line.state == 'sale' and line.invoice_status == 'no':
+                        <ul>
+                            <li>
+                                ${line.name} ${(line.product_uom_qty) | int} ${(line.product_uom.name)}
+                            </li>
+                        </ul>
+                    % endif
+                % endfor
+            % else:
                 Su pedido *${object.name}* con el monto *${format_amount(object.amount_total, object.currency_id)}* ha sido confirmado.
-            </div>
-            <div>
-                La fecha y hora de entrega es "${object.schedule_date_order}"
-            </div>
-         % endif
+            % endif
+        </div>
+        <div>
+            La fecha y hora de entrega es "${object.date_delivery_view} en el bloque: ${am_pm}"
+        </div>
         <div>
             Si tiene alguna pregunta, no dude en escribirnos, con gusto le atenderemos.
         </div>
@@ -74,8 +90,7 @@
                     Saludos *${object.partner_id.name}*
                 </div>
                 <div>
-                    Aquí está su Nota de Entrega *${object.name}* con el monto *${format_amount(object.amount_total, object.currency_id)}*
-                    de ${object.company_id.name}.
+                    Aquí está su Nota de Entrega *${object.name}* con el monto *${format_amount(object.amount_total, object.currency_id)}*.
                 </div>
                 <div>
                     % if object.payment_state == 'paid':

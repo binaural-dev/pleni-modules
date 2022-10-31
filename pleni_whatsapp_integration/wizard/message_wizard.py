@@ -79,8 +79,7 @@ class SendMessage(models.TransientModel):
             related_record = self.env[self._context.get('active_model')].browse(
                 self.env.context.get('active_id'))
             related_record.message_post(
-                body="El status de {} ha sido enviado al cliente por Whatsapp al número: {}".format(
-                    related_record.state, self.mobile_number)
+                body=f'El status de {related_record.state} ha sido enviado al cliente por Whatsapp al número: {self.mobile_number}'
             )
             send_msg = {
                 'type': 'ir.actions.act_url',

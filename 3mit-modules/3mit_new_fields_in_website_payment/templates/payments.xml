@@ -110,7 +110,7 @@
 
                     let today = new Date().toLocaleString("en-US", {timeZone: "America/Caracas"});
                     let todayTimeZone = new Date(today);
-                    let after_tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 2);
+                    let after_tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 1);
                     let after_tomorrow_date = new Date(after_tomorrow).toLocaleDateString("en-US", {timeZone: "America/Caracas"}).split("/")
                     let dayInt = parseInt(after_tomorrow_date[1])
                     if (10 > dayInt) {

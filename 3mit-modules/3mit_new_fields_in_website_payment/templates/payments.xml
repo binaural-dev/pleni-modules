@@ -68,15 +68,14 @@
                 let todayMinutes = todayTimeZone.getMinutes();
                 let tomorrow;
                 let tomorrow_date;
-                if (todayHour > 12) {
-                    document.getElementById("select-am").setAttribute('selected', false);
-                    document.getElementById("select-am").setAttribute('disabled', true);
-                    document.getElementById("select-pm").setAttribute('selected', true);
-                }
                 if (todayHour > 16 ) {
                     if (todayMinutes > 0) {
                         tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 2);
                         tomorrow_date = new Date(tomorrow).toLocaleDateString("en-US", {timeZone: "America/Caracas"}).split("/")
+                        let dayInt = parseInt(tomorrow_date[1])
+                        if (10 > dayInt) {
+                            tomorrow_date[1] = "0" + dayInt
+                        }
                         tomorrow_date = tomorrow_date[2]+"-"+tomorrow_date[0]+"-"+ tomorrow_date[1]
                         let dateName = new Date(tomorrow);
                         let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -85,10 +84,19 @@
                 } else {
                     tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 1);
                     tomorrow_date = new Date(tomorrow).toLocaleDateString("en-US", {timeZone: "America/Caracas"}).split("/")
+                    let dayInt = parseInt(tomorrow_date[1])
+                    if (10 > dayInt) {
+                        tomorrow_date[1] = "0" + dayInt
+                    }
                     tomorrow_date = tomorrow_date[2]+"-"+tomorrow_date[0]+"-"+ tomorrow_date[1]
                     let dateName = new Date(tomorrow);
                     let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                     document.getElementById("date-name").innerHTML = dateName.toLocaleDateString('es-MX', options)
+                    if (todayHour > 12) {
+                        document.getElementById("select-am").setAttribute('selected', false);
+                        document.getElementById("select-am").setAttribute('disabled', true);
+                        document.getElementById("select-pm").setAttribute('selected', 'selected');
+                    }
                 }
 
                 document.getElementsByName("delivery_date")[0].setAttribute('min', tomorrow_date);
@@ -99,6 +107,23 @@
                     let date = new Date(dateFormat);
                     let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                     document.getElementById("date-name").innerHTML = date.toLocaleDateString('es-ES', options)
+
+                    let today = new Date().toLocaleString("en-US", {timeZone: "America/Caracas"});
+                    let todayTimeZone = new Date(today);
+                    let after_tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 2);
+                    let after_tomorrow_date = new Date(after_tomorrow).toLocaleDateString("en-US", {timeZone: "America/Caracas"}).split("/")
+                    let dayInt = parseInt(after_tomorrow_date[1])
+                    if (10 > dayInt) {
+                        after_tomorrow_date[1] = "0" + dayInt
+                    }
+                    after_tomorrow_date = after_tomorrow_date[2]+"-"+after_tomorrow_date[0]+"-"+ after_tomorrow_date[1]
+                    let after_date = new Date(after_tomorrow);
+
+                    if (date > after_date) {
+                        document.getElementById("select-am").setAttribute('selected', '');
+                        document.getElementById("select-am").removeAttribute('disabled');
+                        document.getElementById("select-pm").removeAttribute('selected');
+                    }
                 });
             </script>
         </xpath>

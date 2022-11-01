@@ -9,6 +9,11 @@
                     <t t-foreach="pickings" t-as="picking">
                         <li>
                             <span t-field="picking.name"></span>
+                            <span class="pl-4">
+                                <b>Cantidad faltante:
+                                    <t t-esc="picking.product_uom_qty - picking.qty_to_invoice" />
+                                </b>
+                            </span>
                         </li>
                     </t>
                 </ul>
@@ -251,7 +256,7 @@
                 <div>
                     <a t-att-href="order_faults_url">
                         <i class="fa fa-exclamation-triangle"></i>
-                        <span>Revisar fallas presentes</span>
+                        <span>Productos no disponibles en esta entrega</span>
                     </a>
                 </div>
             </div>

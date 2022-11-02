@@ -13,7 +13,7 @@
             % set guard = namespace(iteration=False)
 
             % for line in object.order_line:
-                % if line.state == 'sale' and line.invoice_status == 'no':
+                % if line.state == 'sale' and line.invoice_status == 'no' and line.qty_to_invoice < line.product_uom_qty:
                     % set guard.iteration = True
                 % endif
             % endfor
@@ -23,14 +23,16 @@
             % elif guard.iteration:
                 Lamentamos informarle que los siguientes productos no los va a poder recibir en el bloque en el que usted pidió:
                 % for line in object.order_line:
-                    % if line.state == 'sale' and line.invoice_status == 'no':
+                    % if line.state == 'sale' and line.invoice_status == 'no' and line.qty_to_invoice < line.product_uom_qty:
                         <ul>
                             <li>
-                                ${line.name} ${(line.product_uom_qty) | int} ${(line.product_uom.name)}
+                                ${line.name} ${(line.product_uom_qty - line.qty_to_invoice)} ${(line.product_uom.name)}
                             </li>
                         </ul>
                     % endif
                 % endfor
+
+                Puede consultar más información sobre su pedido en el siguiente link: https://www.pleni.app/my/orders/${object.id}
             % else:
                 Su pedido *${object.name}* con el monto *${format_amount(object.amount_total, object.currency_id)}* ha sido confirmado.
             % endif

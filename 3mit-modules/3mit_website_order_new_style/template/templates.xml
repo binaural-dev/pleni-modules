@@ -10,9 +10,10 @@
                         <li>
                             <span t-field="picking.name"></span>
                             <span class="pl-4">
-                                <b>Cantidad faltante:
-                                    <t t-esc="picking.product_uom_qty - picking.qty_to_invoice" />
-                                </b>
+                                <t t-esc="picking.product_uom_qty - picking.qty_to_invoice" />
+                            </span>
+                            <span class="pl-4">
+                                <t t-esc="picking.product_uom.name" />
                             </span>
                         </li>
                     </t>

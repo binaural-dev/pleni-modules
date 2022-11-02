@@ -27,7 +27,7 @@ class SaleOrderInherit(models.Model):
         pickings = self.env['sale.order.line'].search([('order_id', '=', self.id)])
 
         for p in pickings:
-            if p.invoice_status == 'to invoice' and p.state == 'sale':
+            if p.invoice_status == 'to invoice' or  p.invoice_status == 'invoiced' and p.state == 'sale':
                 to_invoice = True
             if p.product_uom_qty > p.qty_to_invoice:
                 not_delivered.append(p)

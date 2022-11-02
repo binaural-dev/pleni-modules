@@ -5,23 +5,47 @@
             <div class="container oe_website_sale py-2">
                 <br></br>
                 <h2><span>Los siguientes productos presentan fallas:</span></h2>
-                <ul>
+                <table>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Presentación de venta</th>
+                    </tr>
                     <t t-foreach="pickings" t-as="picking">
-                        <li>
-                            <span t-field="picking.name"></span>
-                            <span class="pl-4">
+                        <tr>
+                            <td>
+                               <t t-esc="picking.name" />
+                            </td>
+                            <td>
                                 <t t-esc="picking.product_uom_qty - picking.qty_to_invoice" />
-                            </span>
-                            <span class="pl-4">
+                            </td>
+                            <td class="pl-4">
                                 <t t-esc="picking.product_uom.name" />
-                            </span>
-                        </li>
+                            </td>
+                        </tr>
                     </t>
-                </ul>
+                </table>
                 <br></br>
                 <br></br>
             </div>
         </t>
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+        </style>
     </template>
     <template id="portal_record_sidebar_new_style" inherit_id="portal.portal_record_sidebar">
         <xpath expr="//div[1]" position="replace">

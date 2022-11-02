@@ -32,7 +32,7 @@
                     % endif
                 % endfor
 
-                Puede consultar más información sobre su pedido en el siguiente link: https://www.pleni.app/my/orders/${object.id}
+                Puede consultar más información sobre su pedido en el siguiente link: https://pleni.app/my/orders/${object.id}
             % else:
                 Su pedido *${object.name}* con el monto *${format_amount(object.amount_total, object.currency_id)}* ha sido confirmado.
             % endif

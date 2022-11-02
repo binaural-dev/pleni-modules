@@ -25,7 +25,8 @@ class SaleOrderInherit(models.Model):
         }
         for line in self.order_line:
             price_list_items = self.env['product.pricelist.item'].search([('pricelist_id','=',pricelist.id),'|',('product_tmpl_id','=',line.product_id.product_tmpl_id.id),('product_id','=',line.product_id.id)], order= 'min_quantity asc')
-            real_qty = line.product_uom_qty / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else line.product_uom_qty * line.product_uom.factor
+            #real_qty = line.product_uom_qty / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else line.product_uom_qty * line.product_uom.factor
+            real_qty = line.product_uom_qty / line.product_uom.factor
             real_price = line.price_unit
             product_id = line.product_id.id
             if real_price < 0: price_dict['discount'] += real_price * -1

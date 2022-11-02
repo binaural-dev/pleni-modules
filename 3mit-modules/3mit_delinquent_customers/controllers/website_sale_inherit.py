@@ -14,7 +14,7 @@ class WebsiteSaleInherit(WebsiteSale):
 		not_delivered = []
 		pickings = request.env['sale.order.line'].search([('order_id', '=', order_id)])
 		for p in pickings:
-			if (p.invoice_status == 'no' and p.state == 'sale' and not p.is_delivery):
+			if p.product_uom_qty > p.qty_to_invoice:
 				not_delivered.append(p)
 		
 		values = {

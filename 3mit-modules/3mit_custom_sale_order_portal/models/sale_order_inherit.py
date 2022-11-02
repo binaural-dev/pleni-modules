@@ -29,7 +29,7 @@ class SaleOrderInherit(models.Model):
         for p in pickings:
             if p.invoice_status == 'to invoice' and p.state == 'sale':
                 to_invoice = True
-            if p.invoice_status == 'no' and p.state == 'sale':
+            if p.product_uom_qty > p.qty_to_invoice:
                 not_delivered.append(p)
      
         return True if to_invoice and not_delivered else False

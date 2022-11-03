@@ -16,10 +16,10 @@
                             <td>
                                <t t-esc="picking.name" />
                             </td>
-                            <td>
+                            <td class="difference_to_delivery">
                                 <t t-esc="picking.product_uom_qty - picking.qty_delivered" />
                             </td>
-                            <td class="pl-4">
+                            <td>
                                 <t t-esc="picking.product_uom.name" />
                             </td>
                         </tr>
@@ -58,6 +58,13 @@
                 opacity: 0.8
             }
         </style>
+        <script type="text/javascript">
+            let collection = document.querySelectorAll('.difference_to_delivery')
+            collection.forEach( element => {
+                element.innerHTML = parseFloat(element.innerHTML).toFixed(2)
+            })
+            
+        </script>
     </template>
     <template id="portal_record_sidebar_new_style" inherit_id="portal.portal_record_sidebar">
         <xpath expr="//div[1]" position="replace">

@@ -16,10 +16,10 @@
                             <td>
                                <t t-esc="picking.name" />
                             </td>
-                            <td>
-                                <t t-esc="picking.product_uom_qty - picking.qty_to_invoice" />
+                            <td class="difference_to_delivery">
+                                <t t-esc="picking.product_uom_qty - picking.qty_delivered" />
                             </td>
-                            <td class="pl-4">
+                            <td>
                                 <t t-esc="picking.product_uom.name" />
                             </td>
                         </tr>
@@ -30,22 +30,41 @@
             </div>
         </t>
         <style>
-            table {
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
+            @media(max-width: 991px){
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
             }
 
+            @media(min-width: 992px){
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 60%;
+                }
+            }
+       
             td, th {
                 border: 1px solid #dddddd;
                 text-align: left;
                 padding: 8px;
+                color: #000;
             }
 
             tr:nth-child(even) {
-                background-color: #dddddd;
+                background-color: #E4AE25;
+                opacity: 0.8
             }
         </style>
+        <script type="text/javascript">
+            let collection = document.querySelectorAll('.difference_to_delivery')
+            collection.forEach( element => {
+                element.innerHTML = parseFloat(element.innerHTML).toFixed(2)
+            })
+            
+        </script>
     </template>
     <template id="portal_record_sidebar_new_style" inherit_id="portal.portal_record_sidebar">
         <xpath expr="//div[1]" position="replace">

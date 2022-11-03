@@ -17,7 +17,7 @@
                                <t t-esc="picking.name" />
                             </td>
                             <td>
-                                <t t-esc="picking.product_uom_qty - picking.qty_to_invoice" />
+                                <t t-esc="picking.amount_total_usd" />
                             </td>
                             <td class="pl-4">
                                 <t t-esc="picking.product_uom.name" />
@@ -30,20 +30,32 @@
             </div>
         </t>
         <style>
-            table {
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
+            @media(max-width: 991px){
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
             }
 
+            @media(min-width: 992px){
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 60%;
+                }
+            }
+       
             td, th {
                 border: 1px solid #dddddd;
                 text-align: left;
                 padding: 8px;
+                color: #000;
             }
 
             tr:nth-child(even) {
-                background-color: #dddddd;
+                background-color: #E4AE25;
+                opacity: 0.8
             }
         </style>
     </template>

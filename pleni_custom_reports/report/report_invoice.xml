@@ -21,15 +21,7 @@
             </t>
             <div style="white-space: nowrap; margin-right: 0px;">
               <span t-field="partner.name" />
-              <t t-if="partner.rif">
-                <span t-field="partner.rif" style="white-space: nowrap; margin-left: 5px; padding: 0;" />
-              </t>
-              <t t-else="">
-                <span style="white-space: nowrap;">
-                  <span class="m-0" t-field="partner.document_type">-</span>
-                  <span t-field="partner.identification_document" />
-                </span>
-              </t>
+              <span t-field="partner.rif" style="white-space: nowrap; margin-left: 5px; padding: 0;" />
             </div>
             <div style="margin: 0; padding: 0; white-space: nowrap;">
               <span t-if="partner.phone">Teléfono: </span>

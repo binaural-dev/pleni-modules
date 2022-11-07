@@ -10,16 +10,20 @@ class StockPicking(models.Model):
         ATC_CHANNEL = 50
 
         for element in vals:
-            if self and 'origin' in element:
+            if self:
                 not_delivered = []
                 sale = self.env['sale.order'].search(
-                    [('name', '=', element['origin'])])
+                    [('name', '=', self.origin)])
                 pickings = self.env['sale.order.line'].search(
                     [('order_id', '=', sale.id)])
 
                 for p in pickings:
-                    if p.invoice_status == 'no' and p.state == 'sale' and p.qty_to_invoice != p.product_uom_qty:
+                    if p.product_uom_qty > p.qty_to_invoice and p.state == 'sale' and p.invoice_status == 'to invoice':
                         not_delivered.append(p)
+                    if p.product_uom_qty > p.qty_delivered and p.state == 'sale' and p.invoice_status == 'no':
+                        not_delivered.append(p)
+                    # if p.invoice_status == 'no' and p.state == 'sale' and p.qty_to_invoice != p.product_uom_qty:
+                        # not_delivered.append(p)
 
                 if not_delivered:
                     ATC_CHANNEL_MSG = {

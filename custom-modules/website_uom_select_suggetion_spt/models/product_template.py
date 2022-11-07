@@ -23,14 +23,14 @@ class ProductTemplate(models.Model):
         product_id = self.env['product.product'].search([('product_tmpl_id','=',self.id)])
         price_list_items = self.env['product.pricelist.item'].search([('pricelist_id','=',pricelist.id),'|',('product_tmpl_id','=',self.id),('product_id','=',product_id.id)], order= 'min_quantity asc')
         real_price = discounted_price = round(self.list_price * self.create_uid.company_id.currency_id.new_rate, 2)
-        real_qty = line.product_uom_qty / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else line.product_uom_qty * line.product_uom.factor
+        real_qty = line.product_uom_qty / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else line.product_uom_qty
         min_price = discounted_price if discounted_price != 0 else (price_list_items[0].fixed_price if len(price_list_items) else 0)
 
         if not price_list_items:
             return {
             'has_discount': False,
-            'discounted_price': min_price / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else min_price * line.product_uom.factor,
-            'real_price': real_price / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else real_price * line.product_uom.factor
+            'discounted_price': min_price / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else min_price,
+            'real_price': real_price / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else real_price
         }
         for item in price_list_items:
             if real_qty >= item.min_quantity:
@@ -38,8 +38,8 @@ class ProductTemplate(models.Model):
 
         return {
             'has_discount': real_price < min_price,
-            'discounted_price': min_price / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else min_price * line.product_uom.factor,
-            'real_price': real_price / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else real_price * line.product_uom.factor
+            'discounted_price': min_price / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else min_price,
+            'real_price': real_price / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else real_price
         }
 
 class ProductProduct(models.Model):

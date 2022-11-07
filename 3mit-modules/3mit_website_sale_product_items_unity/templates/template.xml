@@ -37,19 +37,15 @@
         </xpath>
 
         <xpath expr="//div[hasclass('product_price')]" position="before">
-			<div t-if="combination_info['wholesale_price']" class="product_price" itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
-                <!--<div class="small badge badge-danger">
-                    <span t-if="combination_info['discount_rate']" t-esc="combination_info['discount_rate']"/>
-                    <span itemprop="price" style="display:none;" t-esc="combination_info['discount_rate']"/>
-                    <span> % </span>
-                </div>-->
+
+            <t t-if="not pricelist" t-set="combination_info" t-value="product._get_combination_info(combination, add_qty=add_qty or 1, pricelist=website_sale_order.pricelist_id)"/>
+			      <div t-if="combination_info['wholesale_price']" class="product_price" itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
                 <del t-attf-class="text-danger mr-2 {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
                 <span t-if="combination_info['wholesale_price']" style="font-size: small; color: #E85C2E; font-weight: bold" t-esc="combination_info['wholesale_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
                 <span itemprop="price" style="display:none; font-size: 12px" t-esc="combination_info['wholesale_price']" />
                 <span itemprop="priceCurrency" style="display:none; font-size: 12px" t-esc="website.currency_id.name" />
                 <span  style="font-size: 10px; color: #E85C2E; font-weight: bold"> / </span>
                 <span t-esc="combination_info['uom_id']" style="font-size: 10px; color: #E85C2E; font-weight: bold"></span>
-                <!-- <span style="font-size: 20px"> - Al por mayor </span> -->
             </div>
         </xpath> 
 

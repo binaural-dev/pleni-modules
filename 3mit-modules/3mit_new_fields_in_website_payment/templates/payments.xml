@@ -68,6 +68,11 @@
                 let todayMinutes = todayTimeZone.getMinutes();
                 let tomorrow;
                 let tomorrow_date;
+                if (todayHour > 12) {
+                    document.getElementById("select-am").setAttribute('selected', false);
+                    document.getElementById("select-am").setAttribute('disabled', true);
+                    document.getElementById("select-pm").setAttribute('selected', true);
+                }
                 if (todayHour > 16 ) {
                     if (todayMinutes > 0) {
                         tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 2);

@@ -1,5 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <template id="faults_new_style">
+        <t t-call="website.layout">
+            <div class="container oe_website_sale py-2">
+                <br></br>
+                <h2><span>Los siguientes productos presentan fallas:</span></h2>
+                <table>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Presentación de venta</th>
+                    </tr>
+                    <t t-foreach="pickings" t-as="picking">
+                        <tr>
+                            <td>
+                               <t t-esc="picking.name" />
+                            </td>
+                            <td class="difference_to_delivery">
+                                <t t-esc="picking.product_uom_qty - picking.qty_delivered" />
+                            </td>
+                            <td>
+                                <t t-esc="picking.product_uom.name" />
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+                <br></br>
+                <br></br>
+            </div>
+        </t>
+        <style>
+            @media(max-width: 991px){
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+            }
+
+            @media(min-width: 992px){
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 60%;
+                }
+            }
+       
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+                color: #000;
+            }
+
+            tr:nth-child(even) {
+                background-color: #E4AE25;
+                opacity: 0.8
+            }
+        </style>
+        <script type="text/javascript">
+            let collection = document.querySelectorAll('.difference_to_delivery')
+            collection.forEach( element => {
+                element.innerHTML = parseFloat(element.innerHTML).toFixed(2)
+            })
+            
+        </script>
+    </template>
     <template id="portal_record_sidebar_new_style" inherit_id="portal.portal_record_sidebar">
         <xpath expr="//div[1]" position="replace">
             <div t-attf-class="#{classes} d-none">
@@ -229,6 +295,15 @@
             <i class="fa fa-map-pin"></i>
         </xpath>
         <xpath expr="//section[@id='details']" position="before">
+            <t t-set="order_faults_url" t-value="'/my/orders/fault/%s' % (sale_order.id)"/>
+            <div t-if="sale_order._get_order_fails()" id="order_faults" class="d-flex flex-wrap align-items-center justify-content-between">
+                <div>
+                    <a t-att-href="order_faults_url">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        <span>Productos no disponibles en esta entrega</span>
+                    </a>
+                </div>
+            </div>
             <br></br>
             <strong> Métodos de Pago: <i class="fa fa-credit-card-alt"></i></strong>
             <t t-set="payment_tx_id" t-value="sale_order.get_portal_last_transaction()"/>

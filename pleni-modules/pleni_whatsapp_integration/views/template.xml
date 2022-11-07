@@ -13,7 +13,10 @@
             % set guard = namespace(iteration=False)
 
             % for line in object.order_line:
-                % if line.state == 'sale' and line.invoice_status == 'no' and line.qty_to_invoice < line.product_uom_qty:
+                % if line.state == 'sale' and line.invoice_status == 'to invoice' and line.qty_to_invoice < line.product_uom_qty:
+                    % set guard.iteration = True
+                % endif
+                % if line.state == 'sale' and line.invoice_status == 'no' and line.product_uom_qty > line.qty_delivered:
                     % set guard.iteration = True
                 % endif
             % endfor
@@ -23,13 +26,19 @@
             % elif guard.iteration:
                 Lamentamos informarle que los siguientes productos no los va a poder recibir en el bloque en el que usted pidió:
                 % for line in object.order_line:
-                    % if line.state == 'sale' and line.invoice_status == 'no' and line.qty_to_invoice < line.product_uom_qty:
+                    % if line.state == 'sale' and line.invoice_status == 'to invoice' and line.qty_to_invoice < line.product_uom_qty:
                         <ul>
                             <li>
                                 ${line.name} ${(line.product_uom_qty - line.qty_to_invoice)} ${(line.product_uom.name)}
                             </li>
                         </ul>
-                    % endif
+                    % elif line.state == 'sale' and line.invoice_status == 'no' and line.product_uom_qty > line.qty_delivered:
+                        <ul>
+                                <li>
+                                    ${line.name} ${(line.product_uom_qty - line.qty_delivered)} ${(line.product_uom.name)}
+                                </li>
+                        </ul>
+                    % endif                    
                 % endfor
 
                 Puede consultar más información sobre su pedido en el siguiente link: https://pleni.app/my/orders/${object.id}
@@ -38,7 +47,7 @@
             % endif
         </div>
         <div>
-            La fecha y hora de entrega es "${object.date_delivery_view} en el bloque: ${am_pm}"
+            La fecha y hora de entrega es "${object.date_delivery_view} en el bloque: ${object.am_pm}"
         </div>
         <div>
             Si tiene alguna pregunta, no dude en escribirnos, con gusto le atenderemos.

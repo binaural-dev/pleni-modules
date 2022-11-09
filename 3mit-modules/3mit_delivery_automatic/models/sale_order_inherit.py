@@ -29,7 +29,7 @@ class SaleOrderInherit(models.Model):
     def changing_order_line(self):
         if len(self.order_line) > 0:
             amount_real = sum([line.price_total for line in self.order_line if not line.is_delivery])
-            if amount_real > 30:
+            if amount_real > 50:
                 delivery_line = self.env['sale.order.line'].search([('order_id', '=', self.id), ('is_delivery', '=', True)])
                 if not delivery_line:
                     return

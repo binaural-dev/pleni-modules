@@ -85,6 +85,8 @@ class WSSaleOrder(MainSaleOrder):
             product_context)
         product = product_with_context.browse(int(product_id))
 
+        product_template_object = self.env['product.template'].search([('id', '=',  product.product_tmpl_id.id)])
+        product_template_uoms = product_template_object.product_uom_ids
         try:
             if add_qty:
                 add_qty = int(add_qty)
@@ -189,9 +191,6 @@ class WSSaleOrder(MainSaleOrder):
             # create the line
             values.update({
                 'name': product.name
-
-
-
             })
 
             if 'discount' in values:
@@ -251,6 +250,16 @@ class WSSaleOrder(MainSaleOrder):
                 order_line.tax_id,
                 self.company_id
             )
+
+            product_template_uoms_check = False
+            for uom in product_template_uoms:
+                if order_line.product_uom.id == uom.id:
+                    product_template_uoms_check = True
+            
+            if not product_template_uoms_check:
+                order_line.update({
+                    "product_uom": product_template_uoms[0]
+                })
 
             if 'uom_id' in kwargs.keys():
                 values.update({

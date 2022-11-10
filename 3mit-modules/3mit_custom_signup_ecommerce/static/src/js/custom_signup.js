@@ -183,12 +183,13 @@ odoo.define('3mit_custom_signup_ecommerce.custom_signup', function (require) {
 
         _onChangeEmail: async function() {
             const email = document.getElementById('login');
+            document.getElementById('login').value = email.value.toLowerCase();
             const textValidation = document.getElementById('validationEmail');
             if (textValidation) {
-                if (email.value.match(patternEmail)) {
+                if (email.value.toLowerCase().match(patternEmail)) {
                     email.classList.remove("is-invalid")
                     email.classList.add("is-valid")
-                    let emailSaved = await ajax.rpc('/getEmailSaved', {'email': email.value});
+                    let emailSaved = await ajax.rpc('/getEmailSaved', {'email': email.value.toLowerCase()});
                     if (emailSaved) {
                         email.classList.remove("is-valid")
                         email.classList.add("is-invalid")

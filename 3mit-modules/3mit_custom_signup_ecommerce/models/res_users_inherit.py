@@ -77,7 +77,7 @@ class ResUsersInherit(models.Model):
                 'name': values.get('name'),
                 'password': values.get('password'),
                 'mobile': values.get('mobile'),
-                'country_id': int(values.get('country_id')),
+                'country_id': 238,
             }
 
         if token:

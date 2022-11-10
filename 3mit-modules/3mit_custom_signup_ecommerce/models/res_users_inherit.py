@@ -132,7 +132,7 @@ class ResUsersInherit(models.Model):
                             'name': values.get('name'),
                             'password': values.get('password'),
                             'mobile': values.get('mobile'),
-                            'country_id': values.get('country_id'),
+                            'country_id': 238,
                         }
                         partner_user = self._signup_create_user(original_values)
                     else:
@@ -180,7 +180,7 @@ class ResUsersInherit(models.Model):
                     'lang': 'es_VE',
                     'people_type_company': people_type_company,
                     'people_type_individual': people_type_individual,
-                    'country_id': int(values.get('country_id')),
+                    'country_id': 238,
                     'nationality': nationality,
                     'document_type': nationality,
                     'identification_id': identification_id,

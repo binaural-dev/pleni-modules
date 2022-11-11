@@ -6,11 +6,6 @@
                     t-att-data-product-product-id="product_variant_id" data-action="o_wishlist"/>
         </xpath>
     </template>
-    <template id="website_sale_inherit" inherit_id="website_sale.products_item">
-        <xpath expr="//h6[@class='o_wsale_products_item_title']" position="attributes">
-            <attribute name="style">font-size: small;</attribute>
-        </xpath>
-    </template>
     <template id="website_sale_products_description_inherit" inherit_id="website_sale.products_description">
         <xpath expr="//div[@class='oe_subdescription']" position="replace">
             <div class="oe_subdescription" contenteditable="false" style="width: 0px; height: 0px; margin: 0px; padding: 0px;">

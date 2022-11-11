@@ -10,10 +10,6 @@
                 .o_wsale_products_grid_table_wrapper .oe_product .o_wsale_products_item_title a {
                     width: 100%
                 }
-
-                <!-- .o_wsale_product_information {
-                    height: 9.5vh;
-                } -->
             </style>
         </xpath>
     </template>
@@ -27,12 +23,12 @@
             <script type="text/javascript">
                 document.querySelectorAll('.o_quick_view_title').forEach(function(element) {
                     element.removeAttribute("href")
-                    <!-- element.text = element.text.substring(0,30);
+                    element.text = element.text.substring(0,30);
                     if (element.text.length === 30) {
                         if (element.text.slice(-1) !== ' ') {
                             element.text = element.text + '...'
                         }
-                    }   -->
+                    }  
                 });
             </script>
         </xpath>

@@ -232,7 +232,7 @@ tr.load_pre_product {
 				    right: auto;
 				    margin: 8px;
 				    border-radius: 0;
-			        border: 1px solid #ebebeb;
+			        border: none;
 				    @include transition(ease all 0.35s);
 				    overflow: inherit;
 				    @include down-md {
@@ -248,10 +248,16 @@ tr.load_pre_product {
 		}
 		.o_wsale_product_information {
 			background: none !important;
+			@include down-sm {
+				height: 12.5vh;
+			}
+			@include up-md {
+				height: 9.5vh;
+			}
 		}
 		.o_wsale_product_information_text {
 			text-align: left;
-			border-top: 1px solid #ebebeb;
+			border-top: none;
 		}
 		.as-pro-tags {
 			display: flex;
@@ -296,8 +302,13 @@ tr.load_pre_product {
 		}
 		.o_wsale_products_item_title {
 			margin: 0 0 4px;
-		    font-weight: 500;
-		    font-size: 15px;
+		    font-weight: normal;
+			@include down-sm {
+				font-size: 0.8em;
+			}
+			@include up-md {
+				font-size: 0.9em;
+			}
 		    font-family: inherit;
 			a {
 				color: $as-dark;
@@ -307,7 +318,7 @@ tr.load_pre_product {
 			    max-width: 100%;
 			    text-overflow: ellipsis;
 			    overflow: hidden;
-			    white-space: nowrap;
+			    //white-space: nowrap;
 			    &.btn-danger {
 			    	display: block;
 			    	color: $as-white;
@@ -411,7 +422,7 @@ tr.load_pre_product {
 		.product_price {
 			color: $as-body;
 		    font-weight: 500;
-		    font-size: 13px;
+		    font-size: 1em;
 			b {
 				font-weight: 500;
 			}

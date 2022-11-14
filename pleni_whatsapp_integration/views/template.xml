@@ -29,14 +29,14 @@
                     % if line.state == 'sale' and line.invoice_status == 'to invoice' and line.qty_to_invoice < line.product_uom_qty:
                         <ul>
                             <li>
-                                ${line.name} ${(line.product_uom_qty - line.qty_to_invoice)} ${(line.product_uom.name)}
+                                ${line.name} ${"%.2f "|format(line.product_uom_qty - line.qty_to_invoice | float)} ${(line.product_uom.name)}
                             </li>
                         </ul>
                     % elif line.state == 'sale' and line.invoice_status == 'no' and line.product_uom_qty > line.qty_delivered:
                         <ul>
-                                <li>
-                                    ${line.name} ${(line.product_uom_qty - line.qty_delivered)} ${(line.product_uom.name)}
-                                </li>
+                            <li>
+                                ${line.name} ${"%.2f "|format(line.product_uom_qty - line.qty_delivered | float)} ${(line.product_uom.name)}
+                            </li>
                         </ul>
                     % endif                    
                 % endfor

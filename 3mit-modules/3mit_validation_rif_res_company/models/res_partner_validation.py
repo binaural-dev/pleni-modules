@@ -16,7 +16,6 @@ class ResPartnerRif(models.Model):
             if val.get("name") and not val.get("commercial_name"):
                 val["commercial_name"] = val.get("name")
             if val.get('rif'):
-                print("pasandoooooooooooooooooo 1", val)
                 if not self.validate_rif_er(val.get('rif')):
                     raise UserError('El rif tiene el formato incorrecto. Ej: V-012345678, E-012345678, J-012345678 o G-012345678. Por favor verifique el formato y si posee los 9 digitos como se indica en el Ej. e intente de nuevo')
                 if self.validate_rif_duplicate(val.get('rif')):
@@ -32,7 +31,6 @@ class ResPartnerRif(models.Model):
             if s.loc_ven:
                 if values:
                     if values.get("rif"):
-                        print("pasandoooooooooooooooooo 2", values)
                         if not s.validate_rif_er(values.get("rif")):
                             raise UserError(
                                 'El rif tiene el formato incorrecto. Ej: V-012345678, E-012345678, J-012345678 o G-012345678. Por favor verifique el formato y si posee los 9 digitos como se indica en el Ej. e intente de nuevo')

@@ -10,7 +10,7 @@ odoo.define('3mit_custom_signup_ecommerce.custom_signup', function (require) {
     const patternP = new RegExp("^(?!^0+\$)[a-zA-Z0-9]{6,9}");
     const patternName = /^[a-zA-Z\s\.]+$/
     const patternBusinessName = new RegExp("^[ÁÀÂÄÇÉÈÊËÍÌÎÏÓÒÔÖÙÛÜÚÑßĄA-Z'|a-záàâäçéèêëíìîïóòôöùûüúñ'\\-][ÁÀÂÄÇÉÈÊËÍÌÎÏÓÒÔÖÙÛÜÚÑßĄA-Z'\\-a-záàâäçéèêëíìîïóòôöùûüúñ0-9, ]+((\\.|\\s)+[ÁÀÂÄÇÉÈÊËÍÌÎÏÓÒÔÖÙÛÜÚÑßĄA-Z'\\-|a-záàâäçéèêëíìîïóòôöùûüúñ|0-9|\\., ]+)*\$")
-    const patternEmail = /^[0-9a-z]+(?:\.[0-9a-z]+)*@[a-z0-9]{2,}(?:\.[a-z]{2,})+$/;
+    const patternEmail = /^[a-zA-Z0-9]+(?:[_.-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:[_.-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,3}$/;
 
     authSignup.registry.SignUpForm = authSignup.Widget.extend({
         selector: '.oe_website_login_container',

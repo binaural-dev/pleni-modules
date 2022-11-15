@@ -15,12 +15,14 @@ class ResPartnerRif(models.Model):
         for val in values:
             if val.get("name") and not val.get("commercial_name"):
                 val["commercial_name"] = val.get("name")
-            # if val.get('rif'):
-            #     if not self.validate_rif_er(val.get('rif')):
-            #         raise UserError('El rif tiene el formato incorrecto. Ej: V-012345679, E-012345678, J-012345678 o G-012345678. Por favor verifique el formato y si posee los 9 digitos como se indica en el Ej. e intente de nuevo')
-            #     if self.validate_rif_duplicate(val.get('rif')):
-            #         raise UserError('El cliente o proveedor ya se encuentra registrado con el rif: %s y se encuentra activo'
-            #                         % (val.get('rif')))
+            if val.get("rif") and not isinstance(val.get('rif'), bool) and len(val.get('rif')) < 3:
+                val['rif'] = ''
+            if val.get('rif'):
+                if not self.validate_rif_er(val.get('rif')):
+                    raise UserError('El rif tiene el formato incorrecto. Ej: V-012345679, E-012345678, J-012345678 o G-012345678. Por favor verifique el formato y si posee los 9 digitos como se indica en el Ej. e intente de nuevo')
+                if self.validate_rif_duplicate(val.get('rif')):
+                    raise UserError('El cliente o proveedor ya se encuentra registrado con el rif: %s y se encuentra activo'
+                                    % (val.get('rif')))
             if val.get('email'):
                 if not self.validate_email_addrs(val.get('email'), 'email'):
                     raise UserError('El email es incorrecto. Ej: cuenta@dominio.xxx. Por favor intente de nuevo')
@@ -30,6 +32,8 @@ class ResPartnerRif(models.Model):
         for s in self:
             if s.loc_ven:
                 if values:
+                    if values.get("rif") and not isinstance(values.get('rif'), bool) and len(values.get('rif')) < 3:
+                        values['rif'] = ''
                     if values.get("rif"):
                         if not s.validate_rif_er(values.get("rif")):
                             raise UserError(

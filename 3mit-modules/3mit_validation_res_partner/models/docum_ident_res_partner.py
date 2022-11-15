@@ -40,6 +40,9 @@ class ValidationDocument(models.Model):
                 if not s.validate_ci_duplicate(vals.get('identification_id', False)):
                     raise UserError('El cliente o proveedor ya se encuentra registrado con el Documento: %s'
                                     % (vals.get('identification_id', False)))
+
+                if vals.get('identification_id') and vals.get('nationality'):
+                    vals['identification_id'] = vals.get('nationality')+'-'+vals.get('identification_id')
             res = super(ValidationDocument, s).write(vals)
             return res
 

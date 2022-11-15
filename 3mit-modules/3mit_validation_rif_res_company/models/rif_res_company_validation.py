@@ -16,7 +16,7 @@ class CompanyRif(models.Model):
             if res.loc_ven:
                 if res.rif:
                     if not self.validate_rif_er(vals[0].get('rif')):
-                        raise UserError('El rif tiene el formato incorrecto. Ej: V-012345678, E-012345678, J-012345678 o '
+                        raise UserError('El rif tiene el formato incorrecto. Ej: V-012345676, E-012345678, J-012345678 o '
                                         'G-012345678. Por favor intente de nuevo.')
                     if self.validate_rif_duplicate(vals[0].get('rif'), res):
                         raise UserError('El cliente o proveedor ya se encuentra registrado con el rif: %s y se encuentra activo'
@@ -33,7 +33,7 @@ class CompanyRif(models.Model):
                 if vals.get('rif'):
                     res = s.validate_rif_er(vals.get('rif'))
                     if not res:
-                        raise UserError('El rif tiene el formato incorrecto. Ej: V-012345678, E-012345678, J-012345678 o '
+                        raise UserError('El rif tiene el formato incorrecto. Ej: V-012345675, E-012345678, J-012345678 o '
                                         'G-012345678. Por favor intente de nuevo')
                     if s.validate_rif_duplicate(vals.get('rif'), False):
                         raise UserError('El cliente o proveedor ya se encuentra registrado con el rif: %s y se encuentra activo'

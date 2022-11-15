@@ -6,16 +6,6 @@ from odoo.exceptions import UserError
 class ResUsersInherit(models.Model):
     _inherit = 'res.users'
 
-    # @api.model
-    # def _signup_create_user(self, values):
-    #     if 'ecommerce_user' in values:
-    #         missing_values = self.check_missing_values(values.get('company_type'), values)
-    #         if missing_values != '':
-    #             raise UserError(f'Missing some fields for the user creation: {missing_values}.')
-    #         del values['ecommerce_user']
-    #     res = super(ResUsersInherit, self)._signup_create_user(values)
-    #     print(res)
-
     @staticmethod
     def check_missing_values(company_type, values):
         missing = ''
@@ -156,6 +146,7 @@ class ResUsersInherit(models.Model):
                     people_type_individual = values.get('people_type_individual')
                     nationality = values.get('nationality')
                     identification_id = values.get('identification_id')
+                    identification_id_nationality = nationality+'-'+identification_id
                     people_type_company = False
                     rif = False
                     rif_separable = False
@@ -165,6 +156,7 @@ class ResUsersInherit(models.Model):
                     people_type_individual = False
                     nationality = False
                     identification_id = False
+                    identification_id_nationality = False
                     people_type_company = values.get('people_type_company')
                     commercial_name = values.get('commercial_name')
                     rif = values.get('rif')
@@ -183,7 +175,7 @@ class ResUsersInherit(models.Model):
                     'country_id': 238,
                     'nationality': nationality,
                     'document_type': nationality,
-                    'identification_id': identification_id,
+                    'identification_id': identification_id_nationality,
                     'identification_document': identification_id,
                     'rif': rif,
                     'rif_type': rif_type if rif_separable else None,

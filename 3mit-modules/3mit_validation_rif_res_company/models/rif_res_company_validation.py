@@ -47,7 +47,6 @@ class CompanyRif(models.Model):
     @staticmethod
     def validate_rif_er(field_value):
         res = {}
-        print("aaaaaaaaaaaaaaaaaaaa", field_value.upper())
         rif_obj = re.compile(r"^[J]+[-][\d]{9}", re.X)
         if rif_obj.search(field_value.upper()):
             res = {

@@ -281,7 +281,7 @@ class WSSaleOrder(MainSaleOrder):
                     if uom.factor == 1:
                         real_price = item.fixed_price
                         continue
-                    real_price = item.min_quantity * item.fixed_price if item.min_quantity != 0 else item.fixed_price
+                    real_price = item.fixed_price/uom.factor if item.min_quantity != 0 else item.fixed_price
             if uom.factor > 1:
                 min_item = prices_list[0]
                 real_price = min_item.fixed_price / uom.factor

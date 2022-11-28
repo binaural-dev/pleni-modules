@@ -20,7 +20,7 @@
     'version': '1.2',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','contacts','3mit_validation_rif_res_company','3mit_ve_dpt','pleni_custom_fields'],
+    'depends': ['base','contacts','3mit_validation_rif_res_company','pleni_custom_fields'],
 
     # always loaded
     'data': [

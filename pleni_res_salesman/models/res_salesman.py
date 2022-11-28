@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from odoo import models, fields, api
 from datetime import datetime
 
@@ -19,7 +20,7 @@ class Salesman(models.Model):
         SALESMAN_ROLE, string='Rol del vendedor', required=True)
     email = fields.Char(string='Email',)
     state_id = fields.Many2one(
-        'res.country.state', string='Estado', required=True, domain="[('country_id', '=', 238), ('is_active', '=', True)]")  # Domain filter with ID 238 (Venezuela)
+        'res.country.state', string='Estado', required=True, domain="[('country_id', '=', 238)]")  # Domain filter with ID 238 (Venezuela)
     zone = fields.Char(string='Zona')
     admission_date = fields.Date(
         string='Fecha de unión', default=datetime.today(), required=True)

@@ -1,15 +1,12 @@
+# -*- coding: utf-8 -*-
 {
     'name': "Pleni - Resource Salesman",
-    'version': '0.1.5',
+    'version': '0.1.6',
     'category': 'Uncategorized',
     'license': 'GPL-3',
     'author': "Manuel Escalante",
     'website': "https://pleni.app",
-    'depends': [
-        'base',
-        'sale',
-        '3mit_ve_dpt'
-    ],
+    'depends': ['base', 'sale'],
     'data': [
         'security/ir.model.access.csv',
         'security/salesman_security.xml',

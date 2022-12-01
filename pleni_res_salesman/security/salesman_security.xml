@@ -2,6 +2,6 @@
 <odoo>
   <record id="group_salesman_admin" model="res.groups">
     <field name="name">Administrador de grupo de vendedores</field>
-    <field name="comment">Grupo con permisos de andiminstración para los datos de los vendedores</field>
+    <field name="comment">Grupo con permisos de administración para los datos de los vendedores</field>
   </record>
 </odoo>

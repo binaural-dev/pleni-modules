@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Pleni Custom SQL Query",
+    'name': "[DEPRECATED] Pleni - Custom SQL Query",
     'version': '0.1',
     'category': 'Administration',
     'license': 'GPL-3',

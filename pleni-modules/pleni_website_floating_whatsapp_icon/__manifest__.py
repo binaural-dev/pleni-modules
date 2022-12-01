@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Pleni - Whatsapp Floating Icon in Website",
-    'version': '0.1',
+    'name': "Pleni - Whatsapp floating icon in ecommerce",
+    'version': '0.1.1',
     'category': 'Uncategorized',
     'license': 'GPL-3',
     'author': "Manuel Escalante",

@@ -1,73 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <data>
-    <record id="res_salesman_view_tree" model="ir.ui.view">
-      <field name="name">res.salesman.view.tree</field>
-      <field name="type">tree</field>
-      <field name="model">res.salesman</field>
-      <field name="arch" type="xml">
-        <tree string="Registros de Vendedores">
-          <field name="name" />
-          <field name="saleman_role" />
-          <field name="sale_order_ids" />
-          <field name="res_partner_ids" />
-        </tree>
-      </field>
-    </record>
+  <record id="res_salesman_view_tree" model="ir.ui.view">
+    <field name="name">res.salesman.view.tree</field>
+    <field name="type">tree</field>
+    <field name="model">res.salesman</field>
+    <field name="arch" type="xml">
+      <tree string="Registros de Vendedores">
+        <field name="name" />
+        <field name="saleman_role" />
+        <field name="sale_order_ids" />
+        <field name="res_partner_ids" />
+      </tree>
+    </field>
+  </record>
 
-    <record id="res_salesman_view_form" model="ir.ui.view">
-      <field name="name">res.salesman.view.form</field>
-      <field name="model">res.salesman</field>
-      <field name="arch" type="xml">
-        <form string="Datos del vendedor" duplicate="0">
-          <sheet>
-            <field name="active" invisible="1" />
-            <widget name="web_ribbon" title="Archivado" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}" />
+  <record id="res_salesman_view_form" model="ir.ui.view">
+    <field name="name">res.salesman.view.form</field>
+    <field name="model">res.salesman</field>
+    <field name="arch" type="xml">
+      <form string="Datos del vendedor" duplicate="0">
+        <sheet>
+          <field name="active" invisible="1" />
+          <widget name="web_ribbon" title="Archivado" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}" />
+          <group>
             <group>
-              <group>
-                <field name="name" />
-                <field name="email" />
-                <field name="state_id" options="{'no_open': True, 'no_create': True}" />
-                <field name="zone" />
-              </group>
-              <group>
-                <field name="saleman_role" />
-                <field name="admission_date" />
-                <field name="deactivation_date" />
-              </group>
+              <field name="name" />
+              <field name="email" />
+              <field name="state_id" options="{'no_open': True, 'no_create': True}" />
+              <field name="zone" />
             </group>
             <group>
-              <field name="sale_order_ids" />
-              <field name="res_partner_ids" />
+              <field name="saleman_role" />
+              <field name="admission_date" />
+              <field name="deactivation_date" />
             </group>
-          </sheet>
-        </form>
-      </field>
-    </record>
+          </group>
+          <group>
+            <field name="sale_order_ids" />
+            <field name="res_partner_ids" />
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
 
-    <record id="res_salesman_view_search" model="ir.ui.view">
-      <field name="name">res.salesman.view.search</field>
-      <field name="model">res.salesman</field>
-      <field name="arch" type="xml">
-        <search string="Vendedores">
-          <field name="name" />
-          <field name="state_id" />
-          <separator />
-          <filter string="Archivado" name="inactive" domain="[('active', '=', False)]" />
-          <separator />
-        </search>
-      </field>
-    </record>
+  <record id="res_salesman_view_search" model="ir.ui.view">
+    <field name="name">res.salesman.view.search</field>
+    <field name="model">res.salesman</field>
+    <field name="arch" type="xml">
+      <search string="Vendedores">
+        <field name="name" />
+        <field name="state_id" />
+        <separator />
+        <filter string="Archivado" name="inactive" domain="[('active', '=', False)]" />
+        <separator />
+      </search>
+    </field>
+  </record>
 
 
-    <record id="res_salesman_action" model="ir.actions.act_window">
-      <field name="name">Vendedores</field>
-      <field name="type">ir.actions.act_window</field>
-      <field name="res_model">res.salesman</field>
-      <field name="view_mode">tree,form</field>
-    </record>
+  <record id="res_salesman_action" model="ir.actions.act_window">
+    <field name="name">Vendedores</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">res.salesman</field>
+    <field name="view_mode">tree,form</field>
+  </record>
 
-    <menuitem id="res_salesman_menu" name="Vendedores" action="res_salesman_action" parent="contacts.menu_contacts" sequence="2" />
-
-  </data>
+  <menuitem id="res_salesman_menu" name="Vendedores" action="res_salesman_action" parent="contacts.menu_contacts" sequence="2" />
 </odoo>

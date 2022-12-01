@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <data>
     <menuitem id="action_open_find_us_menu" name="¿Cómo llegó a nosostros?" action="find_us_action" parent="contacts.res_partner_menu_config" sequence="2" />

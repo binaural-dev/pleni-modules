@@ -10,8 +10,8 @@
     'data': [
         'security/ir.model.access.csv',
         'security/salesman_security.xml',
-        'views/sale_order_view.xml',
         'views/res_partner_view.xml',
+        'views/sale_order_view.xml',
         'views/res_salesman_view.xml',
     ]
 }

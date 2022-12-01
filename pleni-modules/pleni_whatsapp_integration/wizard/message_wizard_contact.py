@@ -1,4 +1,5 @@
-from odoo import models, fields, api
+# -*- coding: utf-8 -*-
+from odoo import models, fields
 
 import html2text
 import urllib.parse as parse

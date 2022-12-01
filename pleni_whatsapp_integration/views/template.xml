@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <odoo>
-    <record id="whatsapp_sales_template" model="mail.template">
-        <field name="name">WhatsApp Sale template</field>
-        <field name="subject">Sales template</field>
-        <field name="model_id" ref="sale.model_sale_order" />
-        <field name="body_html">
-            <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+  <record id="whatsapp_sales_template" model="mail.template">
+    <field name="name">WhatsApp Sale template</field>
+    <field name="subject">Sales template</field>
+    <field name="model_id" ref="sale.model_sale_order" />
+    <field name="body_html">
+      <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
         <div>
             Hola *${object.partner_id.name or ''}*,
         </div>
@@ -53,49 +53,46 @@
             Si desea recibir estos productos en otra entrega, indiquenos por aquí y con gusto le atenderemos.
         </div>
         ]]>
-        </field>
-    </record>
+    </field>
+  </record>
 
-    <record id="whatsapp_inventory_template" model="mail.template">
-        <field name="name">Whatsapp Inventory template</field>
-        <field name="subject">Inventory Template</field>
-        <field name="model_id" ref="stock.model_stock_picking" />
-        <field name="body_html">
-            <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
-         <p style="margin: 0px; padding: 0px; font-size: 13px;">
-         <div>
-            Hola *${object.partner_id.name or ''}*,
-         </div>
-         <div>
-             % if object.state == 'draft':
-                Hemos recibido su pedido *${object.name}* el cual será enviado pronto.
-             % endif
-             % if object.state == 'confirmed':
-                Su pedido *${object.name}* se está procesando.
+  <record id="whatsapp_inventory_template" model="mail.template">
+    <field name="name">Whatsapp Inventory template</field>
+    <field name="subject">Inventory Template</field>
+    <field name="model_id" ref="stock.model_stock_picking" />
+    <field name="body_html">
+      <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        <div>
+          Hola *${object.partner_id.name or ''}*,
+        </div>
+        <div>
+          % if object.state == 'draft':
+            Hemos recibido su pedido *${object.name}* el cual será enviado pronto.
+          % endif
+          % if object.state == 'confirmed':
+            Su pedido *${object.name}* se está procesando.
+          % endif
+          % if object.state == 'assigned':
+            Su orden *${object.name}* está lista y será enviada pronto.
+          % endif
+          % if object.state == 'done':
+            Su orden *${object.name}* ha sido enviada.
+          % endif
+        </div>
+        <div>
+          Si tiene alguna pregunta, siéntase comodo de escribirnos, con gusto le atenderemos.
+        </div>
+      ]]>
+    </field>
+  </record>
 
-                <!-- FALLAS -->
-             % endif
-             % if object.state == 'assigned':
-                Su orden *${object.name}* está lista y será enviada pronto
-             % endif
-             % if object.state == 'done':
-                Su orden *${object.name}* ha sido enviada.
-             % endif
-         </div>
-         <div>
-            Si tiene alguna pregunta, siéntase comodo de escribirnos, con gusto le atenderemos.
-         </div>
-            </p>
-        ]]>
-        </field>
-    </record>
-
-    <record id="whatsapp_invoice_template" model="mail.template">
-        <field name="name">Whatsapp Invoice template</field>
-        <field name="subject">Invoice Template</field>
-        <field name="model_id" ref="account.model_account_move" />
-        <field name="body_html">
-            <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+  <record id="whatsapp_invoice_template" model="mail.template">
+    <field name="name">Whatsapp Invoice template</field>
+    <field name="subject">Invoice Template</field>
+    <field name="model_id" ref="account.model_account_move" />
+    <field name="body_html">
+      <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
         <p style="margin: 0px; padding: 0px; font-size: 13px;">
                 <div>
                     Saludos *${object.partner_id.name}*
@@ -114,15 +111,15 @@
                 
                 Si tiene alguna pregunta, siéntase comodo de escribirnos, con gusto le atenderemos.
         ]]>
-        </field>
-    </record>
+    </field>
+  </record>
 
-    <record id="whatsapp_purchase_template" model="mail.template">
-        <field name="name">Whatsapp Purchase template</field>
-        <field name="subject">Purchase Template</field>
-        <field name="model_id" ref="purchase.model_purchase_order" />
-        <field name="body_html">
-            <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+  <record id="whatsapp_purchase_template" model="mail.template">
+    <field name="name">Whatsapp Purchase template</field>
+    <field name="subject">Purchase Template</field>
+    <field name="model_id" ref="purchase.model_purchase_order" />
+    <field name="body_html">
+      <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
              <p style="margin: 0px; padding: 0px; font-size: 13px;">
              <div>
                 Hola *${object.partner_id.name or ''}*,
@@ -164,13 +161,13 @@
               Esperamos recibir los productos en la fecha programada.
             </div>
         ]]>
-        </field>
-    </record>
+    </field>
+  </record>
 
-    <record id="whatsapp_contacts_template" model="mail.template">
-        <field name="name">Whatsapp Contact template</field>
-        <field name="subject">Contact Message Template</field>
-        <field name="model_id" ref="model_res_partner" />
-        <field name="body_html"></field>
-    </record>
+  <record id="whatsapp_contacts_template" model="mail.template">
+    <field name="name">Whatsapp Contact template</field>
+    <field name="subject">Contact Message Template</field>
+    <field name="model_id" ref="model_res_partner" />
+    <field name="body_html"></field>
+  </record>
 </odoo>

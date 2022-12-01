@@ -6,7 +6,7 @@
     <field name="inherit_id" ref="base.res_config_settings_view_form" />
     <field name="arch" type="xml">
       <xpath expr="//div[hasclass('app_settings_block')]/div[@name='integration']" position="after">
-        <div class="app_setting_block" data-string="Pleni WhatsApp Integration" string="Pleni WhatsApp Integration" data-key="pleni_whatsapp_integration">
+        <div class="app_setting_block" data-string="Pleni Whatsapp Integration" string="Pleni Whatsapp Integration" data-key="pleni_whatsapp_integration">
           <div id="direct_whatsapp" modifiers="{}">
             <h2 modifiers="{}">Mensaje Directo de Whatsapp</h2>
             <div class="row mt16 o_settings_container" id="pricing_setting_container">
@@ -17,8 +17,8 @@
                 <div class="o_setting_right_pane">
                   <label for="group_send_sms" />
                   <div class="text-muted">
-                      Haga clic para habilitar la función de mensaje directo de WhatsApp
-                    </div>
+                      Haga clic para habilitar la función de mensaje directo de Whatsapp
+                  </div>
                 </div>
               </div>
             </div>

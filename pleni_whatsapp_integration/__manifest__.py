@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 {
     'name': "Pleni - Whatsapp Integration",
     'version': '0.1',
-    'category': 'Whatsapp',
+    'category': 'Uncategorized',
     'author': "Manuel Escalante",
     'license': 'GPL-3',
     'website': "https://pleni.app",

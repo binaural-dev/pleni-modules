@@ -1,1 +1,1 @@
-# pleni
+# odoo-pleni

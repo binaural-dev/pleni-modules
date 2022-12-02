@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="multi_uom_website_assets" name="Multi UOM website Assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/website_uom_select_suggetion_spt/static/src/js/variant_mixin.js"></script>
+        </xpath>
+    </template>
+
+    <template id="multi_uom_assets_frontend" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/website_uom_select_suggetion_spt/static/src/js/variant_mixin.js"></script>
+            <script type="text/javascript" src="/website_uom_select_suggetion_spt/static/src/js/website_sale.js"></script>
+            <script type="text/javascript" src="/website_uom_select_suggetion_spt/static/src/js/warning_msg.js"></script>
+        </xpath>
+    </template>
+</odoo>

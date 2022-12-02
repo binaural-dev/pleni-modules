@@ -1,0 +1,72 @@
+<odoo>
+    <template id="banners_view">
+      <t t-call="website.layout">
+        <section id="laze_slider_8" class="ani-carousel carousel-arrow center white s_carousel s_carousel_default carousel slide oe_snippet_body" data-ride="carousel">
+          <ol class="carousel-indicators">
+              <li data-target="#laze_slider_8" data-slide-to="0" class="active"></li>
+              <li data-target="#laze_slider_8" data-slide-to="1"></li>
+              <li data-target="#laze_slider_8" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+              <div class="carousel-item active bg-cover bg-no-repeat bg-center" style="background-image: url(/pleni_banners/static/src/img/frutas_2.jpg);">
+                  <div class="container">
+                      <div class="row screen-65 p-50px-tb align-items-center justify-content-center">
+                          <div class="col-lg-10 text-center">
+                              <div class="ani-fade-top ani-1 font-alt display-4 white-color font-w-700 m-25px-b">Sale Starts Today</div>
+                              <img class="ani-fade-top ani-2" src="/theme_laze/static/src/img/laze-fashion-1-1.png" />
+                              <div class="ani-fade-top ani-3 white-color m-15px-tb">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</div>
+                              <div class="ani-fade-top ani-4 m-30px-t">
+                                  <a class="as-btn as-btn-theme" href="#">Shop Now</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="carousel-item bg-cover bg-no-repeat bg-center" style="background-image: url(/pleni_banners/static/src/img/frutas_1.jpeg);">
+                  <div class="container">
+                      <div class="row screen-65 p-50px-tb align-items-center justify-content-center">
+                          <div class="col-lg-10 text-center">
+                              <div class="ani-fade-top ani-1 font-alt display-4 white-color font-w-700 m-25px-b">Sale Starts Today</div>
+                              <img class="ani-fade-top ani-2" src="/theme_laze/static/src/img/laze-fashion-1-1.png" />
+                              <div class="ani-fade-top ani-3 white-color m-15px-tb">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</div>
+                              <div class="ani-fade-top ani-4 m-30px-t">
+                                  <a class="as-btn as-btn-theme" href="#">Shop Now</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="carousel-item bg-cover bg-no-repeat bg-center" style="background-image: url(/pleni_banners/static/src/img/pleni_image.jpeg);">
+                  <div class="container">
+                      <div class="row screen-65 p-50px-tb align-items-center justify-content-center">
+                          <div class="col-lg-10 text-center">
+                              <div class="ani-fade-top ani-1 font-alt display-4 white-color font-w-700 m-25px-b">Sale Starts Today</div>
+                              <img class="ani-fade-top ani-2" src="/theme_laze/static/src/img/laze-fashion-1-1.png" />
+                              <div class="ani-fade-top ani-3 white-color m-15px-tb">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</div>
+                              <div class="ani-fade-top ani-4 m-30px-t">
+                                  <a class="as-btn as-btn-theme" href="#">Shop Now</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <a class="carousel-control carousel-control-prev" href="#laze_slider_8" role="button" data-slide="prev">
+              <span class="prev-icon"></span>
+          </a>
+          <a class="carousel-control carousel-control-next" href="#laze_slider_8" role="button" data-slide="next">
+              <span class="next-icon"></span>
+          </a>
+      </section>
+      </t>
+    </template>
+      <!-- <template id="object">
+        <h1><t t-esc="object.display_name"/></h1>
+        <dl>
+          <t t-foreach="object._fields" t-as="field">
+            <dt><t t-esc="field"/></dt>
+            <dd><t t-esc="object[field]"/></dd>
+          </t>
+        </dl>
+      </template> -->
+</odoo>

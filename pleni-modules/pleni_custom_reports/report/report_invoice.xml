@@ -178,7 +178,7 @@
     <xpath expr="//div[hasclass('clearfix')]" position="attributes">
       <attribute name="style">font-size: medium;</attribute>
     </xpath>
-    <xpath expr="//tr[hasclass('border-black', 'o_subtotal)]" position="attributes">
+    <xpath expr="//tr[hasclass('border-black', 'o_subtotal')]" position="attributes">
       <attribute name="style">display: none;</attribute>
     </xpath>
     <xpath expr="//t[@t-foreach='o.amount_by_group']" position="replace">

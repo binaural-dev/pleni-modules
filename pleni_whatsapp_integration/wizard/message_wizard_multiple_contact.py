@@ -7,6 +7,7 @@ import urllib.parse as parse
 
 class SendMultipleContactMessage(models.TransientModel):
     _name = 'whatsapp.wizard.multiple.contact'
+    _description = 'Whatsapp wizard multiple contact'
 
     partner_id = fields.Many2one('res.partner', string="Recipient")
     mobile = fields.Char(required=True, string="Contact Number")

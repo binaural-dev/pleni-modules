@@ -8,7 +8,7 @@
     'website': "https://pleni.app",
     'depends': ['base', 'sale', 'account'],
     'data': [
-        'report/report_deliveryslip.xml'
+        'report/report_deliveryslip.xml',
         'report/report_invoice.xml',
     ]
 }

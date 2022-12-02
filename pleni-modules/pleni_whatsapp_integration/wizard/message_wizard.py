@@ -7,6 +7,7 @@ import urllib.parse as parse
 
 class MessageError(models.TransientModel):
     _name = 'display.error.message'
+    _description = 'Whatsapp display error message'
 
     def get_message(self):
         if self.env.context.get("message", False):
@@ -17,6 +18,7 @@ class MessageError(models.TransientModel):
 
 class SendMessage(models.TransientModel):
     _name = 'whatsapp.wizard'
+    _description = 'Whatsapp wizard'
 
     user_id = fields.Many2one('res.partner', string="Recipient Name", default=lambda self: self.env[self._context.get(
         'active_model')].browse(self.env.context.get('active_ids')).partner_id)

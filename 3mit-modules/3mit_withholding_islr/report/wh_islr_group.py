@@ -4,6 +4,7 @@ from odoo import api, fields, models, _
 
 class RepComprobanteIslrGroup(models.AbstractModel):
     _name = 'report.3mit_withholding_islr.template_wh_islr_group'
+    _description = 'Report 3mit withholding ISLR template group'
 
     def split_fecha(self,fecha):
         split_date = (str(fecha).split('-'))

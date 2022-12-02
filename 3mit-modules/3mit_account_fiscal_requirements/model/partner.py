@@ -4,8 +4,7 @@
 
 import re
 
-from odoo.addons import decimal_precision as dp
-from odoo import fields,models,api
+from odoo import fields, models, api
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
@@ -13,7 +12,7 @@ from odoo.tools.translate import _
 class ResPartnerInherit(models.Model):
     _inherit = 'res.partner'
 
-    def _get_country_code(self,ids):
+    def _get_country_code(self, ids):
         """
         Return the country code of the user company. If not exists, return XX.
         """
@@ -28,7 +27,7 @@ class ResPartnerInherit(models.Model):
 
     wh_iva_rate = fields.Float(
         string='Rate',
-        digits=dp.get_precision('Withhold'),
+        digits='Withhold',
         help="Vat Withholding rate")
 
     wh_iva_agent = fields.Boolean(
@@ -49,7 +48,7 @@ class ResPartnerInherit(models.Model):
             self.make_visible = False
 
     @api.model
-    def default_get(self,fields_list):
+    def default_get(self, fields_list):
         """ Load the country code of the user company to form to be created.
         """
         # NOTE: use field_list argument instead of fields for fix the pylint
@@ -59,8 +58,8 @@ class ResPartnerInherit(models.Model):
         res.update({'uid_country': self._get_country_code(self)})
         return res
 
+    # def _get_uid_country(self, cr, uid, ids, field_name, args, context=None):
 
-    #def _get_uid_country(self, cr, uid, ids, field_name, args, context=None):
     def _get_uid_country(self, field_name, args):
         """ Return a dictionary of key ids as invoices, and value the country code
         of the user company.
@@ -68,7 +67,6 @@ class ResPartnerInherit(models.Model):
         context = self._context or {}
         res = {}.fromkeys(self._ids, self._get_country_code())
         return res
-
 
     def _check_partner_invoice_addr(self):
 
@@ -83,9 +81,7 @@ class ResPartnerInherit(models.Model):
         else:
             return True
 
-
     def _check_vat_uniqueness(self):
-
 
         context = self._context or {}
 
@@ -112,7 +108,6 @@ class ResPartnerInherit(models.Model):
                     return False
                 continue
         return True
-
 
     def _check_vat_mandatory(self):
         """ This method will check the vat mandatoriness in partners
@@ -189,7 +184,7 @@ class ResPartnerInherit(models.Model):
                     else:
                         translated_msg = tmp_msg
                 else:
-                    translated_msg = trans._get_source(self,self._name,
+                    translated_msg = trans._get_source(self, self._name,
                                                        'constraint', lng, msg)
                 error_msgs.append(
                     _("Error occurred while validating the field(s) %s: %s") %
@@ -197,7 +192,7 @@ class ResPartnerInherit(models.Model):
                 )
                 self._invalids.update(field_list)
         if error_msgs:
-            raise UserError("ValidateError \n %s"  %(error_msgs))
+            raise UserError("ValidateError \n %s" % (error_msgs))
         else:
             self._invalids.clear()
 
@@ -207,9 +202,9 @@ class ResPartnerInherit(models.Model):
         context = self._context or {}
         if not value:
             return super(ResPartnerInherit, self).vat_change(value)
-        res = self.search(self [('vat', 'ilike', value)])
+        res = self.search(self[('vat', 'ilike', value)])
         if res:
-            rp = self.browse(self,res[0])
+            rp = self.browse(self, res[0])
             return {'warning': {
                 'title': _('Vat Error !'),
                 'message': _('The VAT [%s] looks like ' % value +

@@ -8,6 +8,7 @@ from odoo.exceptions import UserError
 
 class WhIvaGroup(models.Model):
     _name = 'wh.iva.group'
+    _description = 'Withholding iva group'
 
     invoice_ids = fields.Many2many('account.move', string='Facturas Incluidas para retención', name_get='new_names')
     retentions = fields.Many2many('account.wh.iva', string='Retenciones asociadas')

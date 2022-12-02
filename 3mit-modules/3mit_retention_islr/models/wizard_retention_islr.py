@@ -240,6 +240,7 @@ class RetentionISLR(models.Model):
 
 class ReportRetentionISLR(models.AbstractModel):
     _name = 'report.3mit_retention_islr.report_retention_islr1'
+    _description = 'Report 3mit retention ISLR report'
 
     @api.model
     def _get_report_values(self, docids, data=None):

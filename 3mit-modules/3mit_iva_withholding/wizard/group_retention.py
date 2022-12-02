@@ -4,6 +4,7 @@ from odoo.exceptions import Warning
 
 class GroupRetention(models.TransientModel):
     _name = 'wizard.group.retention'
+    _description = 'Wizard group retention'
 
     start_date = fields.Date('Desde')
     final_date = fields.Date('Hasta')

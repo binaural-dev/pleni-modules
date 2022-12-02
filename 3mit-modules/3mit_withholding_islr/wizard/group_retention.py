@@ -3,6 +3,7 @@ from odoo.exceptions import UserError
 
 class GroupRetentionISLR(models.TransientModel):
     _name = 'wizard.group.retention.islr'
+    _description = 'Wizard group retention ISLR'
 
     start_date = fields.Date('Desde')
     final_date = fields.Date('Hasta')

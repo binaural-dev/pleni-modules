@@ -3,6 +3,7 @@ from odoo.exceptions import Warning
 
 class recordRetention(models.TransientModel):
     _name = 'record.retention'
+    _description = 'Record retention'
 
     invoice_ids = fields.Many2many('account.move', string='Facturas')
     control_number = fields.Char('Numero de Comprobante')

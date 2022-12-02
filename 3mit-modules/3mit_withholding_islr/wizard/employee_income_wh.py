@@ -31,7 +31,7 @@ class EmployeeIncomeWh(models.Model):
 
     _name = 'employee.income.wh'
 
-    _description = ''
+    _description = 'Employee income withholding'
 
     logger = logging.getLogger('employee.income.wh')
 

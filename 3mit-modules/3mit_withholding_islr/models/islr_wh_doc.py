@@ -4,9 +4,9 @@
 import time
 from odoo import fields, models
 from odoo.exceptions import UserError
-from odoo.addons import decimal_precision as dp
 
 ISLR_XML_WH_LINE_TYPES = [('invoice', 'Invoice'), ('employee', 'Employee')]
+
 
 class IslrWhDoc(models.Model):
     _name = "islr.wh.doc"
@@ -15,18 +15,18 @@ class IslrWhDoc(models.Model):
     _rec_name = 'name'
 
     move_id = fields.Many2one(
-            'account.move', 'Entrada de diario', ondelete='restrict',
-            readonly=True, help="Bono contable")
+        'account.move', 'Entrada de diario', ondelete='restrict',
+        readonly=True, help="Bono contable")
 
     amount_total_signed = fields.Many2one('account.move', string='campo')
     name = fields.Char(
-            'Numero de Comprobante', size=64,
-            required=True,
-            help="Número de Comprobante de Retención")
+        'Numero de Comprobante', size=64,
+        required=True,
+        help="Número de Comprobante de Retención")
     number = fields.Char(
-            'Número de Retención', size=32, help="referencia del vale")
+        'Número de Retención', size=32, help="referencia del vale")
     number_comprobante = fields.Char(
-            'Número de Comprobante de Retención', size=32, help="Número de Comprobante de Retención")
+        'Número de Comprobante de Retención', size=32, help="Número de Comprobante de Retención")
 
     invoice_id = fields.Many2one("account.move", string="Factura retenida")
 
@@ -36,67 +36,68 @@ class IslrWhDoc(models.Model):
         help="Diario donde se registran los asientos contables")
 
     type = fields.Selection([
-            ('out_invoice', 'Factura de cliente'),
-            ('in_invoice', 'Factura de proveedor'),
-            ('in_refund', 'Reembolso de la factura del proveedor'),
-            ('out_refund', 'Reembolso de la factura del cliente'),
-            ], string='Tipo', readonly=True,
-            help="Tipo de referencia")
+        ('out_invoice', 'Factura de cliente'),
+        ('in_invoice', 'Factura de proveedor'),
+        ('in_refund', 'Reembolso de la factura del proveedor'),
+        ('out_refund', 'Reembolso de la factura del cliente'),
+    ], string='Tipo', readonly=True,
+        help="Tipo de referencia")
     state = fields.Selection([
-            ('draft', 'Borrador'),
-            ('confirmed', 'Confirmado'),
-            ('cancel', 'Cancelado')
-            ], string='Estado', readonly=True, default='draft',
-            help="estado del vale")
+        ('draft', 'Borrador'),
+        ('confirmed', 'Confirmado'),
+        ('cancel', 'Cancelado')
+    ], string='Estado', readonly=True, default='draft',
+        help="estado del vale")
     date_ret = fields.Date(
-            'Fecha de contabilidad', readonly=True,
-            states={'draft': [('readonly', False)]},
-            help="Mantener vacío para usar la fecha actual")
+        'Fecha de contabilidad', readonly=True,
+        states={'draft': [('readonly', False)]},
+        help="Mantener vacío para usar la fecha actual")
     date_uid = fields.Date(
-            'Fecha de retención', readonly=True,
-            states={'draft': [('readonly', False)]}, help="Fecha del vale")
+        'Fecha de retención', readonly=True,
+        states={'draft': [('readonly', False)]}, help="Fecha del vale")
     account_id = fields.Many2one(
-            'account.account', 'Cuenta', # required=True,
-            readonly=True,
-            states={'draft': [('readonly', False)]},
-            help="Cuenta por cobrar o cuenta por pagar de socio")
+        'account.account', 'Cuenta',  # required=True,
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+        help="Cuenta por cobrar o cuenta por pagar de socio")
 
     partner_id = fields.Many2one(
-            'res.partner', 'Compañia', readonly=True, required=True,
-            states={'draft': [('readonly', False)]},
-            help="Socio objeto de retención")
+        'res.partner', 'Compañia', readonly=True, required=True,
+        states={'draft': [('readonly', False)]},
+        help="Socio objeto de retención")
     currency_id = fields.Many2one(
-            'res.currency', 'Moneda', required=True, readonly=True,
-            states={'draft': [('readonly', False)]},
-            help="Diario donde se registran los asientos contables")
+        'res.currency', 'Moneda', required=True, readonly=True,
+        states={'draft': [('readonly', False)]},
+        help="Diario donde se registran los asientos contables")
     company_id = fields.Many2one(
         'res.company', 'Compañia', required=True,
         default=lambda self: self.env.company,
         help="Compañia")
     amount_total_ret = fields.Float(store=True, string='Monto total',
-            digits=dp.get_precision('Withhold ISLR'),
-            help="Importe total retenido")
+                                    digits='Withhold ISLR',
+                                    help="Importe total retenido")
     concept_ids = fields.One2many(
-            'islr.wh.doc.line', 'islr_wh_doc_id', 'Concepto de retención de ingresos',
-            readonly=True, states={'draft': [('readonly', False)]},
-            help='Concepto de retención de ingresos')
+        'islr.wh.doc.line', 'islr_wh_doc_id', 'Concepto de retención de ingresos',
+        readonly=True, states={'draft': [('readonly', False)]},
+        help='Concepto de retención de ingresos')
     islr_wh_doc_id = fields.One2many(
-            'account.move', 'islr_wh_doc_id', 'Facturas',
-            states={'draft': [('readonly', False)]},
-            help='Se refiere al documento de retención de ingresos del impuesto generado en la factura')
+        'account.move', 'islr_wh_doc_id', 'Facturas',
+        states={'draft': [('readonly', False)]},
+        help='Se refiere al documento de retención de ingresos del impuesto generado en la factura')
     user_id = fields.Many2one(
-            'res.users', 'Salesman', readonly=True,
-            states={'draft': [('readonly', False)]},
-            default=lambda s: s._uid,
-            help="Vendor user")
+        'res.users', 'Salesman', readonly=True,
+        states={'draft': [('readonly', False)]},
+        default=lambda s: s._uid,
+        help="Vendor user")
     automatic_income_wh = fields.Boolean(
-            string='Retención Automática de Ingresos',
-            default=False,
-            help='Cuando todo el proceso se verifique automáticamente, y si todo está bien, se configurará como hecho')
+        string='Retención Automática de Ingresos',
+        default=False,
+        help='Cuando todo el proceso se verifique automáticamente, y si todo está bien, se configurará como hecho')
 
     # Método computado que retorna la empresa actual
     def _get_company(self):
-        res_company = self.env['res.company'].search([('id', '=', self.company_id.id)])
+        res_company = self.env['res.company'].search(
+            [('id', '=', self.company_id.id)])
         return res_company
 
     # Método que genera el código de secuencia de cada retención
@@ -105,19 +106,21 @@ class IslrWhDoc(models.Model):
         if local_number and self.date_ret:
             account_month = self.date_ret.split('-')[1]
             if not account_month == local_number[4:6]:
-                local_number = local_number[:4] + account_month + local_number[6:]
+                local_number = local_number[:4] + \
+                    account_month + local_number[6:]
         return local_number
 
     # Método para calcular todos los montos de retención y sustraendo de cada concepto
     def create_xml_lines(self):
-        ut = self.env["l10n.ut"].search([("date", "<=", self.invoice_id.date)], order='date DESC', limit=1)
+        ut = self.env["l10n.ut"].search(
+            [("date", "<=", self.invoice_id.date)], order='date DESC', limit=1)
         if self.partner_id.company_type == "person":
             type_partner = self.partner_id.people_type_individual.upper()
         else:
             type_partner = self.partner_id.people_type_company.upper()
 
         if self.partner_id.rif:
-            rif = self.partner_id.rif.replace("-","")
+            rif = self.partner_id.rif.replace("-", "")
         else:
             rif = str()
 
@@ -127,8 +130,10 @@ class IslrWhDoc(models.Model):
             invoice_number = self.invoice_id.payment_reference
 
         for line in self.concept_ids:
-            invoice_lines = self.env["account.move.line"].search([("move_id", "=", self.invoice_id.id), ("concept_id", "=", line.concept_id.id)])
-            xml_line = self.env["islr.rates"].search([("concept_id", "=", line.concept_id.id), ("name", "=", type_partner)])
+            invoice_lines = self.env["account.move.line"].search(
+                [("move_id", "=", self.invoice_id.id), ("concept_id", "=", line.concept_id.id)])
+            xml_line = self.env["islr.rates"].search(
+                [("concept_id", "=", line.concept_id.id), ("name", "=", type_partner)])
             concepts = []
             for invoice_line in invoice_lines:
                 line.xml_ids = [(0, 0, {
@@ -151,7 +156,8 @@ class IslrWhDoc(models.Model):
                 line.amount += invoice_line.price_subtotal_conversion * xml_line.wh_perc / 100
                 line.control_number = line.invoice_id.nro_ctrl
                 if type_partner == "PNRE" and line.concept_id.id not in concepts:
-                    line.subtract += round(ut.amount * xml_line.minimum * (xml_line.wh_perc / 100),2)
+                    line.subtract += round(ut.amount *
+                                           xml_line.minimum * (xml_line.wh_perc / 100), 2)
                     concepts.append(line.concept_id.id)
             if line.invoice_id.move_type in ["in_invoice", "in_refund"]:
                 invoice_number = line.invoice_id.supplier_invoice_number
@@ -212,7 +218,8 @@ class IslrWhDoc(models.Model):
         self.invoice_ids.invoice_id.ensure_one()
         SEQUENCE_CODE = 'number_comprobante_islr'
         company_id = self._get_company()
-        IrSequence = self.env['ir.sequence'].with_context(force_company=company_id.id)
+        IrSequence = self.env['ir.sequence'].with_context(
+            force_company=company_id.id)
         number = IrSequence.next_by_code(SEQUENCE_CODE)
         return number
 
@@ -222,7 +229,8 @@ class IslrWhDoc(models.Model):
                 if not self.number:
                     number = self._get_sequence_code()
                     if not number:
-                        raise UserError("Error Configuracion \nSin secuencia configurada para retención de ingresos del proveedor")
+                        raise UserError(
+                            "Error Configuracion \nSin secuencia configurada para retención de ingresos del proveedor")
 
                     self.write({'number': number})
         else:
@@ -231,7 +239,8 @@ class IslrWhDoc(models.Model):
                     number = self.env['ir.sequence'].get(
                         'islr.wh.doc.%s' % self.type)
                     if not number:
-                        raise UserError("Falta la configuración! \nSin secuencia configurada para ingresos del proveedor Retenciones")
+                        raise UserError(
+                            "Falta la configuración! \nSin secuencia configurada para ingresos del proveedor Retenciones")
         return True
 
     # Método para cancelar una retención
@@ -249,8 +258,10 @@ class IslrWhDoc(models.Model):
     def cancel_move(self):
         for ret in self:
             if ret.state == 'confirmed':
-                ref_move = ret.move_id._reverse_moves([{'date': self.date_ret}], cancel=True)
-                ref_move.write({'ref': 'Reversión de ' + str(self.name) + ' para la ' + str(self.invoice_id.name)})
+                ref_move = ret.move_id._reverse_moves(
+                    [{'date': self.date_ret}], cancel=True)
+                ref_move.write({'ref': 'Reversión de ' + str(self.name) +
+                               ' para la ' + str(self.invoice_id.name)})
 
     # Método para crear la entrada de diario cuando se confirma la retención
     def action_move_create(self):
@@ -261,7 +272,8 @@ class IslrWhDoc(models.Model):
                 self.write({'date_ret': time.strftime('%Y-%m-%d')})
 
             journal_id = ret.journal_id.id
-            name = 'COMP. RET. ISLR ' + ret.name + ' Doc. ' + (ret.invoice_id.name or '')
+            name = 'COMP. RET. ISLR ' + ret.name + \
+                ' Doc. ' + (ret.invoice_id.name or '')
             amount = self.amount_total_ret
 
             move = {'ref': name + 'de ' + str(ret.invoice_id.name),
@@ -335,8 +347,10 @@ class IslrWhDoc(models.Model):
                     'name': name.strip() + ' - ISLR: ' + ret.name.strip()
                 }
 
-            self.env['account.move.line'].with_context(check_move_validity=False).create(l1)
-            self.env['account.move.line'].with_context(check_move_validity=False).create(l2)
+            self.env['account.move.line'].with_context(
+                check_move_validity=False).create(l1)
+            self.env['account.move.line'].with_context(
+                check_move_validity=False).create(l2)
 
             move_id.post()
             for line in ret.concept_ids:
@@ -349,7 +363,8 @@ class IslrWhDoc(models.Model):
     def unlink(self):
         for islr_brw in self:
             if islr_brw.state != 'cancel':
-                raise UserError("El documento de retención debe estar en estado cancelado para ser eliminado.")
+                raise UserError(
+                    "El documento de retención debe estar en estado cancelado para ser eliminado.")
             else:
                 return super(IslrWhDoc, self).unlink()
 
@@ -359,42 +374,45 @@ class IslrWhDoc(models.Model):
             for line in concept.xml_ids:
                 if line.islr_xml_wh_doc:
                     if line.islr_xml_wh_doc.state != 'draft':
-                        raise UserError("Error!! El siguiente archivo XML debe establecerse en Borrador antes de Cancelar este documento %s" % (line.islr_xml_wh_doc.name))
+                        raise UserError("Error!! El siguiente archivo XML debe establecerse en Borrador antes de Cancelar este documento %s" % (
+                            line.islr_xml_wh_doc.name))
+
 
 class IslrWhDocLine(models.Model):
     _name = "islr.wh.doc.line"
     _description = 'Lines of Document Income Withholding'
 
     name = fields.Char(
-            'Descripción', size=64, help="Description of the voucher line")
+        'Descripción', size=64, help="Description of the voucher line")
     invoice_id = fields.Many2one(
-            'account.move', 'Factura', ondelete='set null',
-            help="Factura para Retener")
+        'account.move', 'Factura', ondelete='set null',
+        help="Factura para Retener")
     control_number = fields.Char(string="Número de control")
     invoice_number = fields.Char(string="Número de factura")
-    amount = fields.Float(string='Cantidad retenida', digits=(16, 2), help="Monto retenido del monto base")
-    currency_amount= fields.Float(method=True, digits=(16, 2),
-            string='Moneda retenida Monto retenido', multi='all',
-            help="Monto retenido del monto base")
-    base_amount= fields.Float(
-            'Cantidad base', digits=dp.get_precision('Withhold ISLR'),
-            help="Cantidad base")
-    currency_base_amount= fields.Float(method=True, digits=(16, 2),
-            string='Monto base en moneda extranjera', multi='all',
-            help="Monto retenido del monto base")
-    raw_base_ut= fields.Float(
-            'Cantidad de UT', digits=dp.get_precision('Withhold ISLR'),
-            help="Cantidad de UT")
-    raw_tax_ut= fields.Float(
-            'Impuesto retenido de UT',
-            digits=dp.get_precision('Withhold ISLR'),
-            help="Impuesto retenido de UT")
+    amount = fields.Float(string='Cantidad retenida', digits=(
+        16, 2), help="Monto retenido del monto base")
+    currency_amount = fields.Float(method=True, digits=(16, 2),
+                                   string='Moneda retenida Monto retenido', multi='all',
+                                   help="Monto retenido del monto base")
+    base_amount = fields.Float(
+        'Cantidad base', digits='Withhold ISLR',
+        help="Cantidad base")
+    currency_base_amount = fields.Float(method=True, digits=(16, 2),
+                                        string='Monto base en moneda extranjera', multi='all',
+                                        help="Monto retenido del monto base")
+    raw_base_ut = fields.Float(
+        'Cantidad de UT', digits='Withhold ISLR',
+        help="Cantidad de UT")
+    raw_tax_ut = fields.Float(
+        'Impuesto retenido de UT',
+        digits='Withhold ISLR',
+        help="Impuesto retenido de UT")
     subtract = fields.Float(
-            'Sustraer', digits=dp.get_precision('Withhold ISLR'),
-            help="Sustraer")
+        'Sustraer', digits='Withhold ISLR',
+        help="Sustraer")
     islr_wh_doc_id = fields.Many2one(
-            'islr.wh.doc', 'Retener documento', ondelete='cascade',
-            help="Retención de documentos del impuesto sobre la renta generado por esta factura")
+        'islr.wh.doc', 'Retener documento', ondelete='cascade',
+        help="Retención de documentos del impuesto sobre la renta generado por esta factura")
     islr_xml_wh_doc_id = fields.Many2one(
         'islr.xml.wh.doc', 'Archivo XML', ondelete='set null',
         help="Retención de documentos del impuesto sobre la renta generado por esta factura")
@@ -403,24 +421,25 @@ class IslrWhDocLine(models.Model):
         string='Tipo', required=True, readonly=False,
         default='invoice')
     concept_id = fields.Many2one(
-            'islr.wh.concept', 'Concepto de retención',
-            help="Concepto de retención asociado a esta tasa")
+        'islr.wh.concept', 'Concepto de retención',
+        help="Concepto de retención asociado a esta tasa")
     retencion_islr = fields.Float(
-            'Porcentaje de retención',
-            digits=dp.get_precision('Withhold ISLR'),
-            help="Tasa de retención")
+        'Porcentaje de retención',
+        digits='Withhold ISLR',
+        help="Tasa de retención")
     retention_rate = fields.Float(default=0, method=True, string='Tasa de retención',
-             help="Withhold rate has been applied to the invoice",
-             digits=dp.get_precision('Withhold ISLR'))
+                                  help="Withhold rate has been applied to the invoice",
+                                  digits='Withhold ISLR')
     xml_ids = fields.One2many(
-            'islr.xml.wh.line', 'islr_wh_doc_line_id', 'XML Lines',
-            help='ID de línea de factura de retención XML')
+        'islr.xml.wh.line', 'islr_wh_doc_line_id', 'XML Lines',
+        help='ID de línea de factura de retención XML')
     iwdi_id = fields.Many2one(
-            'islr.wh.doc.invoices', 'Factura retenida', ondelete='cascade',
-            help="Facturas retenidas")
+        'islr.wh.doc.invoices', 'Factura retenida', ondelete='cascade',
+        help="Facturas retenidas")
     partner_id = fields.Many2one('res.partner', string='Partner', store=True)
-    partner_vat = fields.Char(string="RIF")    
-    fiscalyear_id = fields.Many2one('account.fiscalyear', string='Fiscalyear', store=True)
+    partner_vat = fields.Char(string="RIF")
+    fiscalyear_id = fields.Many2one(
+        'account.fiscalyear', string='Fiscalyear', store=True)
     company_id = fields.Many2one(
         'res.company', 'Compañia', required=True,
         default=lambda self: self.env.company,

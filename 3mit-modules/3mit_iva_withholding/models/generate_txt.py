@@ -7,6 +7,7 @@ import base64, time
 
 class TxtIva(models.Model):
     _name = "txt.iva"
+    _description = 'IVA'
     _inherit = ['mail.thread']
 
 
@@ -575,6 +576,7 @@ class TxtIva(models.Model):
 
 class TxtIvaLine(models.Model):
     _name = "txt.iva.line"
+    _description = 'IVA line'
 
     partner_id = fields.Many2one(
         'res.partner', string='Comprador/Vendedor', readonly=True,

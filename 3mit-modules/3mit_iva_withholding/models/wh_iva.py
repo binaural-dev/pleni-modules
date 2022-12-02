@@ -7,6 +7,7 @@ from odoo.exceptions import UserError
 
 class AccountWhIvaLineTax(models.Model):
     _name = 'account.wh.iva.line.tax'
+    _description = 'Account withholding iva line tax'
 
     move_id = fields.Many2one('account.move', string='Invoice', required=True,
                               ondelete='restrict', help="Withholding invoice")

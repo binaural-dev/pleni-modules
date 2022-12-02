@@ -9,6 +9,7 @@ from datetime import datetime
 class IgtfPayment(models.TransientModel):
 
     _name = "igtf.payment.wizard"
+    _description = 'IGTF payment wizard'
 
     journal_id = fields.Many2one('account.journal', store=True, readonly=False,
                                  compute='_compute_journal_id',

@@ -9,6 +9,7 @@ from odoo.exceptions import UserError
 
 class WhIslrGroup(models.Model):
     _name = 'wh.islr.group'
+    _description = 'Withholding ISLR group'
 
     invoice_ids = fields.Many2many('account.move', string='Facturas Incluidas para retención', domain=[("move_type", "in", ["in_invoice", "in_refund"])])
     retentions = fields.Many2many('islr.wh.doc', string='Retenciones asociadas')

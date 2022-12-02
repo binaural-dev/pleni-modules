@@ -10,6 +10,7 @@ from odoo.exceptions import UserError, Warning, ValidationError
 
 class IvaGroupReport(models.AbstractModel):
     _name = 'report.3mit_iva_withholding.template_wh_group_vat'
+    _description = 'Report 3mit IVA withholding template withholding group vat'
 
     @api.model
     def _get_report_values(self, docids, data=None):

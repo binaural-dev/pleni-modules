@@ -8,7 +8,6 @@ from odoo.exceptions import UserError
 
 from odoo import api, fields, models
 from odoo.tools.translate import _
-from odoo.addons import decimal_precision as dp
 
 _logger = logging.getLogger(__name__)
 ISLR_XML_WH_LINE_TYPES = [('invoice', 'Invoice'), ('employee', 'Employee')]
@@ -22,7 +21,6 @@ class IslrXmlWhDoc(models.Model):
         for id in self.employee_xml_ids:
             id.unlink()
         self.action_generate_line_xml()
-
 
     @api.depends('invoice_concept_ids')
     def _get_amount_total(self):
@@ -130,9 +128,12 @@ class IslrXmlWhDoc(models.Model):
     def action_generate_line_xml(self):
         self.invoice_concept_ids = [(5, 0, 0)]
         concept_lines = self.env['islr.wh.doc'].search([('date_ret', '>=', self.date_start),
-                                                        ('date_ret', '<=', self.date_end),
-                                                        ('state', '=', 'confirmed'),
-                                                        ('type', 'in', ['in_invoice', 'in_refund']),
+                                                        ('date_ret', '<=',
+                                                         self.date_end),
+                                                        ('state', '=',
+                                                         'confirmed'),
+                                                        ('type', 'in', [
+                                                         'in_invoice', 'in_refund']),
                                                         ('company_id', '=', self.company_id.id)]).concept_ids.filtered(
             lambda l: not l.islr_xml_wh_doc_id)
         for line in self.employee_xml_ids:
@@ -219,7 +220,8 @@ class IslrXmlWhDoc(models.Model):
             wh_brw = self.browse(ixwd_id)
 
             period = self.get_period()
-            company_vat = rp_obj._find_accounting_partner(wh_brw.company_id.partner_id).rif[0:]
+            company_vat = rp_obj._find_accounting_partner(
+                wh_brw.company_id.partner_id).rif[0:]
             company_vat = company_vat.replace("-", "")
             company_vat1 = wh_brw.company_id.partner_id.rif
             company_vat1 = company_vat1.replace("-", "")
@@ -229,19 +231,23 @@ class IslrXmlWhDoc(models.Model):
             root.attrib[x1] = company_vat if company_vat1 else ''
             root.attrib[x2] = period
 
-            partners = list(map(lambda xml_line: xml_line.partner_id, self.invoice_concept_ids))
+            partners = list(
+                map(lambda xml_line: xml_line.partner_id, self.invoice_concept_ids))
             partners = list(set(partners))
 
-            partners_person_pnre = list(filter(lambda partner: partner.people_type_individual == "pnre", partners))
+            partners_person_pnre = list(
+                filter(lambda partner: partner.people_type_individual == "pnre", partners))
 
             file_lines = {}
 
             for line in self.invoice_concept_ids:
-                control_number = line.control_number.replace("-", "") if line.control_number else ""
+                control_number = line.control_number.replace(
+                    "-", "") if line.control_number else ""
                 invoice_number = line.invoice_number if line.invoice_number else line.invoice_id.supplier_invoice_number
                 partner_vat = line.partner_id.rif
                 date_ret = line.islr_wh_doc_id.date_ret if line.islr_wh_doc_id else datetime.datetime.today()
-                rate_id = line.concept_id.rate_ids.filtered(lambda this: this.name.lower() == line.partner_id.people_type_individual or this.name.lower() == line.partner_id.people_type_company)
+                rate_id = line.concept_id.rate_ids.filtered(lambda this: this.name.lower(
+                ) == line.partner_id.people_type_individual or this.name.lower() == line.partner_id.people_type_company)
                 concept_code = rate_id.code
                 base = line.base_amount
                 percent = line.retencion_islr
@@ -252,7 +258,7 @@ class IslrXmlWhDoc(models.Model):
                         if invoice_number[0] == "-":
                             primeraLetraGuion = True
                         invoice_number = invoice_number[1:]
- 
+
                 if invoice_number.isdigit():
                     invoice_number_format = invoice_number
                 else:
@@ -275,12 +281,14 @@ class IslrXmlWhDoc(models.Model):
                     else:
                         file_lines[partner_vat + concept_code] = [partner_vat, invoice_number_format,
                                                                   control_number_format,
-                                                                  date_ret.strftime('%d/%m/%Y'),
+                                                                  date_ret.strftime(
+                                                                      '%d/%m/%Y'),
                                                                   concept_code, base, percent]
                 else:
                     file_lines[invoice_number_format + concept_code] = [partner_vat, invoice_number_format,
                                                                         control_number_format,
-                                                                        date_ret.strftime('%d/%m/%Y'),
+                                                                        date_ret.strftime(
+                                                                            '%d/%m/%Y'),
                                                                         concept_code, base, percent]
 
             for index, value in file_lines.items():
@@ -290,7 +298,8 @@ class IslrXmlWhDoc(models.Model):
                 SubElement(detalle, "NumeroControl").text = value[2]
                 SubElement(detalle, "FechaOperacion").text = value[3]
                 SubElement(detalle, "CodigoConcepto").text = value[4]
-                SubElement(detalle, "MontoOperacion").text = str(round(value[5],2))
+                SubElement(detalle, "MontoOperacion").text = str(
+                    round(value[5], 2))
                 SubElement(detalle, "PorcentajeRetencion").text = str(value[6])
 
         return tostring(root, encoding="ISO-8859-1")
@@ -322,21 +331,21 @@ class IslrXmlWhLine(models.Model):
     base = fields.Float(
         'Cantidad base', required=True,
         help="Amount where a withholding is going to be computed from",
-        digits=dp.get_precision('Withhold ISLR'))
+        digits='Withhold ISLR')
     raw_base_ut = fields.Float(
-        'Cantidad de UT', digits=dp.get_precision('Withhold ISLR'),
+        'Cantidad de UT', digits='Withhold ISLR',
         help="Cantidad de UT")
     raw_tax_ut = fields.Float(
         'Impuesto retenido de UT',
-        digits=dp.get_precision('Withhold ISLR'),
+        digits='Withhold ISLR',
         help="Impuesto retenido de UT")
     porcent_rete = fields.Float(
         'Porcentaje de retención', required=True, help="Porcentaje de retención",
-        digits=dp.get_precision('Withhold ISLR'))
+        digits='Withhold ISLR')
     wh = fields.Float(
         'Cantidad retenida', required=True,
         help="Cantidad retenida a socio",
-        digits=dp.get_precision('Withhold ISLR'))
+        digits='Withhold ISLR')
     rate_id = fields.Many2one(
         'islr.rates', 'Tipo de persona',
         domain="[('concept_id','=',concept_id)]", required=False,
@@ -356,7 +365,7 @@ class IslrXmlWhLine(models.Model):
         help="Socio objeto de retención")
     sustract = fields.Float(
         'Sustraendo', help="Subtrahend",
-        digits=dp.get_precision('Withhold ISLR'))
+        digits='Withhold ISLR')
     islr_wh_doc_inv_id = fields.Many2one(
         'islr.wh.doc.invoices', 'Factura retenida',
         help="Facturas retenidas")
@@ -365,7 +374,8 @@ class IslrXmlWhLine(models.Model):
         ISLR_XML_WH_LINE_TYPES,
         string='Tipo', required=True, readonly=False,
         default='invoice')
-    company_id = fields.Many2one('res.company', string='Compañia', compute='get_company_id', store=True)
+    company_id = fields.Many2one(
+        'res.company', string='Compañia', compute='get_company_id', store=True)
     _rec_name = 'partner_id'
 
     @api.depends('account_invoice_id')
@@ -401,7 +411,8 @@ IslrXmlWhLine()
 class AccountInvoiceLine(models.Model):
     _inherit = "account.move.line"
 
-    wh_xml_id = fields.Many2one('islr.xml.wh.line', string='XML Id', default=0, help="XML withhold line id")
+    wh_xml_id = fields.Many2one(
+        'islr.xml.wh.line', string='XML Id', default=0, help="XML withhold line id")
 
 
 AccountInvoiceLine()

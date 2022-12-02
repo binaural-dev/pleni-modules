@@ -35,6 +35,7 @@ from odoo import exceptions
 
 class RepComprobanteIslr(models.AbstractModel):
     _name = 'report.3mit_withholding_islr.template_wh_islr'
+    _description = 'Report 3mit withholding ISLR template'
 
     @api.model
     def _get_report_values(self, docids, data=None):

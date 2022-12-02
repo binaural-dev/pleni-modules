@@ -11,6 +11,7 @@ from odoo.addons.website_sale_stock.models.sale_order import SaleOrder
 
 _logger = logging.getLogger(__name__)
 
+
 class SaleOrderInherit(models.Model):
     _inherit = "sale.order"
 
@@ -24,12 +25,14 @@ class SaleOrderInherit(models.Model):
             'discount': 0
         }
         for line in self.order_line:
-            price_list_items = self.env['product.pricelist.item'].search([('pricelist_id','=',pricelist.id),'|',('product_tmpl_id','=',line.product_id.product_tmpl_id.id),('product_id','=',line.product_id.id)], order= 'min_quantity asc')
+            price_list_items = self.env['product.pricelist.item'].search([('pricelist_id', '=', pricelist.id), '|', (
+                'product_tmpl_id', '=', line.product_id.product_tmpl_id.id), ('product_id', '=', line.product_id.id)], order='min_quantity asc')
             #real_qty = line.product_uom_qty / line.product_uom.factor if line.product_uom.uom_type == 'bigger' else line.product_uom_qty * line.product_uom.factor
             real_qty = line.product_uom_qty / line.product_uom.factor
             real_price = line.price_unit
             product_id = line.product_id.id
-            if real_price < 0: price_dict['discount'] += real_price * -1
+            if real_price < 0:
+                price_dict['discount'] += real_price * -1
             for item in price_list_items:
                 if real_qty >= item.min_quantity:
                     real_price = item.fixed_price
@@ -41,30 +44,31 @@ class SaleOrderInherit(models.Model):
                         price_dict[product_id]['quantity'] = real_qty
             total += real_price * real_qty
             subtotal += real_price * real_qty
-        
-        # conversion en bs
-        
-        rate = self.currency_rate
 
+        # conversion en bs
+
+        rate = self.currency_rate
 
         for key in price_dict:
             if key == 'discount':
                 discount += price_dict['discount']
             else:
                 if 'promotion_price' in price_dict[key]:
-                    difference = (price_dict[key]['baseline_price'] - price_dict[key]['promotion_price']) * price_dict[key]['quantity']
+                    difference = (price_dict[key]['baseline_price'] - price_dict[key]
+                                  ['promotion_price']) * price_dict[key]['quantity']
                     discount += difference
                 if 'baseline_price' in price_dict[key]:
-                    subtotal_without_taxes += price_dict[key]['baseline_price'] * price_dict[key]['quantity']
+                    subtotal_without_taxes += price_dict[key]['baseline_price'] * \
+                        price_dict[key]['quantity']
 
-        discount = round(discount,2)
+        discount = round(discount, 2)
 
         return {
             'subtotal': subtotal,
             'taxes': self.amount_tax,
             'total': self.amount_total,
             'main_currency_total': total / rate,
-            'main_currency': self.env['website'].search([('id','=',self.env.context.get('website_id'))]).company_id.currency_id,
+            'main_currency': self.env['website'].search([('id', '=', self.env.context.get('website_id'))]).company_id.currency_id,
             'discount': discount,
             'subtotal_without_taxes': subtotal_without_taxes
         }
@@ -85,7 +89,8 @@ class WSSaleOrder(MainSaleOrder):
             product_context)
         product = product_with_context.browse(int(product_id))
 
-        product_template_object = self.env['product.template'].search([('id', '=',  product.product_tmpl_id.id)])
+        product_template_object = self.env['product.template'].search(
+            [('id', '=',  product.product_tmpl_id.id)])
         product_template_uoms = product_template_object.product_uom_ids
 
         try:
@@ -210,8 +215,7 @@ class WSSaleOrder(MainSaleOrder):
                     "ValidationError occurs during tax compute. %s" % (e))
             if add_qty:
                 add_qty -= 1
-        
-       
+
         # compute new quantity
         if set_qty:
             quantity = set_qty
@@ -256,7 +260,7 @@ class WSSaleOrder(MainSaleOrder):
             for uom in product_template_uoms:
                 if order_line.product_uom.id == uom.id:
                     product_template_uoms_check = True
-            
+
             if not product_template_uoms_check and len(product_template_uoms) > 0:
                 order_line.update({
                     "product_uom": product_template_uoms[0]
@@ -271,7 +275,8 @@ class WSSaleOrder(MainSaleOrder):
                 values['product_uom'] = order_line.product_uom.id
 
             # Calculo correcto del precio
-            prices_list = self.env['product.pricelist.item'].search([('pricelist_id','=',self.pricelist_id.id),('product_id','=',product.id)], order='min_quantity asc')
+            prices_list = self.env['product.pricelist.item'].search(
+                [('pricelist_id', '=', self.pricelist_id.id), ('product_id', '=', product.id)], order='min_quantity asc')
             uom = self.env['uom.uom'].browse(values['product_uom'])
             uom_qty = float(values.get('product_uom_qty'))
             real_qty = uom_qty / uom.factor
@@ -281,7 +286,8 @@ class WSSaleOrder(MainSaleOrder):
                     if uom.factor == 1:
                         real_price = item.fixed_price
                         continue
-                    real_price = item.fixed_price/uom.factor if item.min_quantity != 0 else item.fixed_price
+                    real_price = item.fixed_price / \
+                        uom.factor if item.min_quantity != 0 else item.fixed_price
             if uom.factor > 1:
                 min_item = prices_list[0]
                 real_price = min_item.fixed_price / uom.factor
@@ -321,7 +327,8 @@ class WSSSaleOrder(SaleOrder):
         product_uom = False
         price_unit = 0.0
         if line_id:
-            order_line = self.env['sale.order.line'].search([('id', '=', line_id)])
+            order_line = self.env['sale.order.line'].search(
+                [('id', '=', line_id)])
             product_uom = order_line.product_uom
             price_unit = order_line.price_unit
 

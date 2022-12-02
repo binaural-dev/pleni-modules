@@ -9,6 +9,7 @@ from odoo.addons.http_routing.models.ir_http import url_for
 import logging
 logger = logging.getLogger(__name__)
 
+
 class Website(models.Model):
     _inherit = "website"
 
@@ -34,7 +35,8 @@ class Website(models.Model):
                 check_fpos = True
 
         # Test validity of the sale_order_id
-        sale_order = self.env['sale.order'].with_company(request.website.company_id.id).sudo().browse(sale_order_id).exists() if sale_order_id else None
+        sale_order = self.env['sale.order'].with_company(request.website.company_id.id).sudo(
+        ).browse(sale_order_id).exists() if sale_order_id else None
         # Do not reload the cart of this user last visit if the Fiscal Position has changed.
         if check_fpos and sale_order:
             fpos_id = (
@@ -53,8 +55,8 @@ class Website(models.Model):
             request.session['website_sale_current_pl'] = pricelist_id
             update_pricelist = True
         else:
-            pricelist_id = request.session.get('website_sale_current_pl') or self.get_current_pricelist().id
-
+            pricelist_id = request.session.get(
+                'website_sale_current_pl') or self.get_current_pricelist().id
 
         if not self._context.get('pricelist'):
             self = self.with_context(pricelist=pricelist_id)
@@ -62,19 +64,23 @@ class Website(models.Model):
         # cart creation was requested (either explicitly or to configure a promo code)
         if not sale_order:
             # TODO cache partner_id session
-            pricelist = self.env['product.pricelist'].browse(pricelist_id).sudo()
+            pricelist = self.env['product.pricelist'].browse(
+                pricelist_id).sudo()
             so_data = self._prepare_sale_order_values(partner, pricelist)
-            so_data.update({'currency_id':2})
-            sale_order = self.env['sale.order'].with_company(request.website.company_id.id).with_user(SUPERUSER_ID).create(so_data)
+            so_data.update({'currency_id': 2})
+            sale_order = self.env['sale.order'].with_company(
+                request.website.company_id.id).with_user(SUPERUSER_ID).create(so_data)
 
             # set fiscal position
             if request.website.partner_id.id != partner.id:
                 sale_order.onchange_partner_shipping_id()
-            else: # For public user, fiscal position based on geolocation
+            else:  # For public user, fiscal position based on geolocation
                 country_code = request.session['geoip'].get('country_code')
                 if country_code:
-                    country_id = request.env['res.country'].search([('code', '=', country_code)], limit=1).id
-                    sale_order.fiscal_position_id = request.env['account.fiscal.position'].sudo().with_company(request.website.company_id.id)._get_fpos_by_region(country_id)
+                    country_id = request.env['res.country'].search(
+                        [('code', '=', country_code)], limit=1).id
+                    sale_order.fiscal_position_id = request.env['account.fiscal.position'].sudo(
+                    ).with_company(request.website.company_id.id)._get_fpos_by_region(country_id)
                 else:
                     # if no geolocation, use the public user fp
                     sale_order.onchange_partner_shipping_id()
@@ -95,9 +101,10 @@ class Website(models.Model):
 
             # change the partner, and trigger the onchange
             sale_order.write({'partner_id': partner.id})
-            sale_order.with_context(not_self_saleperson=True).onchange_partner_id()
+            sale_order.with_context(
+                not_self_saleperson=True).onchange_partner_id()
             sale_order.write({'partner_invoice_id': partner.id})
-            sale_order.onchange_partner_shipping_id() # fiscal position
+            sale_order.onchange_partner_shipping_id()  # fiscal position
             sale_order['payment_term_id'] = self.sale_get_payment_term(partner)
 
             # check the pricelist : update it if the pricelist is not the 'forced' one
@@ -121,7 +128,8 @@ class Website(models.Model):
             if (flag_pricelist or recent_fiscal_position != fiscal_position) and sale_order.state == 'draft':
                 update_pricelist = True
         if code and code != sale_order.pricelist_id.code:
-            code_pricelist = self.env['product.pricelist'].sudo().search([('code', '=', code)], limit=1)
+            code_pricelist = self.env['product.pricelist'].sudo().search(
+                [('code', '=', code)], limit=1)
             if code_pricelist:
                 pricelist_id = code_pricelist.id
                 update_pricelist = True
@@ -136,6 +144,7 @@ class Website(models.Model):
             sale_order.write(values)
             for line in sale_order.order_line:
                 if line.exists():
-                    sale_order._cart_update(product_id=line.product_id.id, line_id=line.id, add_qty=0)
+                    sale_order._cart_update(
+                        product_id=line.product_id.id, line_id=line.id, add_qty=0)
 
         return sale_order

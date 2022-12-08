@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_frontend" inherit_id="web.assets_frontend" name="Ecommerce custom fields">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pleni_user/static/src/js/custom_signup.js"/>
+            <script type="text/javascript" src="/pleni_user/static/src/js/custom_my_details_portal.js"/>
+            <link rel="stylesheet" type="text/css" href="/pleni_user/static/src/scss/styles.scss"/>
+        </xpath>
+    </template>
+</odoo>

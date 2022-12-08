@@ -181,11 +181,11 @@
     <xpath expr="//tr[hasclass('border-black', 'o_subtotal')]" position="attributes">
       <attribute name="style">display: none;</attribute>
     </xpath>
-    <xpath expr="//t[@t-foreach='o.amount_by_group']" position="replace">
+    <!-- <xpath expr="//t[@t-foreach='o.amount_by_group']" position="replace">
       <t name="custom_replaced">
         <tr style="display: none"></tr>
       </t>
-    </xpath>
+    </xpath> -->
     <xpath expr="//div[hasclass('clearfix')]" position="after">
       <div class="col-xs" style="font-size: medium;">
         <p t-if="o.invoice_payment_term_id">

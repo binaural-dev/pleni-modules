@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pleni_cart_pleni_cart,pleni_cart.pleni_cart,model_pleni_cart_pleni_cart,base.group_user,1,1,1,1

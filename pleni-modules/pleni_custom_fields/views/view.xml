@@ -16,7 +16,7 @@
     </field>
   </record>
 
-  <record id="view_account_move_date_delivery" model="ir.ui.view">
+  <!-- <record id="view_account_move_date_delivery" model="ir.ui.view">
     <field name="name">view.account.move.date.delivery</field>
     <field name="model">account.move</field>
     <field name="inherit_id" ref="3mit_account_advance_payment.account_invoice_after_rate" />
@@ -29,7 +29,7 @@
         </div>
       </xpath>
     </field>
-  </record>
+  </record> -->
 
   <!-- TODO: Improve -->
   <record id="inherit_view_picking_form" model="ir.ui.view">

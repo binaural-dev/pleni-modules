@@ -9,10 +9,7 @@
         "base",
         'contacts',
         "base_vat",
-        "3mit_validation_res_partner",
-        '3mit_validation_rif_res_company', 
         'pleni_custom_fields',
-        '3mit_grupo_localizacion',
         'auth_signup'
     ],
     # always loaded

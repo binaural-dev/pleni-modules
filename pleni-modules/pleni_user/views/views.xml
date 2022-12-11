@@ -1,6 +1,6 @@
 <odoo>
   <data>
-       <record id="view_contacts_id_fields" model="ir.ui.view">
+       <!-- <record id="view_contacts_id_fields" model="ir.ui.view">
             <field name="name">view.contacts.id.fields</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="3mit_validation_res_partner.view_res_partner_rif"/>
@@ -12,18 +12,18 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
             </field>
-        </record>
+        </record> -->
         <record id="view_res_company_rif_invisible" model="ir.ui.view">
             <field name="name">view.res.company.rif.invisible</field>
             <field name="model">res.partner</field>
-            <field name="inherit_id" ref="3mit_validation_rif_res_company.view_res_partner_rif"/>
+            <field name="inherit_id" ref="pleni_custom_fields.view_res_partner_custom_fields"/>
             <field name="arch" type="xml">
                     <xpath expr="//field[@name='rif']" position="attributes">
                         <attribute name="invisible">1</attribute>
                     </xpath>
             </field>
         </record>
-        <record id="view_contacts_location_fields" model="ir.ui.view">
+        <!-- <record id="view_contacts_location_fields" model="ir.ui.view">
             <field name="name">view.contacts.location.fields</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="3mit_ve_dpt.res_partner_view_municipality_parish"/>
@@ -35,7 +35,7 @@
                     <attribute name="required">1</attribute>
                 </xpath>
             </field>
-        </record>
+        </record> -->
         <record id="view_contacts_required_fields" model="ir.ui.view">
             <field name="name">view.contacts.required.fields</field>
             <field name="model">res.partner</field>

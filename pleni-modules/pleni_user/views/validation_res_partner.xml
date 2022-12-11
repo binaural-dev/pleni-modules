@@ -6,9 +6,9 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//sheet/group/group[1]/field[@name='vat']" position="after">
+                <!-- <xpath expr="//sheet/group/group[1]/field[@name='vat']" position="after">
                     <field name="rif" placeholder="Ej.: J-012345678" string="RIF" attrs="{'readonly': [('parent_id','!=',False)],'invisible': ['|',('loc_ven', '=', False),('people_type_company','=','pjnd')],'required': [('company_type', '=', 'company'),('people_type_company','=','pjdo'), ('loc_ven','=',True)]}"/>
-                </xpath>
+                </xpath> -->
                 <xpath expr="//label[@for='street']" position="replace">
                     <label for="street" string="Dirección Fiscal"/>
                 </xpath>

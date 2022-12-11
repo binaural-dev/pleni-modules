@@ -13,7 +13,7 @@
                 </xpath>
             </field>
         </record> -->
-        <record id="view_res_company_rif_invisible" model="ir.ui.view">
+        <!-- <record id="view_res_company_rif_invisible" model="ir.ui.view">
             <field name="name">view.res.company.rif.invisible</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="pleni_custom_fields.view_res_partner_custom_fields"/>
@@ -22,7 +22,7 @@
                         <attribute name="invisible">1</attribute>
                     </xpath>
             </field>
-        </record>
+        </record> -->
         <!-- <record id="view_contacts_location_fields" model="ir.ui.view">
             <field name="name">view.contacts.location.fields</field>
             <field name="model">res.partner</field>
@@ -41,7 +41,7 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='type']" position="before">
+                <!-- <xpath expr="//field[@name='type']" position="before">
                     <label for="document_type" string="Documento de Identidad" attrs="{'invisible':['|',('company_type', '=', 'company'),
                     ('loc_ven', '=', False)]}"/>
                     <div class="o_address_format">
@@ -52,8 +52,8 @@
                         <field name="identification_document" class="o_address_city" style="width:50%%" placeholder="Ej. 19763505" attrs="{'required': [('company_type', '=', 'person'),
                         ('loc_ven', '=', True)], 'invisible':['|',('company_type', '=', 'company'), ('loc_ven', '=', False)]}"/>
                     </div>
-                </xpath>
-                <xpath expr="//sheet/group/group[1]/field[@name='vat']" position="after">
+                </xpath> -->
+                <!-- <xpath expr="//sheet/group/group[1]/field[@name='vat']" position="after">
                     <label for="rif_type" string="RIF" attrs="{'invisible': ['|',('loc_ven', '=', False),
                             ('people_type_company','=','pjnd')]}"/>
                     <div class="oe_inline">
@@ -66,7 +66,7 @@
                             ('people_type_company','=','pjnd')],'required': [('company_type', '=', 'company'),('people_type_company','=','pjdo'), ('loc_ven','=',True)]}"/>
                         </div>
                     </div>
-                </xpath>
+                </xpath> -->
                 <xpath expr="//field[@name='name']" position="attributes">
                     <attribute name="required">1</attribute>
                     <attribute name="placeholder">Nombre Razón Social</attribute>

@@ -15,7 +15,6 @@ jobs:
           repository: binaural-dev/pleni2
           ref: staging
           token: ${{ secrets.PLENI2_TOKEN_GITHUB }}
-
       - name: Pull & update submodules recursively
         run: |
           git submodule update --init --recursive

@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+
+        <record id="view_wh_group_islr_tree" model="ir.ui.view">
+            <field name="name">wh.islr.group.tree</field>
+            <field name="model">wh.islr.group</field>
+            <field name="arch" type="xml">
+                <tree string="Retención de ISLR" create="false" edit="false">
+                    <field name="invoice_ids" widget="many2many_tags"/>
+                    <field name="retentions" widget="many2many_tags"/>
+                    <field name="partner_id" readonly="1" force_save="1"/>
+                    <field name="fecha_contable"/>
+                    <field name="number_ret"  readonly="1" force_save="1"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_wh_group_islr_form" model="ir.ui.view">
+            <field name="name">wh.islr.group.form</field>
+            <field name="model">wh.islr.group</field>
+            <field name="arch" type="xml">
+                <form string="Retención de ISLR Proveedores" options="{'no_quick_create': True}" create="false">
+                    <header>
+                        <button name="action_confirm" type="object" states="draft" string="Confirmar"/>
+                        <button name="update_lines" type="object" states="draft" string="Actualizar lineas retención"/>
+                        <button name="set_to_draft" type="object" states="confimed" string="Volver a Borrador"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed" statusbar_colors="{&quot;confirmed&quot;:&quot;blue&quot;}"/>
+                    </header>
+                    <group colspan="4" col="6">
+                        <field name="invoice_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('state','!=','draft')]}"/>
+                        <field name="partner_id" readonly="1" force_save="1"/>
+                        <field name="fecha_contable" attrs="{'readonly': [('state','!=','draft')]}"/>
+                        <field name="number_ret"  readonly="1" force_save="1"/>
+                    </group>
+                    <group>
+                        <field name="retentions" nolabel="1" readonly="1">
+                            <tree editable="false" open="false" >
+                                <field name="number" />
+                                <field name="date_ret" />
+                                <field name="partner_id" />
+                                <field name="amount_total_ret" />
+                                <field name="currency_id" />
+                                <field name="state" />
+                            </tree>
+                        </field>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_wh_group_islr_search" model="ir.ui.view">
+            <field name="name">wh.islr.group.search</field>
+            <field name="model">wh.islr.group</field>
+            <field name="arch" type="xml">
+                <search string="Employees">
+                    <field name="invoice_ids" string="Factura retenida"/>
+                </search>
+             </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_account_wh_group_islr_supplier">
+            <field name="name">Comprobante de ISLR Proveedores</field>
+            <field name="res_model">wh.islr.group</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('company_id','=',allowed_company_ids[0])]</field>
+            <field name="help">Con el Proveedor de retención de ISLR puede crear y administrar la retención de documentos emitidos a sus clientes. Odoo también puede generar retenciones de documentos automáticamente de las facturas. Para la retención debe agregar las facturas, procesarlas y luego validar el documento.</field>
+        </record>
+
+
+        <menuitem id="menu_islr_retention_suppliers" name="Retención de ISLR" parent="account.menu_finance_payables" sequence="20"/>
+        <menuitem id="menu_action_account_wh_group_islr_supplier" name="Comprobante de ISLR al Proveedor (VE)" parent="menu_islr_retention_suppliers" action="action_account_wh_group_islr_supplier" sequence="2"/>
+    </data>
+</odoo>

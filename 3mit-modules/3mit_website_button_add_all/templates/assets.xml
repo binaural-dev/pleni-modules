@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="add_cart_assets_frontend" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/3mit_website_button_add_all/static/src/js/website_add_cart.js"></script>
+            <link rel="stylesheet" href="/3mit_website_button_add_all/static/src/scss/grid_config.scss"/>
+        </xpath>
+    </template>
+</odoo>

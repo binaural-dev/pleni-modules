@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!-- Vista para ocultar la columna de la tasa en la vista tree de monedas y agregar la nueva columna -->
+        <record id="view_product_new_id" model="ir.ui.view">
+            <field name="name">Ocultar el widget de Tasas en el formulario de Monedas</field>
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_form"/>
+            <field name="arch" type="xml">
+                <!-- Se oculta la columna de la tasa -->
+                <xpath expr="//field[@name='rate']" position="after">
+                    <field name="make_visible" invisible="1"/>
+                    <field name="new_rate" digits="[12,6]" readonly="True" attrs="{'invisible':[('make_visible','=',False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='rate']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('make_visible','=',True)]}</attribute>
+                </xpath>
+                <!-- Se crea una nueva columna de tasa almacenada en el modelo -->
+
+            </field>
+        </record>
+
+        <!--Vista para crear columna de descripcion a la vista tree de tasas -->
+        <record id="view_rates_new_field" model="ir.ui.view">
+            <field name="name">Agregar columna de descripcion a las tasas</field>
+            <field name="model">res.currency.rate</field>
+            <field name="inherit_id" ref="base.view_currency_rate_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='rate']" position="after">
+                    <field name="description_rate"/>
+                </xpath>
+                <xpath expr="//field[@name='rate']" position="before">
+                    <field name="loc_ven" invisible="1"/>
+                    <field name="rate_divided" string="Tasa" attrs="{'invisible': [('loc_ven', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='rate']" position="attributes">
+                    <field name="loc_ven" invisible="1"/>
+                    <attribute name="attrs">{'readonly': [('loc_ven', '=', True)]}</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_hide_and_add_new_rate" model="ir.ui.view">
+            <field name="name">Reemplazar la columna de tasa por una nueva</field>
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='rate']" position="attributes">
+                    <field name="loc_ven" invisible="1"/>
+                    <attribute name="attrs">{'invisible': [('loc_ven', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='rate']" position="after">
+                    <field name="loc_ven" invisible="1"/>
+                    <field name="new_rate" digits="[12,6]" readonly="True" attrs="{'invisible': [('loc_ven', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

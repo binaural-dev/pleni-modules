@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="asset_frontend_mobile" name="asset_frontend_mobile" inherit_id="website.assets_frontend">
+            <xpath expr="//link[last()]" position="after">
+                <link rel="stylesheet" type="text/scss" href="/pleni_wishlist/static/src/scss/style.scss"/>
+            </xpath>
+        </template>
+        <template id="add_cart_assets_frontend" inherit_id="website.assets_frontend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/pleni_wishlist/static/src/js/website_add_cart.js"></script>
+                <link rel="stylesheet" href="/pleni_wishlist/static/src/scss/grid_config.scss"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

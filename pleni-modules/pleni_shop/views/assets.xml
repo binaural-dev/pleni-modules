@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_frontend_ecommerce" inherit_id="web.assets_frontend" name="Ecommerce custom fields">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pleni_shop/static/src/js/custom_handleAdd.js"/>
+            <script type="text/javascript" src="/pleni_shop/static/src/js/custom_onClickAddCartJson.js"/>
+            <script type="text/javascript" src="/pleni_shop/static/src/js/custom_onChangeQuantity.js"/>
+            <script type="text/javascript" src="/pleni_shop/static/src/js/custom_onChangeUomSelection.js"/>
+            <script type="text/javascript" src="/pleni_shop/static/src/js/custom_MultiUOMWebsiteSale.js"/>
+            <script type="text/javascript" src="/pleni_shop/static/src/js/custom_quickView.js"/>
+        </xpath>
+    </template>
+
+    <template id="multi_uom_assets_frontend" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pleni_shop/static/src/js/website_sale_delivery_date.js"></script>
+        </xpath>
+    </template>
+</odoo>

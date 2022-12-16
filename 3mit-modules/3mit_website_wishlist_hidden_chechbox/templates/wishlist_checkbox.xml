@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<template id="wishlist_hidden_checkbox" inherit_id="website_sale_wishlist.product_wishlist">
+        <xpath expr="//div[hasclass('checkbox')]" position="replace">
+			<div class="checkbox" style="display: none;">
+                <label class='text-muted'><input type="checkbox" id='b2b_wish' value="1" class="mr8" checked="checked"/>Add product to my cart but keep it in my wishlist</label>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

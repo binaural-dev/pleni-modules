@@ -1,0 +1,265 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* 3mit_custom_signup_ecommerce
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e-20211018\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-02 18:19+0000\n"
+"PO-Revision-Date: 2022-05-02 18:19+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+msgid "+1 (650) 691-3277"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "City"
+msgstr "Ciudad"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Company"
+msgstr "Compañía"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Company type"
+msgstr "Tipo de Compañía"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Country"
+msgstr "País"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model:ir.model.fields,field_description:3mit_custom_signup_ecommerce.field_res_users__display_name
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Display Name"
+msgstr "Mostrar nombre"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Document type"
+msgstr "Tipo de Documento"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Extranjero"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: model:ir.model.fields,field_description:3mit_custom_signup_ecommerce.field_res_users__id
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "ID"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Identification document (I.D.)"
+msgstr "Documento de Identidad"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Individual"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "J-123456789"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: model:ir.model.fields,field_description:3mit_custom_signup_ecommerce.field_res_users____last_update
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Last Modified on"
+msgstr "Modificada por última vez"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Municipality"
+msgstr "Municipio"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "PJDO Persona Jurídica Domiciliada"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "PJND Persona Jurídica No Domiciliada"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "PNNR Persona Natural No Residente"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "PNRE Persona Natural Residente"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Parish"
+msgstr "Parroquia"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Pasaporte"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: code:addons/3mit_custom_signup_ecommerce/controllers/main.py:0
+#, python-format
+msgid "Passwords do not match; please retype them."
+msgstr "Las contraseñas no coinciden; por favor reescríbalas."
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Person type"
+msgstr "Tipo de Persona"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "RIF"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "State"
+msgstr "Estado"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Street"
+msgstr "Calle"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Street 2"
+msgstr "Calle 2"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Telephone"
+msgstr "Teléfono"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Phone"
+msgstr "Teléfono"
+
+#. module: 3mit_custom_signup_ecommerce
+#: code:addons/3mit_custom_signup_ecommerce/controllers/main.py:0
+#, python-format
+msgid "The form was not properly filled in."
+msgstr "El formulario no ha sido llenado apropiadamente."
+
+#. module: 3mit_custom_signup_ecommerce
+#: model:ir.model,name:3mit_custom_signup_ecommerce.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Venezolano"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "ZIP"
+msgstr "Código Postal"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Zip / Postal Code"
+msgstr "Código Postal"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Your Email"
+msgstr "Tu correo electrónico"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Your Name"
+msgstr "Tu nombre"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Name"
+msgstr "Nombre"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "State / Province"
+msgstr "Estado"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "e.g. John Doe"
+msgstr ""
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Confirm Password"
+msgstr "Confirmar contraseña"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Password"
+msgstr "Contraseña"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Reference Point"
+msgstr "Punto de referencia"
+
+#. module: 3mit_custom_signup_ecommerce
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.login_custom
+#: model_terms:ir.ui.view,arch_db:3mit_custom_signup_ecommerce.my_details_custom
+msgid "Dispatcher Instructions"
+msgstr "Instrucciones para el despachador"

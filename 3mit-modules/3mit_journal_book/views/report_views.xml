@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="report.paperformat" id="paperformat_journal_book">
+            <field name="name">Diario Legal</field>
+            <field name="default" eval="True"/>
+            <field name="format">Letter</field>
+            <field name="orientation">Portrait</field>
+            <field name="page_width">0</field>
+            <field name="page_height">0</field>
+            <field name="margin_top">60</field>
+            <field name="margin_right">6</field>
+            <field name="margin_bottom">6</field>
+            <field name="margin_left">6</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">55</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report id="action_report_journal_book"
+                model="journal.book.wizard"
+                string="Diario Legal"
+                report_type="qweb-pdf"
+                name="3mit_journal_book.journal_book_report"
+                paperformat="3mit_journal_book.paperformat_journal_book"
+                menu="False"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template inherit_id='portal.portal_my_details' id="portal_my_details" name="Inherit portal detail">
+        <xpath expr='//button[@type="submit"]' position='before'>
+            <div class="clearfix">
+                <h4>Push Notification(s)</h4>
+                <div class="p-3">
+                  <input type="checkbox" id="register_all_notification" name="register_all_notification" value="true" t-att-data-check="partner.register_all_notification"/>
+                  <label for="register_notification"> All Device(s)</label><br /><span style="color: red;font-style: italic;" data-toggle="tooltip" data-placement="bottom" title="Enable/Disable notification to all device(s) regardless of notification settings of active/inactive notification of device.">(Enable/Disable notification to all device(s) regardless of notification settings of active/inactive notification of device.)</span><br />
+                  <div class="d-none">
+                      <input type="checkbox" id="register_specific_notification" name="register_specific_notification" value="true" t-att-data-check="partner.check_specific_firebase()"/>
+                      <label for="register_notification">Active Device(s)</label><br /><span style="color: red;font-style: italic;" data-toggle="tooltip" data-placement="bottom" title="Enable/Disable notification to only those device(s) having notification settings that are active on that device.">(Enable/Disable notification to only those device(s) having notification settings that are active on that device.)</span><br />
+                  </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.base.setup</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="0" />
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='languages']" position="before">
+                    <div id="user_wise_push_notification">
+                        <h2>User Wise Push Notification</h2>
+                        <div class='row mt16 o_settings_container' name="languages_setting_container">
+                            <div class='col-xs-12 col-md-6 o_setting_box' id="languages_setting">
+                                <div class='o_setting_right_pane'>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <label for="user_wise_notification_apiKey" class="col-6 col-lg-6 o_light_label" />
+                                            <field name="user_wise_notification_apiKey" class="oe_inline" />
+                                            <label for="user_wise_notification_authDomain" class="col-6 col-lg-6 o_light_label" />
+                                            <field name="user_wise_notification_authDomain" class="oe_inline" />
+                                            <label for="user_wise_notification_databaseURL" class="col-6 col-lg-6 o_light_label" />
+                                            <field name="user_wise_notification_databaseURL" class="oe_inline" />
+                                            <label for="user_wise_notification_projectId" class="col-6 col-lg-6 o_light_label" />
+                                            <field name="user_wise_notification_projectId" class="oe_inline" />
+                                            <label for="user_wise_notification_serverToken" class="col-6 col-lg-6 o_light_label" />
+                                            <field name="user_wise_notification_serverToken" class="oe_inline" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='col-xs-12 col-md-6 o_setting_box' id="languages_setting">
+                                <div class='o_setting_right_pane'>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <label for="user_wise_notification_storageBucket" class="col-6 col-lg-6 o_light_label" />
+                                            <field name="user_wise_notification_storageBucket" class="oe_inline" />
+                                            <label for="user_wise_notification_messagingSenderId" class="col-6 col-lg-6 o_light_label" />
+                                            <field name="user_wise_notification_messagingSenderId" class="oe_inline" />
+                                            <label for="user_wise_notification_appId" class="col-6 col-lg-6 o_light_label" />
+                                            <field name="user_wise_notification_appId" class="oe_inline" />
+                                            <label for="user_wise_notification_measurementId" class="col-6 col-lg-6 o_light_label" />
+                                            <field name="user_wise_notification_measurementId" class="oe_inline" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form.firebase</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Firebase Record" groups="base.group_no_one">
+                    <field name="ref_firebase" mode="tree">
+                        <tree create="0" edit="0">
+                            <field name="ip" />
+                            <field name="browser" />
+                            <field name="port" />
+                            <field name="platform" />
+                            <field name="isactive"/>
+                            <field name="token"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="open_push_wizard" model="ir.actions.server" >
+        <field name="name">Push Notification</field>
+        <field name="model_id" ref="user_base_firebase.model_push_notification_wizard"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_open_wizard()</field>
+    </record>
+</odoo>

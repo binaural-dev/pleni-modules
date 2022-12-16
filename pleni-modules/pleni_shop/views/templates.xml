@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- Impromevents of shop -->
+	<template id="website_product_unity" inherit_id="website_sale.products_item">
+    <xpath expr="//form/div[2]/div[1]/div[1]/span[1]" position="after">
+			<span> / </span>
+      <span t-esc="combination_info['uom_id']"></span>
+    </xpath>
+
+    <xpath expr="//div[hasclass('product_price')]" position="replace">
+      <div class="product_price" itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" >
+        <del t-attf-class="text-danger mr-2 {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="white-space: nowrap; font-size: small;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+        <t t-if="not combination_info['wholesale_price']">
+          <span t-if="combination_info['price']" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+          <span itemprop="price" style="display:none;" t-esc="combination_info['price']" />
+          <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name" />
+          <span style="font-size: 10px;"> / </span>
+          <span style="font-size: 10px;" t-esc="combination_info['uom_id']"/>
+          <br/>
+          <br/>
+        </t>
+        <t t-else="">
+            <div style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+              <div class="badge badge-danger">
+                <span t-if="combination_info['discount_rate']" t-esc="combination_info['discount_rate']" style="font-size: 10px;"/>
+                <span style="font-size: 10px;">%</span>
+              </div>
+              <span style="white-space: nowrap;">
+                <span t-if="combination_info['price']" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" style="text-decoration:line-through; font-size: 10px;"/>
+                <span itemprop="price" style="display:none; text-decoration:line-through;" t-esc="combination_info['price']" />
+                <span itemprop="priceCurrency" style="display:none; text-decoration:line-through;" t-esc="website.currency_id.name" />
+                <span style="text-decoration:line-through; font-size: 10px;">/</span>
+                <span style="text-decoration:line-through; font-size: 10px;" t-esc="combination_info['uom_id']"></span>
+              </span>
+            </div>
+          </t>
+      </div>
+    </xpath>
+
+    <xpath expr="//div[hasclass('product_price')]" position="before">
+        <t t-if="not pricelist" t-set="combination_info" t-value="product._get_combination_info(combination, add_qty=add_qty or 1, pricelist=website_sale_order.pricelist_id)"/>
+        <div t-if="combination_info['wholesale_price']" class="product_price" itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
+          <del t-attf-class="text-danger mr-2 {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+          <span t-if="combination_info['wholesale_price']" class="item-price-shop" t-esc="combination_info['wholesale_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+          <span itemprop="price" style="display:none; font-size: 12px" t-esc="combination_info['wholesale_price']" />
+          <span itemprop="priceCurrency" style="display:none" t-esc="website.currency_id.name" />
+          <span  style="font-size: 10px; color: #E85C2E; font-weight: bold"> / </span>
+          <span t-esc="combination_info['uom_id']" class="item-uom-shop"></span>
+        </div>
+        <style>
+          @media (min-width: 980px) {
+            .item-price-shop {
+                font-size: 1.2em; 
+                color: #E85C2E; 
+                font-weight: bold
+            }
+
+            .item-uom-shop {
+                font-size: 0.9em; 
+                color: #E85C2E; 
+                font-weight: bold
+            }
+          }
+
+          @media (max-width: 980px) {
+            .item-price-shop {
+                font-size: 1em; 
+                color: #E85C2E; 
+                font-weight: bold
+            }
+
+            .item-uom-shop {
+                font-size: 0.9em; 
+                color: #E85C2E; 
+                font-weight: bold
+            }
+          }
+      </style>
+    </xpath> 
+  </template>
+  <template id="as_shop_product_label_height" inherit_id="website_sale.products_item">
+      <xpath expr="//div[hasclass('oe_product_image')]" position="before">
+          <style>
+              .o_wsale_products_grid_table_wrapper .oe_product .oe_product_image a span img{
+                  height: 13vh !important;
+              }
+
+              .o_wsale_products_grid_table_wrapper .oe_product .o_wsale_products_item_title a {
+                  width: 100%
+              }
+          </style>
+      </xpath>
+  </template>
+  <template id="o_quick_view_title_style" inherit_id="website_sale.products_item">
+      <xpath expr="//h6[hasclass('o_wsale_products_item_title')]/a[1]" position="replace">
+          <a itemprop="name" t-att-href="product_href" t-att-content="product.name" t-field="product.name" 
+              class="o_quick_view_title" t-att-data-product-product-id="product.product_variant_ids[0].id" 
+              t-att-data-product_template_id="product.id" title="Quick View" type="button" href=""/>
+      </xpath>
+      <xpath expr="//h6[hasclass('o_wsale_products_item_title')]/a[1]" position="after">
+          <script type="text/javascript">
+              document.querySelectorAll('.o_quick_view_title').forEach(function(element) {
+                  element.removeAttribute("href")
+                  element.text = element.text.substring(0,30);
+                  if (element.text.length === 30) {
+                      if (element.text.slice(-1) !== ' ') {
+                          element.text = element.text + '...'
+                      }
+                  }  
+              });
+          </script>
+      </xpath>
+    </template>
+
+    <template id="3mit_website_products_categories_inherit" inherit_id="website_sale.products_categories">
+      <xpath expr="//div[@id='wsale_products_categories_collapse']/ul[1]/li[1]" position="replace">
+        <li class="nav-item d-flex">
+          <a t-att-href="keep('/shop', category=0)" t-attf-class="nav-link #{'' if category else 'active'} o_not_editable" style="flex: 1; z-index: 1;">
+            <span style="width: 100%; white-space: nowrap;">Todos los productos</span>
+          </a>
+        </li>
+      </xpath>
+    </template>
+
+    <template id="3mit_website_option_collapse_categories_recursive_inherit" inherit_id="website_sale.option_collapse_categories_recursive">
+      <xpath expr="." position="replace">
+        <li class="nav-item d-flex flex-column pl-0 text-nowrap">
+          <t t-set="children" t-value="not search and c.child_id or c.child_id.filtered(lambda c: c.id in search_categories_ids)"/>
+          <i t-if="children" t-attf-class="text-primary fa #{'fa-chevron-down' if c.id in category.parents_and_self.ids else 'fa-chevron-right'}"
+              t-attf-title="#{'Unfold' if c.id in category.parents_and_self.ids else 'Fold'}"
+              t-attf-aria-label="#{'Unfold' if c.id in category.parents_and_self.ids else 'Fold'}" role="img"/>
+          <a t-att-href="keep('/shop/category/' + slug(c), category=0)" t-attf-class="nav-link #{'active' if c.id == category.id else ''}" style="flex: 1; z-index: 1;">
+              <span t-field="c.name" style="width: 100%; white-space: nowrap;"/>
+          </a>
+          <ul t-if="children" class="nav nav-pills flex-column nav-hierarchy" t-att-style="'display:flex; flex-direction: column; ' if c.id in category.parents_and_self.ids else 'display:none;'">
+              <t t-foreach="children" t-as="c">
+                  <t t-call="website_sale.option_collapse_categories_recursive"/>
+              </t>
+          </ul>
+        </li>
+      </xpath>
+    </template>
+
+    <template id="add_qty_input_inherit" inherit_id="website_sale.product_quantity">
+      <xpath expr="//input[@name='add_qty']" position="replace">
+			  <input type="text" class="form-control quantity" 
+          data-min="0" name="add_qty" t-att-value="'0.00'" disabled="disabled"/>
+      </xpath>
+    </template>
+
+    <template id="pricelist_hidden_input" inherit_id="website_sale.product">
+        <xpath expr="//input[@name='product_template_id']" position="after">
+          <input type="hidden" class="pricelist" name="pricelist" t-att-value="pricelist.id" />
+        </xpath>
+        <xpath expr="//a[@id='add_to_cart']" position="replace">
+          <a role="button" id="add_to_cart" 
+            class="btn btn-primary btn-lg mt16 js_check_product a-submit d-block d-sm-inline-block" 
+            href="#"><i class="fa fa-shopping-cart"/> 
+            Agregar $0.00
+          </a>
+        </xpath>
+    </template>
+
+    <template id="product_price_has_discount" inherit_id="website_sale.product_price">
+      <xpath expr="//h4[1]/span[1]" position="replace">
+			  <span t-attf-class="text-danger oe_default_price {{'' if (combination_info['has_discounted_price'] or combination_info['show_discount']) else 'd-none'}}" style="text-decoration: line-through; white-space: nowrap;"
+          t-esc="combination_info['list_price']" 
+          t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+        />
+      </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_order_custom_uom_domain" model="ir.ui.view">
+            <field name="name">Custom domain for UOM field</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="before">
+                    <field name="product_uom_domain" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+                    <attribute name="domain">[('id', 'in', product_uom_domain)]</attribute>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

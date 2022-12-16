@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+        <record id="account_journal_form_wh" model="ir.ui.view">
+            <field name="name">account.journal.form.wh</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='bank_account']//group" position="inside">
+                    <field name="loc_ven" invisible="1"/>
+                    <group string="Información IVA e ISLR" attrs="{'invisible':[('loc_ven','=',False)]}">
+                        <field name="is_iva_journal" widget="boolean_toggle" string="Es Diario de IVA" attrs="{'invisible':[('loc_ven','=',False)]}"/>
+                        <field name="is_islr_journal" widget="boolean_toggle" string="Es Diario de ISLR" attrs="{'invisible':[('loc_ven','=',False)]}"/>
+                        <field name="default_iva_account" attrs="{'invisible': ['|',('is_iva_journal', '=', False),('loc_ven','=',False)], 'required': [('is_iva_journal', '=', True)]}" />
+                        <field name="default_islr_account" attrs="{'invisible': ['|',('is_islr_journal', '=', False),('loc_ven','=',False)], 'required': [('is_islr_journal', '=', True)]}" />
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_move_form_add_rate_usd" model="ir.ui.view">
+            <field name="name">account.move.form.add.rate.usd</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="priority">37</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@id='header_right_group']" position="inside">
+                    <field name="loc_ven" invisible="1"/>
+                    <field name="currency_bs_rate" readonly="1" force_save="1" attrs="{'invisible': [('loc_ven', '=', False)]}"/>
+                    <field name="currency_bs_date" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

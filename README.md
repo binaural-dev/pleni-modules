@@ -1,1 +1,1 @@
-# pleni-modules  
+# odoo-pleni

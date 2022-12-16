@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="price_bs_2" inherit_id="payment.payment_tokens_list">
+        <xpath expr="//span[@class='payment_option_name']" position="after">
+            <t t-set="amount_usd" t-value="website_sale_order.amount_total" />
+            <t t-set="exchange" t-value="website_sale_order.amount_total/website_sale_order.currency_rate" />
+            <input type="hidden" class="price_bs_input" t-att-value="exchange"/>
+            <input type="hidden" class="price_usd_input" t-att-value="amount_usd"/>
+            <style>
+                .tag-price-bs {
+                    padding-right: 0.6em;
+                    padding-left: 0.6em;
+                    border-radius: 10rem;
+                    color: #212529;
+                    background-color: #ffc107;
+                }
+            </style>
+            <script type="text/javascript">
+                Array.from(document.getElementsByClassName("payment_option_name")).forEach( element => {
+                    if (['Pago Móvil', 'Punto de Venta','Transferencia Bancaria en Bs'].includes(element.textContent.trim().split('\n')[0])) {
+                        let priceFloat = parseFloat(document.getElementsByClassName("price_bs_input")[0].value).toFixed(2).replace(".", ",")
+                        if (!element.innerHTML.includes(priceFloat)) {
+                            element.innerHTML = element.innerHTML + ' ' +  '<span class="tag-price-bs"><b>Bs. </b>' + '<b>' + priceFloat + '</b></span>'
+                        }
+                    } else if (['Efectivo', 'Transferencia bancaria en US$','Zelle'].includes(element.textContent.trim().split('\n')[0])) {
+                        let priceFloat = parseFloat(document.getElementsByClassName("price_usd_input")[0].value).toFixed(2).replace(".", ",")
+                        if (!element.innerHTML.includes(priceFloat)) {
+                            element.innerHTML = element.innerHTML + ' ' +  '<span class="tag-price-bs"><b>$ </b>' + '<b>' + priceFloat + '</b></span>'
+                        }
+                    }
+                })
+            </script>
+        </xpath>
+    </template>
+	<template id="custom_payments_template" inherit_id="website_sale.payment">
+        <xpath expr="//div[hasclass('oe_cart')]/div[hasclass('card')]" position="after">
+			<div class="card mt-5" id="delivery_date_div">
+                <div class="card-header text-white" style="background-color: #E4AE25; font-size: 14px; font-weight:bold">
+                    2) Detalles de entrega
+                </div>
+                <div class="card-body" id="delivery_date_client_notes">  
+                    <div class="row">      
+                        <div class="col-lg-4">
+                            <div><b>Fecha de Entrega:</b></div>
+                            <input id="delivery_date" type="date" name="delivery_date" class="form-control o_website_form_input o_website_form_date address-inline"/>
+                            <p id="date-name"></p>
+                        </div>
+                        <div class="col-lg-4">
+                            <div><b> Bloque horario de preferencia:</b></div>
+                            <select id="delivery_hour" name="delivery_hour" class="form-control s_website_form_input">
+                                <option id="select-am" value="am" selected="True">AM</option>
+                                <option id="select-pm" value="pm">PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pt-3">      
+                        <div class="col-lg-12">
+                            <div><b>Observaciones:</b></div>
+                            <textarea id="client_notes" type="text" class="form-control s_website_form_input" name="client_notes" rows="6"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                let today = new Date().toLocaleString("en-US", {timeZone: "America/Caracas"});
+                let todayTimeZone = new Date(today);
+                let todayHour = todayTimeZone.getHours();
+                let todayMinutes = todayTimeZone.getMinutes();
+                let tomorrow;
+                let tomorrow_date;
+                if (todayHour > 12) {
+                    document.getElementById("select-am").setAttribute('selected', false);
+                    document.getElementById("select-am").setAttribute('disabled', true);
+                    document.getElementById("select-pm").setAttribute('selected', true);
+                }
+                if (todayHour > 16 ) {
+                    if (todayMinutes > 0) {
+                        tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 2);
+                        tomorrow_date = new Date(tomorrow).toLocaleDateString("en-US", {timeZone: "America/Caracas"}).split("/")
+                        let dayInt = parseInt(tomorrow_date[1])
+                        if (10 > dayInt) {
+                            tomorrow_date[1] = "0" + dayInt
+                        }
+                        tomorrow_date = tomorrow_date[2]+"-"+tomorrow_date[0]+"-"+ tomorrow_date[1]
+                        let dateName = new Date(tomorrow);
+                        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        document.getElementById("date-name").innerHTML = dateName.toLocaleDateString('es-MX', options)
+                    }
+                } else {
+                    tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 1);
+                    tomorrow_date = new Date(tomorrow).toLocaleDateString("en-US", {timeZone: "America/Caracas"}).split("/")
+                    let dayInt = parseInt(tomorrow_date[1])
+                    if (10 > dayInt) {
+                        tomorrow_date[1] = "0" + dayInt
+                    }
+                    tomorrow_date = tomorrow_date[2]+"-"+tomorrow_date[0]+"-"+ tomorrow_date[1]
+                    let dateName = new Date(tomorrow);
+                    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    document.getElementById("date-name").innerHTML = dateName.toLocaleDateString('es-MX', options)
+                    if (todayHour > 12) {
+                        document.getElementById("select-am").setAttribute('selected', false);
+                        document.getElementById("select-am").setAttribute('disabled', true);
+                        document.getElementById("select-pm").setAttribute('selected', 'selected');
+                    }
+                }
+
+                document.getElementsByName("delivery_date")[0].setAttribute('min', tomorrow_date);
+                document.getElementsByName("delivery_date")[0].value = tomorrow_date
+
+                document.getElementsByName("delivery_date")[0].addEventListener('change', (event) => {
+                    let dateFormat = event.target.value.replace(/-/g,"/")
+                    let date = new Date(dateFormat);
+                    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    document.getElementById("date-name").innerHTML = date.toLocaleDateString('es-ES', options)
+
+                    let today = new Date().toLocaleString("en-US", {timeZone: "America/Caracas"});
+                    let todayTimeZone = new Date(today);
+                    let after_tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 1);
+                    let after_tomorrow_date = new Date(after_tomorrow).toLocaleDateString("en-US", {timeZone: "America/Caracas"}).split("/")
+                    let dayInt = parseInt(after_tomorrow_date[1])
+                    if (10 > dayInt) {
+                        after_tomorrow_date[1] = "0" + dayInt
+                    }
+                    after_tomorrow_date = after_tomorrow_date[2]+"-"+after_tomorrow_date[0]+"-"+ after_tomorrow_date[1]
+                    let after_date = new Date(after_tomorrow);
+
+                    if (date > after_date) {
+                        document.getElementById("select-am").setAttribute('selected', '');
+                        document.getElementById("select-am").removeAttribute('disabled');
+                        document.getElementById("select-pm").removeAttribute('selected');
+                    }
+                });
+            </script>
+        </xpath>
+
+        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']/h3[1]" position="replace">
+            <div class="card-header text-white mt-5" style="background-color: #E4AE25; font-size: 14px; font-weight:bold">
+                3) Métodos de pago
+            </div>
+            <style>
+                .text-muted.ml-3 {
+                    height: 5px;
+                }
+
+                form .card {
+                    margin-bottom: 20px;
+                }
+            </style>
+        </xpath>
+
+        <xpath expr="//div[hasclass('oe_cart')]/div[@class='card']/div[1]" position="before">
+            <div class="card-header text-white" style="background-color: #E4AE25; font-size: 14px; font-weight:bold">
+                1) Dirección de entrega
+            </div>
+        </xpath>
+
+    </template>
+
+</odoo>

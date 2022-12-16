@@ -1,72 +1,10 @@
 <odoo>
   <data>
-       <!-- <record id="view_contacts_id_fields" model="ir.ui.view">
-            <field name="name">view.contacts.id.fields</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="3mit_validation_res_partner.view_res_partner_rif"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='nationality']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='identification_id']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
-            </field>
-        </record> -->
-        <!-- <record id="view_res_company_rif_invisible" model="ir.ui.view">
-            <field name="name">view.res.company.rif.invisible</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="pleni_custom_fields.view_res_partner_custom_fields"/>
-            <field name="arch" type="xml">
-                    <xpath expr="//field[@name='rif']" position="attributes">
-                        <attribute name="invisible">1</attribute>
-                    </xpath>
-            </field>
-        </record> -->
-        <!-- <record id="view_contacts_location_fields" model="ir.ui.view">
-            <field name="name">view.contacts.location.fields</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="3mit_ve_dpt.res_partner_view_municipality_parish"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='municipality_id']" position="attributes">
-                    <attribute name="required">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='parish_id']" position="attributes">
-                    <attribute name="required">1</attribute>
-                </xpath>
-            </field>
-        </record> -->
         <record id="view_contacts_required_fields" model="ir.ui.view">
             <field name="name">view.contacts.required.fields</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <!-- <xpath expr="//field[@name='type']" position="before">
-                    <label for="document_type" string="Documento de Identidad" attrs="{'invisible':['|',('company_type', '=', 'company'),
-                    ('loc_ven', '=', False)]}"/>
-                    <div class="o_address_format">
-                        <field name="document_type" class="o_address_city"  style="width:auto" attrs="{'required': [('company_type', '=', 'person'),
-                        ('loc_ven', '=', True)], 'invisible':['|',('company_type', '=', 'company'), ('loc_ven', '=', False)]}"/>
-                        <label for="identification_document" string="-" attrs="{'invisible':['|',('company_type', '=', 'company'),
-                        ('loc_ven', '=', False)]}"/>
-                        <field name="identification_document" class="o_address_city" style="width:50%%" placeholder="Ej. 19763505" attrs="{'required': [('company_type', '=', 'person'),
-                        ('loc_ven', '=', True)], 'invisible':['|',('company_type', '=', 'company'), ('loc_ven', '=', False)]}"/>
-                    </div>
-                </xpath> -->
-                <!-- <xpath expr="//sheet/group/group[1]/field[@name='vat']" position="after">
-                    <label for="rif_type" string="RIF" attrs="{'invisible': ['|',('loc_ven', '=', False),
-                            ('people_type_company','=','pjnd')]}"/>
-                    <div class="oe_inline">
-                        <div class="o_address_format">
-                            <field name="rif_type" class="o_address_city" style="width:auto" attrs="{'invisible': ['|',('loc_ven', '=', False),
-                            ('people_type_company','=','pjnd')],'required': [('company_type', '=', 'company'),('people_type_company','=','pjdo'), ('loc_ven','=',True)]}"/>
-                            <label for="identification_rif" string="-" attrs="{'invisible': ['|',('loc_ven', '=', False),
-                            ('people_type_company','=','pjnd')]}"/>
-                            <field name="identification_rif" style="width:50%%" class="o_address_city" placeholder="Ej.: 012345678" attrs="{'invisible': ['|',('loc_ven', '=', False),
-                            ('people_type_company','=','pjnd')],'required': [('company_type', '=', 'company'),('people_type_company','=','pjdo'), ('loc_ven','=',True)]}"/>
-                        </div>
-                    </div>
-                </xpath> -->
                 <xpath expr="//field[@name='name']" position="attributes">
                     <attribute name="required">1</attribute>
                     <attribute name="placeholder">Nombre Razón Social</attribute>

@@ -15,10 +15,11 @@ odoo.define('pleni_user.custom_signup', function (require) {
     authSignup.registry.SignUpForm = authSignup.Widget.extend({
         selector: '.oe_website_login_container',
         events: {
-            'change #new_nationality': '_onChangeNewNationality',
-            'input #new_identification_id': '_onChangeNewIdentificationId',
+            'change #prefix_vat': '_onChangeNewNationality',
+            'input #vat': '_onChangeNewIdentificationId',
             'change #country_select': '_onChangeCountry',
             'change #state_select': '_onChangeState',
+            'change #city_select': '_onChangeState',
             'change #municipality_select': '_onChangeMunicipality',
             'click .toggle-password': '_showEyesPassword',
             'click .toggle-confirm-password': '_showEyesConfirmPassword',
@@ -44,7 +45,7 @@ odoo.define('pleni_user.custom_signup', function (require) {
          * @private
          */
         _onChangeNewNationality: function(){
-            const newNationalityId = document.getElementById('new_nationality').value;
+            const newNationalityId = document.getElementById('prefix_vat').value;
             const inputCommercialName = document.getElementById('field_commercial_name');
             const commercialName = document.getElementById('commercial_name');
             const labelPerson = document.getElementById('label_person');
@@ -66,14 +67,14 @@ odoo.define('pleni_user.custom_signup', function (require) {
                         'Debe contener solo entre 6 y 8 dígitos numéricos', 
                         patternVE, 
                         textValidation, 
-                        document.getElementById('new_identification_id')
+                        document.getElementById('vat')
                     )
                 } else {
                     matchRegrex(
                         'Debe contener entre 6 y 9 caracteres y números', 
                         patternP, 
                         textValidation, 
-                        document.getElementById('new_identification_id')
+                        document.getElementById('vat')
                     )
                 }
 
@@ -91,7 +92,7 @@ odoo.define('pleni_user.custom_signup', function (require) {
                     'Debe contener solo entre 6 y 9 dígitos numéricos', 
                     patternJG, 
                     textValidation, 
-                    document.getElementById('new_identification_id')
+                    document.getElementById('vat')
                 )
             }
 
@@ -101,8 +102,8 @@ odoo.define('pleni_user.custom_signup', function (require) {
          * @private
          */
         _onChangeNewIdentificationId: function(){
-            const newNationalityId = document.getElementById('new_nationality').value;
-            const newIdentificationId = document.getElementById('new_identification_id').value;
+            const newNationalityId = document.getElementById('prefix_vat').value;
+            const newIdentificationId = document.getElementById('vat').value;
             const inputCommercialName = document.getElementById('field_commercial_name');
             const textValidation = document.getElementById('validationIdentification');
             const commercialName = document.getElementById('commercial_name');
@@ -128,14 +129,14 @@ odoo.define('pleni_user.custom_signup', function (require) {
                         'Debe contener solo entre 6 y 8 dígitos numéricos', 
                         patternVE, 
                         textValidation, 
-                        document.getElementById('new_identification_id')
+                        document.getElementById('vat')
                     )
                 } else {
                     matchRegrex(
                         'Debe contener entre 6 y 9 caracteres y números', 
                         patternP, 
                         textValidation, 
-                        document.getElementById('new_identification_id')
+                        document.getElementById('vat')
                     )
                 }
 
@@ -152,7 +153,7 @@ odoo.define('pleni_user.custom_signup', function (require) {
                     'Debe contener solo entre 6 y 9 dígitos numéricos', 
                     patternJG, 
                     textValidation, 
-                    document.getElementById('new_identification_id')
+                    document.getElementById('vat')
                 )
             }
 
@@ -278,7 +279,21 @@ odoo.define('pleni_user.custom_signup', function (require) {
                 opt.innerHTML = e.name;
                 municipalityId.appendChild(opt);
             });
-            this._onChangeMunicipality()
+            this._onChangeCity();
+            this._onChangeMunicipality();
+        },
+
+        _onChangeCity: async function () {
+            const inputStateId = $("select[name='state_id']").val();
+            const allCities = await ajax.rpc('/getCitiesById', {'input_state_id': inputStateId});
+            const cityId = document.getElementById('city_select');
+            $('#city_select').empty()
+            allCities.forEach(e => {
+                var opt = document.createElement('option');
+                opt.value = e.id;
+                opt.innerHTML = e.name;
+                cityId.appendChild(opt);
+            });
         },
 
         /**

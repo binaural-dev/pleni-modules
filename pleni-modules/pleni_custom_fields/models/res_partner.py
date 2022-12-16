@@ -27,3 +27,5 @@ class ResPartnerInherit(models.Model):
         'res.users', string='Vendedor entrenador')
     trained_person = fields.Many2one(
         'res.partner', string='[Deprecated] Vendedor')
+    relation_us = fields.Selection(selection=[('client', 'Cliente'), ('supplier', 'Proveedor'), ('both', 'Cliente-Proveedor'),
+                                              ('seller','Vendedor')], string="Relación con Nosotros")

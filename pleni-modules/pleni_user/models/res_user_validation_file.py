@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
-#from odoo import api, models
-#from odoo.exceptions import UserError
+# # -*- coding: utf-8 -*-
+# from odoo import api, models
+# from odoo.exceptions import UserError
 
 
 # class ResUsersInherit(models.Model):
@@ -9,21 +9,21 @@
 #     @staticmethod
 #     def check_missing_values(company_type, values):
 #         missing = ''
-#         if company_type == 'person':
-#             if 'nationality' not in values:
-#                 missing += 'Nationality, '
-#             if 'identification_id' not in values:
-#                 missing += 'Identification, '
-#             if 'people_type_individual' not in values:
-#                 missing += 'People Type Individual, '
+#         # if company_type == 'person':
+#         #     if 'nationality' not in values:
+#         #         missing += 'Nationality, '
+#         #     if 'identification_id' not in values:
+#         #         missing += 'Identification, '
+#         #     if 'people_type_individual' not in values:
+#         #         missing += 'People Type Individual, '
 
-#         if company_type == 'company:':
-#             if 'rif' not in values:
-#                 missing += 'RIF, '
-#             if 'people_type_company' not in values:
-#                 missing += 'People Type Company, '
-#             if 'commercial_name' not in values:
-#                 missing += 'Commercial Name, '
+#         # if company_type == 'company:':
+#         #     if 'rif' not in values:
+#         #         missing += 'RIF, '
+#         #     if 'people_type_company' not in values:
+#         #         missing += 'People Type Company, '
+#         #     if 'commercial_name' not in values:
+#         #         missing += 'Commercial Name, '
 
 #         if 'name' not in values:
 #             missing += 'Name, '
@@ -61,14 +61,14 @@
 #             :return: (dbname, login, password) for the signed up user
 #         """
 
-#         if (values.get('nationality')):
-#             original_values = {
-#                 'login': values.get('login'),
-#                 'name': values.get('name'),
-#                 'password': values.get('password'),
-#                 'mobile': values.get('mobile'),
-#                 'country_id': 238,
-#             }
+#         # if (values.get('nationality')):
+#         #     original_values = {
+#         #         'login': values.get('login'),
+#         #         'name': values.get('name'),
+#         #         'password': values.get('password'),
+#         #         'mobile': values.get('mobile'),
+#         #         'country_id': 238,
+#         #     }
 
 #         if token:
 #             # signup with a token: find the corresponding partner id

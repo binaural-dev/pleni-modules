@@ -29,13 +29,13 @@
         <field name="trained_salesperson" options="{'no_create': True, 'no_create_edit': True}" invisible="1" />
       </xpath>
 
-      <xpath expr="//field[@name='property_payment_term_id']" position="before">
+      <xpath expr="//field[@name='vat']" position="before">
         <field name="urbanization_area" attrs="{'required': True}" />
         <field name="ref_point" />
         <field name="dispatcher_instructions" />
       </xpath>
 
-      <xpath expr="//field[@name='property_payment_term_id']" position="after">
+      <xpath expr="//field[@name='vat']" position="after">
         <field name="fiscal_invoice_needed" attrs="{'required': True}" />
       </xpath>
 

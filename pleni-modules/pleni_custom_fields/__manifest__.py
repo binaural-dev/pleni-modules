@@ -13,7 +13,7 @@
         'stock',
         'sale',
         'sale_stock',
-        'product',
+        'product'
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -25,6 +25,7 @@
         'views/view.xml',
         'views/menu_view.xml',
         'views/sale_order_view.xml',
-        'views/sale_report_view.xml'
+        'views/sale_report_view.xml',
+        'views/purchase_sale_supplier_client.xml'
     ]
 }

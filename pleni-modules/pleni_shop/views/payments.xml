@@ -3,7 +3,7 @@
     <template id="price_bs_2" inherit_id="payment.payment_tokens_list">
         <xpath expr="//span[@class='payment_option_name']" position="after">
             <t t-set="amount_usd" t-value="website_sale_order.amount_total" />
-            <t t-set="exchange" t-value="website_sale_order.amount_total" />
+            <t t-set="exchange" t-value="website_sale_order.amount_total/website_sale_order.currency_rate" />
             <input type="hidden" class="price_bs_input" t-att-value="exchange"/>
             <input type="hidden" class="price_usd_input" t-att-value="amount_usd"/>
             <style>

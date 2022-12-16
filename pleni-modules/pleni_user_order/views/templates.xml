@@ -129,7 +129,7 @@
       <strong>
         <div>
           <span id="exchange-bs">
-            <t t-esc="order.amount_total" />
+            <t t-esc="order.amount_total/ order.currency_rate" />
           </span>
         </div>
       </strong>
@@ -153,7 +153,7 @@
           <div>
             <b>Notas del cliente:</b>
             <span>
-                <!-- <t t-esc="order.client_notes" /> -->
+                <t t-esc="order.client_notes" />
             </span>
           </div>
         </div>
@@ -167,7 +167,7 @@
     </xpath>
     <xpath expr="//div[@class='toggle_summary d-xl-none']" position="inside">
       <span id="exchange-bs" style="padding-left:20px">
-        <t t-esc="website_sale_order.amount_total" />
+        <t t-esc="website_sale_order.amount_total/website_sale_order.currency_rate" />
       </span>
       <script type="text/javascript">
           document.getElementById('exchange-bs').innerHTML = "Bs. " + parseFloat(document.getElementById('exchange-bs').innerHTML).toFixed(2).replace(".", ",")

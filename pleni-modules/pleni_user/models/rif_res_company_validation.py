@@ -13,14 +13,14 @@ class CompanyRif(models.Model):
     def create(self, vals):
         resp = super(CompanyRif, self).create(vals)
         for res in resp:
-            if res.loc_ven:
-                if res.rif:
-                    if not self.validate_rif_er(vals[0].get('rif')):
-                        raise UserError('El rif tiene el formato incorrecto. Ej: V-012345676, E-012345678, J-012345678 o '
-                                        'G-012345678. Por favor intente de nuevo.')
-                    if self.validate_rif_duplicate(vals[0].get('rif'), res):
-                        raise UserError('El cliente o proveedor ya se encuentra registrado con el rif: %s y se encuentra activo'
-                                        % res.rif)
+            # if res.loc_ven:
+            #     if res.rif:
+            #         if not self.validate_rif_er(vals[0].get('rif')):
+            #             raise UserError('El rif tiene el formato incorrecto. Ej: V-012345676, E-012345678, J-012345678 o '
+            #                             'G-012345678. Por favor intente de nuevo.')
+            #         if self.validate_rif_duplicate(vals[0].get('rif'), res):
+            #             raise UserError('El cliente o proveedor ya se encuentra registrado con el rif: %s y se encuentra activo'
+            #                             % res.rif)
             if res.email:
                 if not self.validate_email_addrs(res.email, 'email'):
                     raise UserError('El email es incorrecto. Ej: cuenta@dominio.xxx. Por favor intente de nuevo')
@@ -29,15 +29,15 @@ class CompanyRif(models.Model):
     def write(self, vals):
         for s in self:
             res = super(CompanyRif, s).write(vals)
-            if s.loc_ven:
-                if vals.get('rif'):
-                    res = s.validate_rif_er(vals.get('rif'))
-                    if not res:
-                        raise UserError('El rif tiene el formato incorrecto. Ej: V-012345675, E-012345678, J-012345678 o '
-                                        'G-012345678. Por favor intente de nuevo')
-                    if s.validate_rif_duplicate(vals.get('rif'), False):
-                        raise UserError('El cliente o proveedor ya se encuentra registrado con el rif: %s y se encuentra activo'
-                                        % vals.get('rif'))
+            # if s.loc_ven:
+            #     if vals.get('rif'):
+            #         res = s.validate_rif_er(vals.get('rif'))
+            #         if not res:
+            #             raise UserError('El rif tiene el formato incorrecto. Ej: V-012345675, E-012345678, J-012345678 o '
+            #                             'G-012345678. Por favor intente de nuevo')
+            #         if s.validate_rif_duplicate(vals.get('rif'), False):
+            #             raise UserError('El cliente o proveedor ya se encuentra registrado con el rif: %s y se encuentra activo'
+            #                             % vals.get('rif'))
             if vals.get('email'):
                 res = s.validate_email_addrs(vals.get('email'), 'email')
                 if not res:

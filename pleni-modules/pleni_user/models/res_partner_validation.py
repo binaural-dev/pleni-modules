@@ -28,21 +28,21 @@ class ResPartnerRif(models.Model):
 
     def write(self, values):
         for s in self:
-            if s.loc_ven:
-                if values:
-                    # if values.get("rif"):
-                    #     if not s.validate_rif_er(values.get("rif")):
-                    #         raise UserError(
-                    #             'El rif tiene el formato incorrecto. Ej: V-012345677, E-012345678, J-012345678 o G-012345678. Por favor verifique el formato y si posee los 9 digitos como se indica en el Ej. e intente de nuevo')
-                    #     if s.validate_rif_duplicate(values.get("rif")):
-                    #         raise UserError(
-                    #             'El cliente o proveedor ya se encuentra registrado con el rif: %s y se encuentra activo'
-                    #             % values.get("rif"))
-                    if values.get("email"):
-                        if not s.validate_email_addrs(values.get("email"), 'email'):
-                            raise UserError('El email es incorrecto. Ej: cuenta@dominio.xxx. Por favor intente de nuevo')
-                    if values.get("name") and not s.commercial_name:
-                        values["commercial_name"] = values.get("name")
+            # if s.loc_ven:
+            #     if values:
+            #         # if values.get("rif"):
+            #         #     if not s.validate_rif_er(values.get("rif")):
+            #         #         raise UserError(
+            #         #             'El rif tiene el formato incorrecto. Ej: V-012345677, E-012345678, J-012345678 o G-012345678. Por favor verifique el formato y si posee los 9 digitos como se indica en el Ej. e intente de nuevo')
+            #         #     if s.validate_rif_duplicate(values.get("rif")):
+            #         #         raise UserError(
+            #         #             'El cliente o proveedor ya se encuentra registrado con el rif: %s y se encuentra activo'
+            #         #             % values.get("rif"))
+            #         if values.get("email"):
+            #             if not s.validate_email_addrs(values.get("email"), 'email'):
+            #                 raise UserError('El email es incorrecto. Ej: cuenta@dominio.xxx. Por favor intente de nuevo')
+            #         if values.get("name") and not s.commercial_name:
+            #             values["commercial_name"] = values.get("name")
             return super(ResPartnerRif, s).write(values)
     
     @staticmethod

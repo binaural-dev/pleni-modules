@@ -345,7 +345,7 @@ class WSSSaleOrder(SaleOrder):
                 website = self.env['website'].get_current_website()
                 product_qty = line.product_id.with_context(
                     warehouse=website.warehouse_id.id).virtual_available
-                if cart_qty > int(line.product_id.uom_id._compute_quantity(product_qty, product_uom or line.product_uom)) and (line_id == line.id):
+                if cart_qty > int(line.product_id.uom_id._compute_quantity(product_qty, line.product_id.uom_id)) and (line_id == line.id):
                     qty = int(line.product_id.uom_id._compute_quantity(
                         product_qty, product_uom or line.product_uom)) - cart_qty
                     new_val = super(SaleOrder, self)._cart_update(

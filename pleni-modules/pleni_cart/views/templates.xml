@@ -189,10 +189,13 @@
     <xpath expr="//div[@class='col-lg-12']/a[1]" position="attributes">
         <attribute name="style">display: none !important;</attribute>
     </xpath>
+    <xpath expr="//div[@class='col-lg-12']/a[2]" position="attributes">
+        <attribute name="style">display: none !important;</attribute>
+    </xpath>
   </template>
     <!-- CART_PAGE select -->
   <template id="as_short_cart_summary_payment" inherit_id="website_sale.short_cart_summary">
-      <xpath expr="//div[hasclass('card-body')]//a[hasclass('btn-secondary')]" position="attributes">
+      <xpath expr="//div[hasclass('card-body')]/div[1]/a[hasclass('btn-secondary')]" position="attributes">
           <attribute name="class" separator=" " add="btn-primary" remove="btn-secondary"/>
       </xpath>
   </template>
@@ -290,7 +293,7 @@
       </xpath>
   </template>
 
-  <template id="footer_about_us" inherit_id="website.layout">
+  <!-- <template id="footer_about_us" inherit_id="website.layout">
     <xpath expr="//div[@id='footer']/section[1]/div[1]/div[1]" position="attributes">
               <attribute name="style">justify-content: space-between;</attribute>
     </xpath>
@@ -339,7 +342,7 @@
     <xpath expr="//ul[@class='list-unstyled']/li[4]/a[1]" position="attributes">
           <attribute name="style">color: white;</attribute>
     </xpath>
-  </template>
+  </template> -->
 
   <template id="payment_button_disabled" inherit_id="payment.payment_tokens_list">
     <xpath expr="//div[hasclass('mt-2')][2]/button[1]" position="replace">

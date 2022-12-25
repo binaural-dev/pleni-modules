@@ -210,15 +210,6 @@ class CustomerPortal(CustomerPortal):
             else:
                 error_message.append(_('Changing VAT number is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.'))
 
-        # error para rif e identificacion
-        # if data.get('company_type') == 'company' and not data.get("rif"):
-        #     error["rif"] = 'error'
-        #     error_message.append(_('Las compañias deben registrar su rif.'))
-
-        # if data.get('company_type') == 'person' and not data.get('identification_id'):
-        #     error["identification_id"] = 'error'
-        #     error_message.append(_('Debe ingresar su documento.'))
-
         # error message for empty required fields
         if [err for err in error.values() if err == 'missing']:
             error_message.append(_('Some required fields are empty.'))

@@ -167,10 +167,12 @@
                   </a>
               </div>
               <div class="column">
-                  <a role="button" t-if="website_sale_order and website_sale_order.website_order_line" class="btn btn-primary float-right as-btn show-only-mobile" href="/shop/checkout?express=1">
-                      <span class="">Pagar ahora</span>
-                      <span class="fa fa-chevron-right" />
-                  </a>
+                    <a role="button" t-if="website_sale_order and website_sale_order.website_order_line"
+                        style=""
+                        class="btn btn-primary float-right as-btn show-only-mobile" href="/shop/checkout?express=1">
+                        <span class="">Pagar ahora</span>
+                        <span class="fa fa-chevron-right" />
+                    </a>
               </div>
           </div>
 
@@ -182,6 +184,10 @@
               </a>
           </div>
       </div>
+      <script type="text/javascript">
+        let element = document.getElementsByClassName('show-only-mobile')[0];
+        element.style.removeProperty("display");
+      </script>
     </xpath>
     <xpath expr="//div[@id='o_cart_summary']/div[1]/a[2]" position="attributes">
         <attribute name="style">display: none;</attribute>
@@ -194,11 +200,12 @@
     </xpath>
   </template>
     <!-- CART_PAGE select -->
-  <template id="as_short_cart_summary_payment" inherit_id="website_sale.short_cart_summary">
-      <xpath expr="//div[hasclass('card-body')]/div[1]/a[hasclass('btn-secondary')]" position="attributes">
-          <attribute name="class" separator=" " add="btn-primary" remove="btn-secondary"/>
-      </xpath>
-  </template>
+    <template id="as_short_cart_summary_payment" inherit_id="website_sale.short_cart_summary">
+        <xpath expr="//div[hasclass('card-body')]/div[1]/a[hasclass('btn-secondary')]" position="attributes">
+            <attribute name="class" separator=" " add="btn-primary" remove="btn-secondary"/>
+            <attribute name="class" separator=" " add="as-btn" remove=""/>
+        </xpath>
+    </template>
   <template id="website_uom_select_suggetion_spt.kits_multi_uom_cart_lines" inherit_id="website_sale.cart_lines">
       <xpath expr="//thead//th[hasclass('td-qty')]" position="after">
           <th class="text-center"></th>

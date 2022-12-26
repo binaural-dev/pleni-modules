@@ -30,3 +30,11 @@ class requiredFieldsResPartner(models.Model):
         for element in self:
             res = super(requiredFieldsResPartner, self).write(vals)
         return res
+
+    @api.constrains('vat', 'country_id')
+    def check_vat(self):
+        # The context key 'no_vat_validation' allows you to store/set a VAT number without doing validations.
+        # This is for API pushes from external platforms where you have no control over VAT numbers.
+        if self.env.context.get('no_vat_validation'):
+            return
+        partners_with_vat = self.filtered('vat')

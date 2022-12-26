@@ -10,7 +10,7 @@ odoo.define('pleni_user.custom_my_details_portal', function (require) {
     publicWidget.registry.portalDetails = publicWidget.Widget.extend({
         selector: '.o_portal_details',
         events: {
-            'change select[name="company_type"]': '_onChangeCompanyType',
+            // 'change select[name="company_type"]': '_onChangeCompanyType',
             'change .document_type': '_onChangeDocumentType',
             'change .identification_document': '_onChangeDocumentId',
             'change select[name="country_id"]': '_onCountryChange',
@@ -21,7 +21,7 @@ odoo.define('pleni_user.custom_my_details_portal', function (require) {
          * @override
          */
         start: function () {
-            this._onChangeCompanyType();
+            // this._onChangeCompanyType();
             this._onCountryChange();
             var def = this._super.apply(this, arguments);
             return def;
@@ -100,79 +100,74 @@ odoo.define('pleni_user.custom_my_details_portal', function (require) {
 
         },
         _onChangeDocumentType: function () {
-            const inputCompanyTypeSelector = $("select[name='company_type']");
-            const documentType = $(".document_type");
-            const documentId = $(".identification_document");
-            const nationalityId = document.getElementById('nationality');
-            const divContainerNationalityField = document.getElementById('nationality_id');
-            const identificationId = document.getElementById('identification_id');
-            const divContainerIdentificationIdField = document.getElementById('identification_id_id');
-            const labelCompany = document.getElementById('label_company');
-            const labelPerson = document.getElementById('label_person');
-            const divContainerCommercialNameField = document.getElementById('field_commercial_name');
+            // const inputCompanyTypeSelector = $("select[name='company_type']");
+            // const documentType = $(".document_type");
+            // const documentId = $(".identification_document");
+            // const nationalityId = document.getElementById('nationality');
+            // const divContainerNationalityField = document.getElementById('nationality_id');
+            // const identificationId = document.getElementById('identification_id');
+            // const divContainerIdentificationIdField = document.getElementById('identification_id_id');
+            // const labelCompany = document.getElementById('label_company');
+            // const labelPerson = document.getElementById('label_person');
+            // const divContainerCommercialNameField = document.getElementById('field_commercial_name');
 
-            const rifId = document.getElementById('rif');
-            const divContainerRifId = document.getElementById('rif_id');
+            // const rifId = document.getElementById('rif');
+            // const divContainerRifId = document.getElementById('rif_id');
 
-            let rif = rifId.value.split('-');
+            // let rif = rifId.value.split('-');
 
-            if(documentType[0].value === 'V' || documentType[0].value === 'E' || documentType[0].value === 'P'){
+            // if(documentType[0].value === 'V' || documentType[0].value === 'E' || documentType[0].value === 'P'){
 
-                inputCompanyTypeSelector[0].value = 'person';
-                documentType.attr('name', 'document_type');
-                documentId.attr('name', 'identification_document');
-                nationalityId.value = documentType[0].value;
-                documentId[0].value = identificationId.value;
-                labelCompany.setAttribute('style', 'display: none;');
-                labelPerson.removeAttribute('style');
-                divContainerCommercialNameField.setAttribute('style', 'display: none;');
+            //     inputCompanyTypeSelector[0].value = 'person';
+            //     documentType.attr('name', 'document_type');
+            //     documentId.attr('name', 'identification_document');
+            //     nationalityId.value = documentType[0].value;
+            //     documentId[0].value = identificationId.value;
+            //     labelCompany.setAttribute('style', 'display: none;');
+            //     labelPerson.removeAttribute('style');
+            //     divContainerCommercialNameField.setAttribute('style', 'display: none;');
 
-            }else{
+            // }else{
 
-                inputCompanyTypeSelector[0].value = 'company';
-                documentType.attr('name', 'rif_type');
-                documentId.attr('name', 'identification_rif');
-                rif[0] = documentType[0].value;
-                documentId[0].value = rif[1];
-                rifId.value = `${documentType[0].value}-${documentId[0].value}`;
-                labelCompany.removeAttribute('style');
-                labelPerson.setAttribute('style', 'display: none;');
-                divContainerCommercialNameField.removeAttribute('style');
+            //     inputCompanyTypeSelector[0].value = 'company';
+            //     documentType.attr('name', 'rif_type');
+            //     documentId.attr('name', 'identification_rif');
+            //     rif[0] = documentType[0].value;
+            //     documentId[0].value = rif[1];
+            //     rifId.value = `${documentType[0].value}-${documentId[0].value}`;
+            //     labelCompany.removeAttribute('style');
+            //     labelPerson.setAttribute('style', 'display: none;');
+            //     divContainerCommercialNameField.removeAttribute('style');
 
-            }
+            // }
 
         },
         _onChangeDocumentId: function () {
-            const inputCompanyTypeSelector = $("select[name='company_type']");
+        
             const documentType = $(".document_type");
             const documentId = $(".identification_document");
             const nationalityId = document.getElementById('nationality');
-            const divContainerNationalityField = document.getElementById('nationality_id');
             const identificationId = document.getElementById('identification_id');
-            const divContainerIdentificationIdField = document.getElementById('identification_id_id');
-            const labelCompany = document.getElementById('label_company');
-            const labelPerson = document.getElementById('label_person');
-            const divContainerCommercialNameField = document.getElementById('field_commercial_name');
 
-            const rifId = document.getElementById('rif');
-            const divContainerRifId = document.getElementById('rif_id');
+            // const rifId = document.getElementById('rif');
+            // const divContainerRifId = document.getElementById('rif_id');
 
-            let rif = rifId.value.split('-');
+            // let rif = rifId.value.split('-');
 
-            if(documentType[0].value === 'V' || documentType[0].value === 'E' || documentType[0].value === 'P'){
+            // if(documentType[0].value === 'V' || documentType[0].value === 'E' || documentType[0].value === 'P'){
 
-                documentType[0].value = nationalityId.value;
-                identificationId.value = documentId[0].value;
-                console.log(`${documentType[0].value}-${documentId[0].value}`);
-                console.log(`${nationalityId.value}-${identificationId.value}`);
+            //     documentType[0].value = nationalityId.value;
+            //     identificationId.value = documentId[0].value;
+            //     console.log(`${documentType[0].value}-${documentId[0].value}`);
+            //     console.log(`${nationalityId.value}-${identificationId.value}`);
 
-            }else{
+            // }else{
 
-                documentType[0].value = rif[0];
-                rif[1] = documentId[0].value;
-                rifId.value = `${documentType[0].value}-${documentId[0].value}`;
+            //     documentType[0].value = rif[0];
+            //     rif[1] = documentId[0].value;
+            //     rifId.value = `${documentType[0].value}-${documentId[0].value}`;
 
-            }
+            // }
         },
         _onCountryChange: async function () {
             const inputCountryId = $("select[name='country_id']").val();
@@ -210,19 +205,19 @@ odoo.define('pleni_user.custom_my_details_portal', function (require) {
         },
         _onChangeMunicipality: async function() {
             const inputMunicipalityId = $("select[name='municipality_id']").val();
-            const inputParishId = $("select[id='parish_select']").val();
-            const allParishes = await ajax.rpc('/getParishesById', {'input_municipality_id': inputMunicipalityId});
-            const parishId = document.getElementById('parish_select');
-            $('#parish_select').empty()
-            allParishes.forEach(e => {
-                var opt = document.createElement('option');
-                opt.value = e.id;
-                opt.innerHTML = e.name;
-                if (String(inputParishId) === String(e.id)) {
-                    opt.setAttribute('selected', true)
-                }
-                parishId.appendChild(opt);
-            });
+            // const inputParishId = $("select[id='parish_select']").val();
+            // const allParishes = await ajax.rpc('/getParishesById', {'input_municipality_id': inputMunicipalityId});
+            // const parishId = document.getElementById('parish_select');
+            // $('#parish_select').empty()
+            // allParishes.forEach(e => {
+            //     var opt = document.createElement('option');
+            //     opt.value = e.id;
+            //     opt.innerHTML = e.name;
+            //     if (String(inputParishId) === String(e.id)) {
+            //         opt.setAttribute('selected', true)
+            //     }
+            //     parishId.appendChild(opt);
+            // });
         },
     });
 

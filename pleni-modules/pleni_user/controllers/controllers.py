@@ -126,8 +126,8 @@ class GetParishesById(http.Controller):
 
 class CustomerPortal(CustomerPortal):
 
-    MANDATORY_BILLING_FIELDS = ['name', 'mobile', 'email', 'street', 'city', 'country_id', 'municipality_id', 'parish_id', 'street2', 'street' ]
-    OPTIONAL_BILLING_FIELDS = ["zipcode", "state_id", "vat", "company_name", 'company_type','commercial_name']
+    MANDATORY_BILLING_FIELDS = ['name', 'mobile', 'email', 'street', 'city', 'country_id', 'municipality_id', 'street2', 'street', 'vat', 'prefix_vat' ]
+    OPTIONAL_BILLING_FIELDS = ["zipcode", "state_id", "company_name", 'company_type','commercial_name']
     FIREBASE_FIELDS = ["register_all_notification","register_specific_notification"]
 
     @route(['/my/account'], type='http', auth='user', website=True)
@@ -160,14 +160,14 @@ class CustomerPortal(CustomerPortal):
         countries = request.env['res.country'].sudo().search([])
         states = request.env['res.country.state'].sudo().search([])
         municipalities = request.env['res.country.municipality'].sudo().search([])
-        parishes = request.env['res.country.municipality.parish'].sudo().search([])
+        # parishes = request.env['res.country.municipality.parish'].sudo().search([])
 
         values.update({
             'partner': partner,
             'countries': countries,
             'states': states,
             'municipalities': municipalities,
-            'parishes': parishes,
+            # 'parishes': parishes,
             'has_check_vat': hasattr(request.env['res.partner'], 'check_vat'),
             'redirect': redirect,
             'page_name': 'my_details',

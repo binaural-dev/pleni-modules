@@ -48,7 +48,8 @@
                             </div>
                             <div class="row custom-dni">
                                 <div class="form-group col-xl-3 pr-0 custom-dni-nty">
-                                    <select class="form-control document_type browser-default">
+                                    <select class="form-control document_type browser-default" name="prefix_vat" 
+										t-att-value="prefix_vat or partner.prefix_vat">
                                         <option value="V">V</option>
                                         <option value="E">E</option>
                                         <option value="P">P</option>
@@ -57,7 +58,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-xl pl-0 custom-dni-dni" id="identification_document_id">
-                                    <input type="text" class="form-control identification_document"/>
+									<input type="text" name="vat" class="form-control identification_document" t-att-value="vat or partner.vat"
+									id="vat" placeholder="Ej. 01234567"/>
                                 </div>
                             </div>
                         </div>
@@ -67,24 +69,24 @@
                                 <label class="col-form-label" for="name" id="label_nationality" style="padding-top: 0px; margin-top: 0px; margin-left: 15px;">Identification document (I.D.)</label>
                             </div>
                             <div class="row custom-dni">
-                                <div t-attf-class="form-group #{error.get('nationality') and 'o_has_error' or ''} col-xl-3 pr-0 custom-dni-nty">
+                                <!-- <div t-attf-class="form-group #{error.get('nationality') and 'o_has_error' or ''} col-xl-3 pr-0 custom-dni-nty">
                                     <select t-attf-class="form-control browser-default #{error.get('nationality') and 'is-invalid' or ''}" name="nationality" id="nationality">
                                         <option value="V">V</option>
                                         <option value="E">E</option>
                                         <option value="P">P</option>
                                     </select>
-                                </div>
-                                <div t-attf-class="form-group #{error.get('identification_id') and 'o_has_error' or ''} col-xl pl-0 custom-dni-dni" id="identification_id_id">
+                                </div> -->
+                                <!-- <div t-attf-class="form-group #{error.get('identification_id') and 'o_has_error' or ''} col-xl pl-0 custom-dni-dni" id="identification_id_id">
                                     <input type="text" name="identification_id" id="identification_id" t-attf-class="form-control #{error.get('identification_id') and 'is-invalid' or ''}"
 										   t-att-value="identification_id or partner.identification_id"/>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
-                        <div t-attf-class="form-group #{error.get('rif') and 'o_has_error' or ''} col-xl-4" id="rif_id" style="display: none;">
+                        <!-- <div t-attf-class="form-group #{error.get('rif') and 'o_has_error' or ''} col-xl-4" id="rif_id" style="display: none;">
     	                    <label class="col-form-label" for="rif">RIF</label>
     	                    <input type="text" name="rif" id="rif" t-attf-class="form-control #{error.get('rif') and 'is-invalid' or ''}" t-att-value="rif or partner.rif" placeholder="J-123456789" />
-    	                </div>
+    	                </div> -->
 
     	                <div t-attf-class="form-group #{error.get('name') and 'o_has_error' or ''} col-xl-4">
                             <label for="name" id="label_company" style="display: none;">Razón Social</label>
@@ -176,7 +178,7 @@
     	                    </select>
     	                </div>
 
-                        <div t-attf-class="form-group #{error.get('parish_id') and 'o_has_error' or ''} col-xl-4">
+                        <!-- <div t-attf-class="form-group #{error.get('parish_id') and 'o_has_error' or ''} col-xl-4">
     	                    <label class="col-form-label" for="parish_id">Parish</label>
                             <select name="parish_id" id="parish_select" t-attf-class="form-control browser-default #{error.get('parish_id') and 'is-invalid' or ''}">
     	                        <option value="">select...</option>
@@ -186,7 +188,7 @@
     	                            </option>
     	                        </t>
     	                    </select>
-    	                </div>
+    	                </div> -->
 
     	                <div class="clearfix" />
     	                <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''} col-xl-4">

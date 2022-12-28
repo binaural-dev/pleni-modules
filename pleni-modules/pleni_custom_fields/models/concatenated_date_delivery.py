@@ -25,10 +25,9 @@ class SaleOrderInherit(models.Model):
         am_pm = vals['am_pm'] if 'am_pm' in vals else self.am_pm
         vals['commitment_date'] = date_delivery_view
 
-        if (len(self.picking_ids) < 1):
-            for picking in self.picking_ids:
-                picking.scheduled_date_stock = date_delivery_view
-                picking.am_pm = am_pm
+        for picking in self.picking_ids:
+            picking.scheduled_date_stock = date_delivery_view
+            picking.am_pm = am_pm
 
         for invoice in self.invoice_ids:
             invoice.scheduled_date_account = date_delivery_view

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo>
-	<template id="hidden_delivery_cost" inherit_id="website_sale_delivery.payment_delivery_methods">
-        <xpath expr="//t[2]/span[1]" position="attributes">
-			<attribute name="style">display: none;</attribute>
-        </xpath>
-    </template>
-</odoo>

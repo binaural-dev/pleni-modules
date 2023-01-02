@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_3mit_account_fiscal_l10n_ut,3mit_account_fiscal_requirements.l10n_ut,model_l10n_ut,3mit_grupo_localizacion.group_localizacion,1,1,1,1
-access_wiz_nroctrl,access_wiz_nroctrl,model_wiz_nroctrl,base.group_user,1,1,1,1
-access_search_info_partner_seniat,access_search_info_partner_seniat,model_search_info_partner_seniat,base.group_user,1,1,1,1

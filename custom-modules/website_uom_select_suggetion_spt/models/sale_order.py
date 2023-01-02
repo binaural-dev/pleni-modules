@@ -44,9 +44,6 @@ class SaleOrderInherit(models.Model):
                         price_dict[product_id]['quantity'] = real_qty
             total += real_price * real_qty
             subtotal += real_price * real_qty
-
-        # conversion en bs
-
         rate = self.currency_rate
 
         for key in price_dict:

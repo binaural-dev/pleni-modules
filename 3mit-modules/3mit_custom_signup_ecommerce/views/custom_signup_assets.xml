@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <template id="assets_frontend" inherit_id="web.assets_frontend" name="Ecommerce custom fields">
-        <xpath expr="." position="inside">
-            <script type="text/javascript" src="/3mit_custom_signup_ecommerce/static/src/js/custom_signup.js"/>
-            <script type="text/javascript" src="/3mit_custom_signup_ecommerce/static/src/js/custom_my_details_portal.js"/>
-        </xpath>
-    </template>
-</odoo>

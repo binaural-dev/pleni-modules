@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo>
-    <template id="empty_mini_cart_assets_frontend_uom_id" inherit_id="website.assets_frontend">
-        <xpath expr="." position="inside">
-            <link rel="stylesheet" type="text/scss" href="/3mit_website_button_empty_car/static/src/scss/style.scss"/>
-        </xpath>
-    </template>
-</odoo>

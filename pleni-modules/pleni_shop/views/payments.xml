@@ -81,6 +81,11 @@
                         if (10 > dayInt) {
                             tomorrow_date[1] = "0" + dayInt
                         }
+
+                        let monthInt = parseInt(tomorrow_date[0])
+                        if (10 > dayInt) {
+                            tomorrow_date[0] = "0" + monthInt
+                        }
                         tomorrow_date = tomorrow_date[2]+"-"+tomorrow_date[0]+"-"+ tomorrow_date[1]
                         let dateName = new Date(tomorrow);
                         let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -93,6 +98,11 @@
                     if (10 > dayInt) {
                         tomorrow_date[1] = "0" + dayInt
                     }
+
+                    let monthInt = parseInt(tomorrow_date[0])
+                    if (10 > dayInt) {
+                        tomorrow_date[0] = "0" + monthInt
+                    }
                     tomorrow_date = tomorrow_date[2]+"-"+tomorrow_date[0]+"-"+ tomorrow_date[1]
                     let dateName = new Date(tomorrow);
                     let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -103,7 +113,6 @@
                         document.getElementById("select-pm").setAttribute('selected', 'selected');
                     }
                 }
-
                 document.getElementsByName("delivery_date")[0].setAttribute('min', tomorrow_date);
                 document.getElementsByName("delivery_date")[0].value = tomorrow_date
 

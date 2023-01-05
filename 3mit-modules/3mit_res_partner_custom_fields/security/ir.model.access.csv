@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_urbanization_area,access_urbanization_area,model_urbanization_area,base.group_user,1,1,1,1
-access_find_us,access_find_us,model_find_us,base.group_user,1,1,1,1

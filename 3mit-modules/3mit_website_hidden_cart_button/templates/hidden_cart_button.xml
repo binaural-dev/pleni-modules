@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo>
-	<template id="cart_hidden_button" inherit_id="atharva_theme_base.cart_lines_popup_content">
-        <xpath expr="//button[hasclass('m_c_close')]" position="attributes">
-			<attribute name="style">display: none;</attribute>
-        </xpath>
-    </template>
-</odoo>

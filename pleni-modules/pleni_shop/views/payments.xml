@@ -83,7 +83,7 @@
                         }
 
                         let monthInt = parseInt(tomorrow_date[0])
-                        if (10 > dayInt) {
+                        if (10 > monthInt) {
                             tomorrow_date[0] = "0" + monthInt
                         }
                         tomorrow_date = tomorrow_date[2]+"-"+tomorrow_date[0]+"-"+ tomorrow_date[1]
@@ -100,7 +100,7 @@
                     }
 
                     let monthInt = parseInt(tomorrow_date[0])
-                    if (10 > dayInt) {
+                    if (10 > monthInt) {
                         tomorrow_date[0] = "0" + monthInt
                     }
                     tomorrow_date = tomorrow_date[2]+"-"+tomorrow_date[0]+"-"+ tomorrow_date[1]

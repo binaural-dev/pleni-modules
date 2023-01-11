@@ -67,11 +67,11 @@
         </xpath>
     </template>
 
-    <template id="as_short_cart_summary" inherit_id="website_sale.short_cart_summary">
+<!--     <template id="as_short_cart_summary" inherit_id="website_sale.short_cart_summary">
         <xpath expr="//div[hasclass('card-body')]//a[hasclass('btn-secondary')]" position="attributes">
             <attribute name="class" separator=" " add="as-btn"/>
         </xpath>
-    </template>
+    </template> -->
 
     <template id="as_payment" inherit_id="website_sale.payment">
         <xpath expr="//t[@t-set='submit_class']" position="replace">

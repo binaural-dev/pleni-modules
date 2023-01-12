@@ -15,6 +15,9 @@ _logger = logging.getLogger(__name__)
 class SaleOrderInherit(models.Model):
     _inherit = "sale.order"
 
+    def _get_new_currency_rate(self):
+        return self.env['res.currency'].browse(3).rate
+
     def _get_ecomerce_total(self, pricelist):
         subtotal = 0
         total = 0
@@ -44,6 +47,8 @@ class SaleOrderInherit(models.Model):
                         price_dict[product_id]['quantity'] = real_qty
             total += real_price * real_qty
             subtotal += real_price * real_qty
+
+        self.currency_rate = self.env['res.currency'].browse(3).rate
         rate = self.currency_rate
 
         for key in price_dict:

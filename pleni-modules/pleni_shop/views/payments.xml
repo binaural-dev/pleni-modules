@@ -3,7 +3,7 @@
     <template id="price_bs_2" inherit_id="payment.payment_tokens_list">
         <xpath expr="//span[@class='payment_option_name']" position="after">
             <t t-set="amount_usd" t-value="website_sale_order.amount_total" />
-            <t t-set="exchange" t-value="website_sale_order.amount_total/website_sale_order.currency_rate" />
+            <t t-set="exchange" t-value="website_sale_order.amount_total * website_sale_order.currency_rate" />
             <input type="hidden" class="price_bs_input" t-att-value="exchange"/>
             <input type="hidden" class="price_usd_input" t-att-value="amount_usd"/>
             <style>
@@ -17,12 +17,12 @@
             </style>
             <script type="text/javascript">
                 Array.from(document.getElementsByClassName("payment_option_name")).forEach( element => {
-                    if (['Pago Móvil', 'Punto de Venta','Transferencia Bancaria en Bs'].includes(element.textContent.trim().split('\n')[0])) {
+                    if (['Pago Móvil', 'Punto de venta','Transferencia Bancaria en Bs'].includes(element.textContent.trim().split('\n')[0])) {
                         let priceFloat = parseFloat(document.getElementsByClassName("price_bs_input")[0].value).toFixed(2).replace(".", ",")
                         if (!element.innerHTML.includes(priceFloat)) {
                             element.innerHTML = element.innerHTML + ' ' +  '<span class="tag-price-bs"><b>Bs. </b>' + '<b>' + priceFloat + '</b></span>'
                         }
-                    } else if (['Efectivo', 'Transferencia bancaria en US$','Zelle'].includes(element.textContent.trim().split('\n')[0])) {
+                    } else if (['Efectivo', 'Transferencia Bancaria en US$','Zelle'].includes(element.textContent.trim().split('\n')[0])) {
                         let priceFloat = parseFloat(document.getElementsByClassName("price_usd_input")[0].value).toFixed(2).replace(".", ",")
                         if (!element.innerHTML.includes(priceFloat)) {
                             element.innerHTML = element.innerHTML + ' ' +  '<span class="tag-price-bs"><b>$ </b>' + '<b>' + priceFloat + '</b></span>'

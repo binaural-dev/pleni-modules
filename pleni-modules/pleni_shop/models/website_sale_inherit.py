@@ -76,6 +76,11 @@ class WebsiteSaleController(WebsiteSale):
                 'am_pm': delivery_hour
             })
 
+        salesman_id = request.env['res.partner'].browse(order.partner_id.id).salesman_id.id
+        if salesman_id:
+            order.update({
+                'salesman_id': salesman_id
+            })
         # store the new transaction into the transaction list and if there's an old one, we remove it
         # until the day the ecommerce supports multiple orders at the same time
         last_tx_id = request.session.get('__website_sale_last_tx_id')

@@ -28,6 +28,9 @@
                 </div>
             </div>
         </xpath>
+        <xpath expr="//div[hasclass('checkbox')]" position="attributes">
+            <attribute name="class">d-none</attribute>
+        </xpath>
     </template>
 
     <template id="product_wishlist_extend_button" inherit_id="website_sale_wishlist.product_wishlist">

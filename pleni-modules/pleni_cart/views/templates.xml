@@ -170,7 +170,7 @@
                     <a role="button" t-if="website_sale_order and website_sale_order.website_order_line"
                         style=""
                         class="btn btn-primary float-right as-btn show-only-mobile" href="/shop/checkout?express=1">
-                        <span class="">Pagar ahora</span>
+                        <span class="">Continuar</span>
                         <span class="fa fa-chevron-right" />
                     </a>
               </div>
@@ -357,7 +357,7 @@
             t-att-class="submit_class if submit_class else 'btn btn-primary btn-lg mb8 mt8'">
             <t t-if="submit_txt">
                 <i t-if="icon_class and not icon_right" t-attf-class="fa {{icon_class}}"/>
-                <t t-esc="submit_txt"/>
+                Confirmar Pedido
                 <i t-if="icon_class and icon_right" t-attf-class="fa {{icon_class}}"/>
             </t>
             <t t-else="">

@@ -95,7 +95,7 @@
       <xpath expr="//h6[hasclass('o_wsale_products_item_title')]/a[1]" position="replace">
           <a itemprop="name" t-att-href="product_href" t-att-content="product.name" t-field="product.name" 
               class="o_quick_view_title" t-att-data-product-product-id="product.product_variant_ids[0].id" 
-              t-att-data-product_template_id="product.id" title="Quick View" type="button" href=""/>
+              t-att-data-product_template_id="product.id" t-att-title="product.name" type="button" href=""/>
       </xpath>
       <xpath expr="//h6[hasclass('o_wsale_products_item_title')]/a[1]" position="after">
           <script type="text/javascript">

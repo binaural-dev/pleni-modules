@@ -383,8 +383,7 @@
           <attribute name="style">padding-bottom: 10px;</attribute>
       </xpath>
   </template>
-  <template id="custom_ecommerce_delivery_total" inherit_id="website_sale_delivery.cart_delivery" name="Custom ecommerce delivery total">
-    <!-- <xpath expr="//tr[@id='order_total_untaxed']" position="before"> -->
+  <!-- <template id="custom_ecommerce_delivery_total" inherit_id="website_sale_delivery.cart_delivery" name="Custom ecommerce delivery total">
     <xpath expr="//tr[@id='order_delivery']" position="replace">
       <tr id="order_delivery" t-if="website_sale_order">
         <td class="text-right border-0 text-muted"  title="Delivery will be updated after choosing a new delivery method">Entrega:</td>
@@ -396,5 +395,5 @@
         </td>
       </tr>
     </xpath>
-  </template>
+  </template> -->
 </odoo>

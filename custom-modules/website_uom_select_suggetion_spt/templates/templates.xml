@@ -85,6 +85,31 @@
                       }'/>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="3" class="text-center text-xl-right border-0">
+                        <span class=''>
+                            <t t-set='force_coupon' t-value="website_sale_order.pricelist_id.code or request.params.get('code_not_available')"/>
+                            <t t-if="not force_coupon">
+                                <a href="#" id="have_coupon_button" class="show_coupon">Tengo un cupón</a>
+                            </t>
+                            <div t-attf-class="coupon_form #{not force_coupon and 'd-none'}" id="coupon_form">
+                                <form action="/shop/pricelist"
+                                    method="post" name="coupon_code">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                    <div class="input-group w-100">
+                                        <input name="promo" class="form-control" type="text" placeholder="cupón..." t-att-value="website_sale_order.pricelist_id.code or None"/>
+                                        <div class="input-group-append">
+                                            <button href="#" role="button" class="btn btn-secondary a-submit">Canjear</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <t t-if="request.params.get('code_not_available')" name="code_not_available">
+                                    <div class="alert alert-danger text-left" role="alert">El cupón no esta disponible</div>
+                                </t>
+                            </div>
+                        </span>
+                    </td>
+                </tr>
                 <tr id="order_total">
                     <td class="text-right">
                         <strong>Total:</strong>
@@ -95,32 +120,6 @@
                         <strong t-esc='prices["total"]' class="monetary_field" t-options='{"widget": "monetary", "display_currency": website_sale_order.pricelist_id.currency_id}'/>
                         <!-- <br/>
                         <strong t-esc='prices["main_currency_total"]' class="monetary_field" t-options='{"widget": "monetary", "display_currency": website_sale_order.company_id.currency_id}'/> -->
-                    </td>
-                </tr>
-
-                <tr>
-                <td colspan="3" class="text-center text-xl-right border-0">
-                    <span class=''>
-                        <t t-set='force_coupon' t-value="website_sale_order.pricelist_id.code or request.params.get('code_not_available')"/>
-                        <t t-if="not force_coupon">
-                            <a href="#" id="have_coupon_button" class="show_coupon">Tengo un cupón</a>
-                        </t>
-                        <div t-attf-class="coupon_form #{not force_coupon and 'd-none'}" id="coupon_form">
-                            <form action="/shop/pricelist"
-                                method="post" name="coupon_code">
-                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-                                <div class="input-group w-100">
-                                    <input name="promo" class="form-control" type="text" placeholder="cupón..." t-att-value="website_sale_order.pricelist_id.code or None"/>
-                                    <div class="input-group-append">
-                                        <button href="#" role="button" class="btn btn-secondary a-submit">Canjear</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <t t-if="request.params.get('code_not_available')" name="code_not_available">
-                                <div class="alert alert-danger text-left" role="alert">El cupón no esta disponible</div>
-                            </t>
-                        </div>
-                    </span>
                     </td>
                 </tr>
             </table>

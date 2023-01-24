@@ -88,16 +88,28 @@
                 <tr>
                     <td colspan="3" class="text-center text-xl-right border-0">
                         <span class=''>
-                            <t t-set='force_coupon' t-value="website_sale_order.pricelist_id.code or request.params.get('code_not_available')"/>
-                            <t t-if="not force_coupon">
-                                <a href="#" id="have_coupon_button" class="show_coupon">Tengo un cupón</a>
+                            <t t-set='force_coupon' 
+                                t-value="website_sale_order.pricelist_id.code or request.params.get('code_not_available')"/>
+                            <t t-if="website_sale_order and website_sale_order.promo_code">
+                                <div class="alert alert-success text-left mt16" role="alert">
+                                    Cupón Aplicado: <strong t-esc="website_sale_order.promo_code"/>
+                                </div>
                             </t>
-                            <div t-attf-class="coupon_form #{not force_coupon and 'd-none'}" id="coupon_form">
+                            <t t-else="not force_coupon">
+                                <a href="#" class="show_coupon have_coupon_button" onclick="buttonLinkCoupon()">
+                                    Tengo un cupón
+                                </a>
+                            </t>
+                            <div t-attf-class="coupon_form #{not force_coupon and 'd-none'}">
                                 <form action="/shop/pricelist"
                                     method="post" name="coupon_code">
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
                                     <div class="input-group w-100">
-                                        <input name="promo" class="form-control" type="text" placeholder="cupón..." t-att-value="website_sale_order.pricelist_id.code or None"/>
+                                        <input name="promo" 
+                                            class="form-control" type="text" 
+                                            placeholder="cupón..."
+                                            style="text-transform:uppercase"
+                                            t-att-value="website_sale_order.pricelist_id.code or None"/>
                                         <div class="input-group-append">
                                             <button href="#" role="button" class="btn btn-secondary a-submit">Canjear</button>
                                         </div>
@@ -124,13 +136,16 @@
                 </tr>
             </table>
             <script type="text/javascript">
-                document.getElementById("have_coupon_button").addEventListener("click", function (){
-                    const elem = document.getElementById("coupon_form");
-                    elem.classList.remove('d-none')
+                function buttonLinkCoupon()
+                {
+                    document.querySelectorAll(".coupon_form").forEach(function(elem) {
+                        elem.classList.remove('d-none')
+                    });
 
-                    const buttonLink = document.getElementById("have_coupon_button");
-                    buttonLink.classList.add('d-none')
-                });
+                    document.querySelectorAll(".have_coupon_button").forEach(function(elem) {
+                        elem.classList.add('d-none')
+                    });
+                }
 
             </script>
         </xpath>

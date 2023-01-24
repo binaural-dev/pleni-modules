@@ -11,6 +11,16 @@ odoo.define('pleni_user.custom_signup', function (require) {
     const patternName = /^[a-zA-Z\s\.]+$/
     const patternBusinessName = new RegExp("^[ÁÀÂÄÇÉÈÊËÍÌÎÏÓÒÔÖÙÛÜÚÑßĄA-Z'|a-záàâäçéèêëíìîïóòôöùûüúñ'\\-][ÁÀÂÄÇÉÈÊËÍÌÎÏÓÒÔÖÙÛÜÚÑßĄA-Z'\\-a-záàâäçéèêëíìîïóòôöùûüúñ0-9, ]+((\\.|\\s)+[ÁÀÂÄÇÉÈÊËÍÌÎÏÓÒÔÖÙÛÜÚÑßĄA-Z'\\-|a-záàâäçéèêëíìîïóòôöùûüúñ|0-9|\\., ]+)*\$")
     const patternEmail = /^[a-zA-Z0-9]+(?:[_.-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:[_.-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,3}$/;
+    const allowedStates = [
+        'Distrito Capital',
+        'Miranda',
+        'Aragua',
+        'Carabobo',
+        'Vargas',
+        'Lara',
+        'Yaracuy',
+        'Portuguesa'
+    ]
 
     authSignup.registry.SignUpForm = authSignup.Widget.extend({
         selector: '.oe_website_login_container',
@@ -19,7 +29,6 @@ odoo.define('pleni_user.custom_signup', function (require) {
             'input #vat': '_onChangeNewIdentificationId',
             'change #country_select': '_onChangeCountry',
             'change #state_select': '_onChangeState',
-            'change #city_select': '_onChangeState',
             'change #municipality_select': '_onChangeMunicipality',
             'click .toggle-password': '_showEyesPassword',
             'click .toggle-confirm-password': '_showEyesConfirmPassword',
@@ -254,9 +263,10 @@ odoo.define('pleni_user.custom_signup', function (require) {
         _onChangeCountry: async function () {
             const inputCountryId = $("select[name='country_id']").val();
             const allCountries = await ajax.rpc('/getStatesById', {'input_country_id': 238});
+            const allCountriesFiltered = allCountries.filter(item => allowedStates.includes(item.name));
             const stateId = document.getElementById('state_select');
             $('#state_select').empty()
-            allCountries.forEach(e => {
+            allCountriesFiltered.forEach(e => {
                 var opt = document.createElement('option');
                 opt.value = e.id;
                 opt.innerHTML = e.name;

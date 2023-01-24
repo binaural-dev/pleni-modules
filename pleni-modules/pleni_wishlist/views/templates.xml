@@ -38,6 +38,9 @@
             <button type="button" role="button" class="btn btn-secondary btn-block o_wish_add mb4 as-btn" style="width: 70px">
                 <i class="fa fa-plus-circle"></i>
             </button>
+            <script type="text/javascript">
+                document.getElementById("b2b_wish").checked = true;
+            </script>
         </xpath>
     </template>
 </odoo>

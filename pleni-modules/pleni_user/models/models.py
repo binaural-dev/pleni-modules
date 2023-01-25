@@ -38,3 +38,7 @@ class requiredFieldsResPartner(models.Model):
         if self.env.context.get('no_vat_validation'):
             return
         partners_with_vat = self.filtered('vat')
+
+    def get_count_wish_products(self):
+        count = self.env['product.wishlist'].search([('partner_id', '=', self.id), ('write_date', '>', '2022-12-31 00:00:00')])
+        return True if len(count) == 0 else False

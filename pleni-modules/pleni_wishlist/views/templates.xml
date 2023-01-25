@@ -18,15 +18,25 @@
 
     <template id="website_add_cart" inherit_id="website_sale_wishlist.product_wishlist">
         <xpath expr="//section[1]/h3[1]" position="replace">
+            <div class="alert alert-success text-left mt16" role="alert" id="alert-wishlist">
+                Esta es tu lista de compra frecuente.  Añade los productos directo al carrito.
+            </div>
             <div class="grid-container">
+ 
                 <h3 class="grid-add-cart-h3">Mi compra frecuente</h3>
                 <div class="mini_cart_buttons grid-add-cart-button">
-                    <input type="hidden" class="website_wishlist_product" name="website_wishlist_product" t-att-value="wishes.ids"/>
+                    <input type="hidden" class="website_wishlist_product" 
+                        name="website_wishlist_product" t-att-value="wishes.ids"/>
                     <a id="add_cart" href="#" class="m_c_btn as-btn as-btn-theme">
                         Agregar todo <i class="fa fa-cart-plus"></i>
                     </a>
                 </div>
             </div>
+            <script type="text/javascript">
+                setTimeout(function () {
+                    document.getElementById('alert-wishlist').style.display = 'none'
+                }, 5000);
+            </script>
         </xpath>
         <xpath expr="//div[hasclass('checkbox')]" position="attributes">
             <attribute name="class">d-none</attribute>

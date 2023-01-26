@@ -117,7 +117,7 @@
         <t t-if="request.env.user.id == request.env.ref('base.public_user').id">
           <div class="alert alert-success text-left mt16" role="alert">
             Para continuar con la experiencia de comprar en Pleni,
-            <a t-attf-href="/web/login?{{ keep_query() }}" class="alert-link">
+            <a t-attf-href="/web/login?{{ keep_query() }}" class="alert-link" id="alert-login">
               inicia sesión
             </a>
           </div>
@@ -126,7 +126,7 @@
         <t t-if="request.env.user.id != request.env.ref('base.public_user').id">
           <t t-if="request.env.user.partner_id.get_count_wish_products()">
             <div class="alert alert-success text-left mt16" role="alert">
-              ¿Siempre compras los mismos productos? Agrégalos a tu lista de Compras, dándole click al botón de corazón
+              ¿Siempre compras los mismos productos? Agrégalos a tu lista de Compra Frecuente, dándole click al botón de corazón
             </div>
           </t>
         </t>

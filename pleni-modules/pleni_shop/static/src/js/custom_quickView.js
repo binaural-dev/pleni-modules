@@ -31,6 +31,13 @@ odoo.define('pleni_shop.custom_quickView', function (require) {
                 });
                 // Add to cart from Quick View
                 $(".a-submit").on("click", async function(event) {
+
+                    const user_not_logged = await ajax.rpc('/get_user_logged')
+                    if (user_not_logged) {
+                        window.location = "/web/login";
+                        return;
+                    }
+
                     event.preventDefault();
                     var def = async () => {
                         sale.isBuyNow = $(event.currentTarget).attr('id') === 'buy_now';

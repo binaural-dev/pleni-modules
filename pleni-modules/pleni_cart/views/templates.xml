@@ -25,7 +25,12 @@
               <a id="empty_mini_cart" href="#" class="m_c_btn as-btn as-btn-theme">Vaciar Carrito</a>
           </div>
       </xpath>
-  </template>
+    </template>
+    <template id="loading_pleni_view" inherit_id="website.layout">
+        <xpath expr="//div[@id='wrapwrap']" position="before">
+            <div id="loading_pleni"></div>
+        </xpath>
+    </template>
 	<template id="payment_ux_improvement" inherit_id="website_sale.cart_lines">
     <xpath expr="//div[1]" position="before">
 			<style>

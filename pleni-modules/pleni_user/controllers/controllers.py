@@ -255,6 +255,12 @@ class WebsiteSale(http.Controller):
         })
         return value
 
+    @http.route(['/get_user_logged'], type='json', auth="public", website=True)
+    def get_user_logged(self):
+        if request.env.user.id == request.env.ref('base.public_user').id:
+            return True
+        return False
+
 class WebsiteSaleWishlist(WebsiteSale):
     def _get_pricelist_context(self):
         pricelist_context = dict(request.env.context)

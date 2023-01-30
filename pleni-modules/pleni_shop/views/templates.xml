@@ -112,6 +112,27 @@
       </xpath>
     </template>
 
+    <template id="login_msg_view" inherit_id="website_sale.add_grid_or_list_option">
+      <xpath expr="//div[hasclass('products_pager')]" position="before">
+        <t t-if="request.env.user.id == request.env.ref('base.public_user').id">
+          <div class="alert alert-success text-left mt16" role="alert">
+            Para continuar con la experiencia de comprar en Pleni,
+            <a t-attf-href="/web/login?{{ keep_query() }}" class="alert-link" id="alert-login">
+              inicia sesión
+            </a>
+          </div>
+        </t>
+
+        <t t-if="request.env.user.id != request.env.ref('base.public_user').id">
+          <t t-if="request.env.user.partner_id.get_count_wish_products()">
+            <div class="alert alert-success text-left mt16" role="alert">
+              ¿Siempre compras los mismos productos? Agrégalos a tu lista de Compra Frecuente, dándole click al botón de corazón
+            </div>
+          </t>
+        </t>
+      </xpath>
+    </template>
+
     <template id="3mit_website_products_categories_inherit" inherit_id="website_sale.products_categories">
       <xpath expr="//div[@id='wsale_products_categories_collapse']/ul[1]/li[1]" position="replace">
         <li class="nav-item d-flex">

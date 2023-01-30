@@ -264,19 +264,8 @@ odoo.define('pleni_user.custom_my_details_portal', function (require) {
     function session_expired(cm) {
         return {
             display: function () {
-                const notif = {
-                    type: _t("Debes iniciar sesión"),
-                    message: "Para continuar con la experiencia de comprar en Pleni, te redireccionaremos a la vista de iniciar sesión",
-                };
-                const options = {
-                    buttons: [{
-                        text: _t("Ok"),
-                        click: () => window.location = "/web/login",
-                        close: true
-                    }],
-                };
-                cm.show_warning(notif, options);
-            }
+                return window.location = "/web/login";
+            },
         };
     }
 

@@ -37,6 +37,8 @@ publicWidget.registry.quickCart = publicWidget.Widget.extend({
 
     _onAddToCart:function(event){
         var $card = $(event.currentTarget).closest('.o_wsale_product_btn');
+        let loading = document.getElementById('loading_pleni')
+        loading.classList.add('loading-pleni')
         this._rpc({
             route: '/shop/cart/update_json',
             params: {
@@ -60,6 +62,7 @@ publicWidget.registry.quickCart = publicWidget.Widget.extend({
             }else{
                 wSaleUtils.animateClone($navButton, $(event.currentTarget).parents('.oe_product'), 25, 40);
             }
+            loading.classList.remove('loading-pleni')
         });
     }});
 

@@ -46,6 +46,8 @@ publicWidget.registry.AtharvaCart = publicWidget.Widget.extend({
             value = 1;
         }
         var line_id = parseInt($input.data('line-id'), 10);
+        let loading = document.getElementById('loading_pleni')
+        loading.classList.add('loading-pleni')
         rpc.query({
             route: "/shop/cart/update_json",
             params: {
@@ -91,6 +93,7 @@ publicWidget.registry.AtharvaCart = publicWidget.Widget.extend({
                     cartUpdate._onChangeUomSelection(event);
                 });
             });
+            loading.classList.remove('loading-pleni')
         });
     },
     _onClickDeleteProductCart: function(ev) {
@@ -164,6 +167,7 @@ publicWidget.registry.atharvaCartLink = publicWidget.Widget.extend({
 
     _clickChangeQuantity: function(event) {
         //event.preventDefault();
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
         var cartUpdate = new publicWidget.registry.AtharvaCart();
         cartUpdate._onUpdateQty(event);
     }

@@ -167,7 +167,6 @@ publicWidget.registry.atharvaCartLink = publicWidget.Widget.extend({
 
     _clickChangeQuantity: function(event) {
         //event.preventDefault();
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
         var cartUpdate = new publicWidget.registry.AtharvaCart();
         cartUpdate._onUpdateQty(event);
     }

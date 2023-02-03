@@ -1,21 +1,20 @@
-name: Send submodule updates to pleni2
+name: Send submodule updates to pleni2 repository
 
 on:
   push:
     branches: 
-      - master
+      - staging
 
 jobs:
   update:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
         with: 
           repository: binaural-dev/pleni2
-          ref: master
+          ref: staging
           token: ${{ secrets.PLENI2_TOKEN_GITHUB }}
-      - name: Pull & update submodules recursively
+      - name: Pull & Update submodules recursively
         run: |
           git submodule update --init --recursive
           git submodule update --recursive --remote

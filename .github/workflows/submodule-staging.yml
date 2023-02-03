@@ -1,4 +1,4 @@
-name: Send submodule updates to pleni2 repository
+name: Send submodule updates to staging branch into pleni2 repository
 
 on:
   push:

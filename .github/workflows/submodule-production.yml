@@ -1,0 +1,27 @@
+name: Send submodule updates to master branch into pleni2 repository
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with: 
+          repository: binaural-dev/pleni2
+          ref: master
+          token: ${{ secrets.PLENI2_TOKEN_GITHUB }}
+      - name: Pull & Update submodules recursively
+        run: |
+          git submodule update --init --recursive
+          git submodule update --recursive --remote
+      - name: Commit
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions - update submodules"
+          git add --all
+          git commit -m "Update submodules" || echo "No changes to commit"
+          git push

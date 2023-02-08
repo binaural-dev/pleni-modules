@@ -6,5 +6,5 @@
     'author': "Manuel Escalante",
     'license': 'GPL-3',
     'website': "http://pleni.app",
-    'depends': ['base', 'sale', 'stock']
+    'depends': ['base', 'sale', 'stock', 'binaural_ventas']
 }

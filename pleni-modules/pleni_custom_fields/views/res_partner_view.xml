@@ -48,6 +48,70 @@
       <xpath expr="//field[@name='taxpayer']" position="before">
         <field name="fiscal_invoice_needed" attrs="{'required': True}" />
       </xpath>
+
+      <page name="sales_purchases" position="after">
+        <page name='horario' string="Horario">
+          <group>
+            <group>
+              <field name="monday_open" />
+            </group>
+            <group>
+              <field name="monday_from" />
+              <field name="monday_to" />
+            </group>
+
+            <group>
+              <field name="tuesday_open" />
+            </group>
+            <group>
+              <field name="tuesday_from" />
+              <field name="tuesday_to" />
+            </group>
+
+            <group>
+              <field name="wednesday_open" />
+            </group>
+            <group>
+              <field name="wednesday_from" />
+              <field name="wednesday_to" />
+            </group>
+
+            <group>
+              <field name="thursday_open" />
+            </group>
+            <group>
+              <field name="thursday_from" />
+              <field name="thursday_to" />
+            </group>
+
+            <group>
+              <field name="friday_open" />
+            </group>
+            <group>
+              <field name="friday_from" />
+              <field name="friday_to" />
+            </group>
+
+            <group>
+              <field name="saturday_open" />
+            </group>
+            <group>
+              <field name="saturday_from" />
+              <field name="saturday_to" />
+            </group>
+
+            <group>
+              <field name="sunday_open" />
+            </group>
+            <group>
+              <field name="sunday_from" />
+              <field name="sunday_to" />
+            </group>
+
+          </group>
+        </page>
+      </page>
+
     </field>
   </record>
 </odoo>

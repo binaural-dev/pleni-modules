@@ -14,6 +14,7 @@
         'website_uom_select_suggetion_spt', 
         'website_sale_delivery', 
         'website',
+        'binaural_sitio_web'
     ],
     'data': [
         # 'security/ir.model.access.csv',

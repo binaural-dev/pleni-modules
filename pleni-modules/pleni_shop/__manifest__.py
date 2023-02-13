@@ -13,7 +13,8 @@
         'website_uom_select_suggetion_spt', 
         'atharva_theme_base',
         'payment', 
-        'pleni_custom_fields'
+        'pleni_custom_fields',
+        'binaural_sitio_web'
     ],
     # always loaded
     'data': [

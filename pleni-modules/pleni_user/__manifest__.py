@@ -10,7 +10,8 @@
         'contacts',
         "base_vat",
         'pleni_custom_fields',
-        'auth_signup'
+        'auth_signup',
+        'binaural_vendedores'
     ],
     # always loaded
     'data': [

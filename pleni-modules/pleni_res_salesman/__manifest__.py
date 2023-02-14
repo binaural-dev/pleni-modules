@@ -6,7 +6,7 @@
     'license': 'GPL-3',
     'author': "Manuel Escalante",
     'website': "https://pleni.app",
-    'depends': ['base', 'sale'],
+    'depends': ['base', 'sale', 'binaural_contactos_configuraciones'],
     'data': [
         'security/ir.model.access.csv',
         'security/salesman_security.xml',

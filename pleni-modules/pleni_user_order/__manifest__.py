@@ -5,7 +5,7 @@
     'website': "https://www.pleni.app",
     'category': 'Inventory',
     'version': '0.1',
-    'depends': ['base', 'website', 'website_sale', 'portal', 'payment', 'sale'],
+    'depends': ['base', 'website', 'website_sale', 'portal', 'payment', 'sale', 'binaural_sitio_web'],
 
     # always loaded
     'data': [

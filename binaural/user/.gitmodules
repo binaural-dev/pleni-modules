@@ -1,4 +1,0 @@
-[submodule "pleni-modules"]
-	path = pleni-modules
-	url = https://github.com/binaural-dev/pleni-modules
-	branch = master

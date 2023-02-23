@@ -97,3 +97,4 @@ class ResPartnerInherit(models.Model):
             return f'Domingo: {self.sunday_from}-{self.sunday_to}'
         
         return ''
+

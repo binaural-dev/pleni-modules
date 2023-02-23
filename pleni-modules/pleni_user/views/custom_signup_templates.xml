@@ -132,95 +132,89 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="row">
-
-                                <div class="col-lg-12">
-                                    <label class="text-center col-form-label" style="font-weight: bold; font-size: large; margin-top: 32px;">Registra tu dirección de entrega</label>
-                                </div>
-
-                                    <div class="form-group col-xl-4 d-none">
-                                        <label for="name">Company type</label>
-                                        <select class="form-control" name="company_type" id="company_type">
-                                            <option value='person'>Individual</option>
-                                            <option value='company'>Company</option>
-                                        </select>
+                                <div class="accordion-item" style="width: 100%;">
+                                    <div class="col-lg-12" data-toggle="collapse" 
+                                        href="#collapseExample" role="button" 
+                                        aria-expanded="false" aria-controls="collapseExample">
+                                        <label class="text-center col-form-label" 
+                                        style="font-weight: bold; font-size: large; margin-top: 32px;">
+                                            Registra tu dirección de entrega (Opcional) >
+                                        </label>
                                     </div>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="form-group col-xl-4" style="display: none;">
+                                            <t t-set="countries" t-value="request.env['res.country'].search([], order='name ASC')"/>
+                                            <label for="name" style="display: none;">Country</label>
+                                            <select class="form-control" name="country_id" 
+                                            id="country_select" required="" style="display: none;">
+                                                <t t-foreach="countries" t-as="country">
+                                                    <option t-att-value="country.id">
+                                                        <t t-esc="country.name" />
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
 
-                                    <!-- Company type: person -->
-                                <div id="container_people_type_individual" class="form-group col-xl-4" style="display: none;">
-                                    <label class="col-form-label" for="people_type_individual">Person type</label>
-                                    <select name="people_type_individual" class="form-control" id="people_type_individual">
-                                        <option value="pnre" selected="">PNRE Persona Natural Residente</option>
-                                        <option value="pnnr">PNNR Persona Natural No Residente</option>
-                                    </select>
-                                </div>
+                                        <div class="row">
 
-                                <!-- Company type: company -->
-                                <div id="container_people_type_company_field" class="form-group col-xl-4" style="display: none;">
-                                    <label class="col-form-label" for="people_type_company">Person type</label>
-                                    <select name="people_type_company" class="form-control">
-                                        <option value="pjdo" selected="">PJDO Persona Jurídica Domiciliada</option>
-                                        <option value="pjnd">PJND Persona Jurídica No Domiciliada</option>
-                                    </select>
-                                </div>
+                                            <div class="col-sm-12 col-xl-4">              
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="state">Estado</label>
+                                                    <select name="state_id" class="form-control" id="state_select">
+                                                    </select>
+                                                </div>
 
-                                <div class="form-group col-xl-4" style="display: none;">
-                                    <t t-set="countries" t-value="request.env['res.country'].search([], order='name ASC')"/>
-                                    <label for="name" style="display: none;">Country</label>
-                                    <select class="form-control" name="country_id" id="country_select" required="" style="display: none;">
-                                        <t t-foreach="countries" t-as="country">
-                                            <option t-att-value="country.id">
-                                                <t t-esc="country.name" />
-                                            </option>
-                                        </t>
-                                    </select>
-                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="state">Parroquia</label>
+                                                    <select name="parish_id" class="form-control" id="parish_select" />
+                                                </div>
 
-                                <div class="form-group col-xl-4">
-                                    <label class="col-form-label" for="state">Estado</label>
-                                    <select name="state_id" class="form-control" id="state_select" required="">
-                                    </select>
-                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="reference_point">Punto de referencia</label>
+                                                    <input type="text" name="ref_point" t-att-value="ref_point" id="reference_point" class="form-control" placeholder="Ej. CC San Ignacio"/>
+                                                </div>
+                                            </div>
 
-                                <div class="form-group col-xl-4">
-                                    <label class="col-form-label" for="city">Ciudad</label>
-                                    <select name="city_id" class="form-control" id="city_select" required="">
-                                    </select>
-                                </div>
+                                            <div class="col-sm-12 col-xl-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="city">Ciudad</label>
+                                                    <select name="city" class="form-control" id="city_select">
+                                                    </select>
+                                                </div>
 
-                                <div id="municipality_div" class="col-xl-4">
-                                    <label class="col-form-label" for="state">Municipio</label>
-                                    <select name="municipality_id" class="form-control" id="municipality_select" required=""/>
-                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="street">Calle</label>
+                                                    <input type="text" name="street" class="form-control" id="street" 
+                                                        placeholder="Ej. Calle 1"/>
+                                                </div>
 
-                                <div class="form-group col-xl-4">
-                                    <label class="col-form-label" for="state">Parroquia</label>
-                                    <select name="parish_id" class="form-control" id="parish_select" required=""/>
-                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="name">Instrucciones al despachador</label>
+                                                    <input type="text" name="dispatcher_instructions" t-att-value="dispatcher_instructions" id="dispatcher_instructions" class="form-control" placeholder="Pasando el colegio San Ignacio"/>
+                                                </div>
 
-                                    <div class="form-group col-xl-4">
-                                    <label class="col-form-label" for="street">Calle</label>
-                                    <input type="text" name="street" class="form-control" id="street" required="" placeholder="Ej. Calle 1"/>
+                                            </div>
+
+                                            <div class="col-sm-12 col-xl-4">
+                                                <div id="municipality_div" class="form-group">
+                                                    <label class="col-form-label" for="state">Municipio</label>
+                                                    <select name="municipality_id" class="form-control" id="municipality_select"/>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="street2">Complemento de calle</label>
+                                                    <input type="text" name="street2" class="form-control" id="street_2" placeholder="Ej. Esquina con calle 2"/>
+                                                </div>
+
+                                                <div class="form-group" style="display: none;">
+                                                    <label class="col-form-label" for="zip">ZIP</label>
+                                                    <input type="text" name="zip" class="form-control" id="zip" value="1050"/>
+                                                    <!--Default= 1050-->
+                                                </div>
+                                            </div>
+                                        </div>   
                                     </div>
-
-                                <div class="form-group col-xl-4">
-                                    <label class="col-form-label" for="street2">Complemento de calle</label>
-                                    <input type="text" name="street2" class="form-control" id="street_2" placeholder="Ej. Esquina con calle 2"/>
-                                </div>
-
-                                <div class="form-group col-xl-4" style="display: none;">
-                                    <label class="col-form-label" for="zip">ZIP</label>
-                                    <input type="text" name="zip" class="form-control" id="zip" value="1050"/>
-                                    <!--Default= 1050-->
-                                </div>
-
-                                <div class="form-group col-xl-4">
-                                    <label class="col-form-label" for="reference_point">Punto de referencia</label>
-                                    <input type="text" name="ref_point" t-att-value="ref_point" id="reference_point" class="form-control" placeholder="Ej. CC San Ignacio"/>
-                                </div>
-
-                                <div class="form-group col-xl-4">
-                                    <label class="col-form-label" for="name">Instrucciones al despachador</label>
-                                    <input type="text" name="dispatcher_instructions" t-att-value="dispatcher_instructions" id="dispatcher_instructions" class="form-control" placeholder="Pasando el colegio San Ignacio"/>
                                 </div>
                             </div>
                         </div>

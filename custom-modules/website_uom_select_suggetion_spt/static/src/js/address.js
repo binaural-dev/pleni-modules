@@ -18,7 +18,7 @@ odoo.define('pleni.website_sale_bin', function (require) {
     ]
 
 
-    publicWidget.registry.AtharvaCart = publicWidget.Widget.extend({
+    publicWidget.registry.AtharvaCart.include({
         selector: '#form1',
         events: {
             'change #country_select': '_onChangeCountry',

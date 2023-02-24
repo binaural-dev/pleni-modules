@@ -172,6 +172,23 @@
 	<xpath expr="//div[hasclass('all_shipping')]/div[1]/div[1]/div[1]" position="attributes">
 		<attribute name="style">display: none;</attribute>
 	</xpath>
+
+	<xpath expr="//div[hasclass('oe_cart')]/div[1]" position="replace">
+		<t t-if=" not order.partner_id.parent_id">
+			<div class="row">
+				<div class="col-lg-12">
+					<h3 class="o_page_header mt8">Billing Address</h3>
+				</div>
+				<div class="col-lg-6 one_kanban">
+					<t t-call="website_sale.address_kanban">
+						<t t-set='contact' t-value="order.partner_id"/>
+						<t t-set='selected' t-value="1"/>
+						<t t-set='readonly' t-value="1"/>
+					</t>
+				</div>
+			</div>
+		</t>
+	</xpath>
 </template>
 
 </odoo>

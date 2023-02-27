@@ -6,6 +6,16 @@ odoo.define('pleni_user.custom_my_details_portal', function (require) {
     const core = require('web.core');
     var _t = core._t;
 
+    const allowedStates = [
+        'Distrito Capital',
+        'Miranda',
+        'Aragua',
+        'Carabobo',
+        'Vargas',
+        'Lara',
+        'Yaracuy',
+        'Portuguesa'
+    ]
 
     publicWidget.registry.portalDetails = publicWidget.Widget.extend({
         selector: '.o_portal_details',
@@ -173,9 +183,10 @@ odoo.define('pleni_user.custom_my_details_portal', function (require) {
             const inputCountryId = $("select[name='country_id']").val();
             const inputStateId = $("select[name='state_id']").val();
             const allCountries = await ajax.rpc('/getStatesById', {'input_country_id': 238});
+            const allCountriesFiltered = allCountries.filter(item => allowedStates.includes(item.name));
             const stateId = document.getElementById('state_select');
             $('#state_select').empty()
-            allCountries.forEach(e => {
+            allCountriesFiltered.forEach(e => {
                 var opt = document.createElement('option');
                 opt.value = e.id;
                 opt.innerHTML = e.name;
@@ -201,23 +212,39 @@ odoo.define('pleni_user.custom_my_details_portal', function (require) {
                 }
                 municipalityId.appendChild(opt);
             });
-            this._onChangeMunicipality()
+            this._onChangeCity();
+            this._onChangeMunicipality();
         },
+
+
+        _onChangeCity: async function () {
+            const inputStateId = $("select[name='state_id']").val();
+            const allCities = await ajax.rpc('/getCitiesById', {'input_state_id': inputStateId});
+            const cityId = document.getElementById('city_select');
+            $('#city_select').empty()
+            allCities.forEach(e => {
+                var opt = document.createElement('option');
+                opt.value = e.id;
+                opt.innerHTML = e.name;
+                cityId.appendChild(opt);
+            });
+        },
+
         _onChangeMunicipality: async function() {
             const inputMunicipalityId = $("select[name='municipality_id']").val();
-            // const inputParishId = $("select[id='parish_select']").val();
-            // const allParishes = await ajax.rpc('/getParishesById', {'input_municipality_id': inputMunicipalityId});
-            // const parishId = document.getElementById('parish_select');
-            // $('#parish_select').empty()
-            // allParishes.forEach(e => {
-            //     var opt = document.createElement('option');
-            //     opt.value = e.id;
-            //     opt.innerHTML = e.name;
-            //     if (String(inputParishId) === String(e.id)) {
-            //         opt.setAttribute('selected', true)
-            //     }
-            //     parishId.appendChild(opt);
-            // });
+            const inputParishId = $("select[id='parish_select']").val();
+            const allParishes = await ajax.rpc('/getParishesById', {'input_municipality_id': inputMunicipalityId});
+            const parishId = document.getElementById('parish_select');
+            $('#parish_select').empty()
+            allParishes.forEach(e => {
+                var opt = document.createElement('option');
+                opt.value = e.id;
+                opt.innerHTML = e.name;
+                if (String(inputParishId) === String(e.id)) {
+                    opt.setAttribute('selected', true)
+                }
+                parishId.appendChild(opt);
+            });
         },
     });
 

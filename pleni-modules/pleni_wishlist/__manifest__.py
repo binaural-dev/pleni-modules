@@ -11,7 +11,8 @@
         'website',
         'website_sale_wishlist',
         'product',
-        'theme_laze'
+        'theme_laze',
+        'binaural_sitio_web'
     ],
     # always loaded
     'data': [

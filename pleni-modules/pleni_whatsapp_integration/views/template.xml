@@ -24,7 +24,7 @@
             % if object.state == 'draft' or object.state == 'sent':
                 Su pedido *${object.name}* con el monto *${format_amount(object.amount_total, object.currency_id)}* ha sido recibido.
             % elif guard.iteration:
-                Lo siguientes productos no estarán disponible para su próxima entrega:
+                Actualmente no tenemos disponibilidad de los siguientes productos de su orden:
                 % for line in object.order_line:
                     % if line.state == 'sale' and line.invoice_status == 'to invoice' and line.qty_to_invoice < line.product_uom_qty:
                         <ul>
@@ -41,7 +41,7 @@
                     % endif                    
                 % endfor
 
-                Puede consultar más información sobre su pedido en el siguiente link: https://pleni.app/my/orders/fault/${object.id}
+                Sin embargo, nuestro equipo está trabajando en la completitud del mismo. Puede consultar el estatus de su pedido en el siguiente link: https://pleni.app/my/orders/fault/${object.id}
             % else:
                 Su pedido *${object.name}* con el monto *${format_amount(object.amount_total, object.currency_id)}* ha sido confirmado.
             % endif
@@ -50,7 +50,7 @@
             La fecha y hora de entrega es "${object.date_delivery_view} en el bloque: ${object.am_pm}"
         </div>
         <div>
-            Si desea recibir estos productos en otra entrega, indiquenos por aquí y con gusto le atenderemos.
+            Indíqueme a continuación si desea recibir productos en una segunda entrega, quedamos atentos.
         </div>
         ]]>
     </field>

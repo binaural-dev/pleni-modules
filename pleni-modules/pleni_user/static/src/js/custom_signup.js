@@ -121,11 +121,11 @@ odoo.define('pleni_user.custom_signup', function (require) {
             let nationalityId = document.getElementById('nationality');
             let identificationId = document.getElementById('identification_id');
             // let rifId = document.getElementById('rif');
-            let inputCompanyTypeSelector = document.getElementById('company_type');
+            //let inputCompanyTypeSelector = document.getElementById('company_type');
 
 
             if (newNationalityId === 'V' || newNationalityId === 'E' || newNationalityId === 'P') {
-                inputCompanyTypeSelector.value = 'person';
+                //inputCompanyTypeSelector.value = 'person';
                 nationalityId.value = newNationalityId;
                 identificationId.value = newIdentificationId;
                 inputCommercialName.setAttribute('style', 'display: none;');
@@ -151,7 +151,7 @@ odoo.define('pleni_user.custom_signup', function (require) {
 
 
             } else if (newNationalityId === 'J' || newNationalityId === 'G') {
-                inputCompanyTypeSelector.value = 'company';
+                //inputCompanyTypeSelector.value = 'company';
                 // rifId.value = `${newNationalityId}-${newIdentificationId}`;
                 inputCommercialName.setAttribute('style', 'display: block;');
                 labelPerson.setAttribute('style', 'display: none;');

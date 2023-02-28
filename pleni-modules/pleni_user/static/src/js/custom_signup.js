@@ -60,6 +60,7 @@ odoo.define('pleni_user.custom_signup', function (require) {
             const labelPerson = document.getElementById('label_person');
             const labelCompany = document.getElementById('label_company');
             let nationalityId = document.getElementById('nationality');
+
             //let inputCompanyTypeSelector = document.getElementById('company_type');
             const textValidation = document.getElementById('validationIdentification');
 

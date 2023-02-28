@@ -164,6 +164,31 @@ class WebsiteSale(WebsiteSale):
         #     domain, limit=ppg, offset=pager['offset'], order=order_check)
         products = Product.search(
             domain, limit=ppg, offset=pager['offset'], order=self._get_search_order(post))
+
+        products_ids = []
+        for p in products:
+            product_item = request.env['product.product'].search([('product_tmpl_id', '=', p.id)])
+
+            if product_item:
+                pricelist_items = request.env['product.pricelist.item'].sudo().search(
+                    [
+                        ('pricelist_id','=',pricelist.id),
+                        ('product_id','=',product_item.id)
+                    ], 
+                    order= 'min_quantity asc'
+                )
+
+            if pricelist_items:
+                products_ids.append(p.id)
+
+        if len(products_ids):
+            domain += [('id', 'in', products_ids)]
+            products = Product.search(
+                domain,
+                limit=ppg,
+                offset=pager['offset'],
+                order=self._get_search_order(post)
+            )
         # products = Product.search(
         #     domain, limit=ppg, offset=pager['offset'], order='times_sold desc')
 

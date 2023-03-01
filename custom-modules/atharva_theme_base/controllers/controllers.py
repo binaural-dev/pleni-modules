@@ -179,7 +179,10 @@ class WebsiteSale(WebsiteSale):
                 )
 
             if pricelist_items:
-                products_ids.append(p.id)
+                for price in pricelist_items:
+                    if price.fixed_price:
+                        if p.id not in products_ids:
+                            products_ids.append(p.id)
 
         if len(products_ids):
             domain += [('id', 'in', products_ids)]

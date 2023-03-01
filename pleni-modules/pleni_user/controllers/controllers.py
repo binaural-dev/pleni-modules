@@ -83,7 +83,6 @@ class GetStatedById(http.Controller):
         request_pos = json.loads(request.httprequest.data)
         env = api.Environment(http.request.cr, SUPERUSER_ID, {})
         x = request_pos.get('params')
-        print("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", x)
         return []
 
 

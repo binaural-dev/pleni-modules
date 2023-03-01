@@ -159,7 +159,12 @@ class CustomerPortal(CustomerPortal):
                         values[field] = int(values[field])
                     except:
                         values[field] = False
-                values.update({'zip': values.pop('zipcode', '')})
+                values.update(
+                    {
+                        'zip': values.pop('zipcode', ''),
+                        'type': 'contact'
+                    }
+                )
                 partner.sudo().write(values)
                 if redirect:
                     return request.redirect(redirect)

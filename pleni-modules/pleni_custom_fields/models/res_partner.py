@@ -45,32 +45,32 @@ class ResPartnerInherit(models.Model):
     ]
 
     monday_open = fields.Boolean(string='Lunes Abierto', default=False)
-    monday_from = fields.Selection(hours_of_the_day, string="Desde")
-    monday_to = fields.Selection(hours_of_the_day, string="a")
+    monday_from = fields.Selection(hours_of_the_day, string="L. Desde")
+    monday_to = fields.Selection(hours_of_the_day, string="L. a")
         
     tuesday_open = fields.Boolean(string='Martes Abierto', default=False)
-    tuesday_from = fields.Selection(hours_of_the_day, string="Desde")
-    tuesday_to = fields.Selection(hours_of_the_day, string="a")
+    tuesday_from = fields.Selection(hours_of_the_day, string="M. Desde")
+    tuesday_to = fields.Selection(hours_of_the_day, string="M. a")
 
     wednesday_open = fields.Boolean(string='Miércoles Abierto', default=False)
-    wednesday_from = fields.Selection(hours_of_the_day, string="Desde")
-    wednesday_to = fields.Selection(hours_of_the_day, string="a")
+    wednesday_from = fields.Selection(hours_of_the_day, string="Mi. Desde")
+    wednesday_to = fields.Selection(hours_of_the_day, string="Mi. a")
 
     thursday_open = fields.Boolean(string='Jueves Abierto', default=False)
-    thursday_from = fields.Selection(hours_of_the_day, string="Desde")
-    thursday_to = fields.Selection(hours_of_the_day, string="a")
+    thursday_from = fields.Selection(hours_of_the_day, string="J. Desde")
+    thursday_to = fields.Selection(hours_of_the_day, string="J. a")
 
     friday_open = fields.Boolean(string='Viernes Abierto', default=False)
-    friday_from = fields.Selection(hours_of_the_day, string="Desde")
-    friday_to = fields.Selection(hours_of_the_day, string="a")
+    friday_from = fields.Selection(hours_of_the_day, string="V. Desde")
+    friday_to = fields.Selection(hours_of_the_day, string="V. a")
 
     saturday_open = fields.Boolean(string='Sábado Abierto', default=False)
-    saturday_from = fields.Selection(hours_of_the_day, string="Desde")
-    saturday_to = fields.Selection(hours_of_the_day, string="a")
+    saturday_from = fields.Selection(hours_of_the_day, string="S. Desde")
+    saturday_to = fields.Selection(hours_of_the_day, string="S. a")
 
     sunday_open = fields.Boolean(string='Domingo Abierto', default=False)
-    sunday_from = fields.Selection(hours_of_the_day, string="Desde")
-    sunday_to = fields.Selection(hours_of_the_day, string="a")
+    sunday_from = fields.Selection(hours_of_the_day, string="D. Desde")
+    sunday_to = fields.Selection(hours_of_the_day, string="D. a")
 
     def _get_day_name(self, delivery_date):
         day = delivery_date.strftime("%A")

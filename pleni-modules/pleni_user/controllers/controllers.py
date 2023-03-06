@@ -246,19 +246,19 @@ class WebsiteSale(http.Controller):
             request.website.sale_reset()
             return {}
         
-        # if not line_id:
-        #     prices = request.env['product.pricelist.item'].search(
-        #         [
-        #             ('product_id', '=', product_id),
-        #             ('pricelist_id', '=', order.pricelist_id.id),
-        #         ]
-        #     )
+        if not line_id:
+            prices = request.env['product.pricelist.item'].search(
+                [
+                    ('product_id', '=', product_id),
+                    ('pricelist_id', '=', order.pricelist_id.id),
+                ]
+            )
 
-        #     zero_price = all(item.fixed_price == 0.0 for item in prices)
+            zero_price = all(item.fixed_price == 0.0 for item in prices)
 
-        #     if zero_price:
-        #         request.website.sale_reset()
-        #         return {}
+            if zero_price:
+                request.website.sale_reset()
+                return {}
 
         value = order._cart_update(product_id=product_id, line_id=line_id, add_qty=add_qty, set_qty=set_qty)
 

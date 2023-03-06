@@ -191,6 +191,14 @@ class WebsiteSale(WebsiteSale):
             offset=pager['offset'],
             order=self._get_search_order(post)
         )
+
+        search_categories = Category.search(
+            [('product_tmpl_ids', 'in', products_ids)] + website_domain).parents_and_self
+        
+        catgs_array = []
+        catgs_array.append(('id', 'in', search_categories.ids))
+        categs = Category.search(catgs_array)
+
         # products = Product.search(
         #     domain, limit=ppg, offset=pager['offset'], order='times_sold desc')
 

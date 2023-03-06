@@ -17,6 +17,8 @@ publicWidget.registry.AtharvaCart = publicWidget.Widget.extend({
     _onClickRemoveProduct: function (ev) {
         ev.preventDefault();
         $(ev.currentTarget).siblings().find('.js_quantity').val(0).trigger('change');
+        this._onClickDeleteProductCart(ev)
+
     },
     _onUpdateQty: function(ev){
         ev.preventDefault();

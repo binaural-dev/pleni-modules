@@ -45,9 +45,18 @@
 
     <template id="product_wishlist_extend_button" inherit_id="website_sale_wishlist.product_wishlist">
         <xpath expr="//button[hasclass('o_wish_add')]" position="replace">
-            <button type="button" role="button" class="btn btn-secondary btn-block o_wish_add mb4 as-btn" style="width: 70px">
-                <i class="fa fa-plus-circle"></i>
-            </button>
+            <t t-set="combination_info" t-value="wish.product_id._get_combination_info_variant()"/>
+            <t t-if="combination_info['price'] != 0.0">
+                <button type="button" role="button" 
+                    class="btn btn-secondary btn-block o_wish_add mb4 as-btn" style="width: 70px">
+                    <i class="fa fa-plus-circle"></i>
+                </button>
+            </t>
+            <t t-else="">
+                <span style="color: #722F37;font-size: 11px;font-style: italic;">
+                    No está disponible para la ciudad seleccionada
+                </span>
+            </t>
             <script type="text/javascript">
                 document.getElementById("b2b_wish").checked = true;
             </script>

@@ -281,7 +281,7 @@ class WSSaleOrder(MainSaleOrder):
                 [('pricelist_id', '=', self.pricelist_id.id), ('product_id', '=', product.id)], order='min_quantity asc')
             uom = self.env['uom.uom'].browse(values['product_uom'])
             uom_qty = float(values.get('product_uom_qty'))
-            real_qty = uom_qty / uom.factor
+            real_qty = round(uom_qty / uom.factor)
             real_price = 0
             for item in prices_list:
                 if item.min_quantity <= real_qty:

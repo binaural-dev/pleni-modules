@@ -28,6 +28,7 @@ class WebsiteSale(WebsiteSale):
     @http.route()
     def shop(self, page=0, category=None, search='', ppg=False, **post):
         """ Override for shop method """
+
         rating = post.get('rating')
         max_val = min_val = 0
         custom_min_val = custom_max_val = 0

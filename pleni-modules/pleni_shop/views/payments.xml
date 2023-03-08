@@ -166,9 +166,9 @@
         <xpath expr="//div[@id='shipping_and_billing']/div[1]" position="before">
             <span
                 t-if="not same_shipping and not only_services" 
-                style="color:red;font-weight:bold;padding-bottom:10px;padding-top:5px;display:inline-block">
-                Su dirección fiscal no es la misma que la dirección de entrega. 
-                Si desea cambiarlo, haga clic en el botón editar.
+                style="color:#5e2129;font-style: italic;padding-bottom:10px;padding-top:5px;display:inline-block;">
+                    Su dirección fiscal no es la misma que la dirección de entrega. 
+                    Si desea cambiarlo, haga clic en el botón editar.
             </span>
         </xpath>
 

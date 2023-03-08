@@ -40,6 +40,7 @@ class WebsiteSale(WebsiteSale):
             if not category or not category.can_access_from_current_website():
                 raise NotFound()
         else:
+
             category = Category
         if ppg:
             try:

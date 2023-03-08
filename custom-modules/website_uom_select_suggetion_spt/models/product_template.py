@@ -27,8 +27,8 @@ class ProductTemplate(models.Model):
             'product_tmpl_id', '=', self.id), ('product_id', '=', product_id.id)], order='min_quantity asc')
         real_price = discounted_price = round(
             self.list_price * 1, 2)
-        real_qty = line.product_uom_qty / \
-            line.product_uom.factor if line.product_uom.uom_type == 'bigger' else line.product_uom_qty
+        real_qty = round(line.product_uom_qty / \
+            line.product_uom.factor if line.product_uom.uom_type == 'bigger' else line.product_uom_qty)
         min_price = discounted_price if discounted_price != 0 else (
             price_list_items[0].fixed_price if len(price_list_items) else 0)
 

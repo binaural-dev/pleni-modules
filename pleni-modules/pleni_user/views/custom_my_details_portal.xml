@@ -44,7 +44,9 @@
 
 						<div class="form-group col-xl-4 custom-grid">
                             <div class="row custom-nty-label container_nationality_field">
-                                <label class="col-form-label" for="name" id="label_nationality" style="padding-top: 0px; margin-top: 0px; margin-left: 15px;">Identification document (I.D.)</label>
+                                <label class="col-form-label" for="name" id="label_nationality" style="padding-top: 0px; margin-top: 0px; margin-left: 15px;">
+									Documento de Identidad
+								</label>
                             </div>
                             <div class="row custom-dni">
                                 <div class="form-group col-xl-3 pr-0 custom-dni-nty">
@@ -66,7 +68,9 @@
 
                         <div class="form-group col-xl-4 custom-grid" style="display: none;">
                             <div class="row custom-nty-label container_nationality_field">
-                                <label class="col-form-label" for="name" id="label_nationality" style="padding-top: 0px; margin-top: 0px; margin-left: 15px;">Identification document (I.D.)</label>
+                                <label class="col-form-label" for="name" id="label_nationality" style="padding-top: 0px; margin-top: 0px; margin-left: 15px;">
+									Documento de Identidad
+								</label>
                             </div>
                             <div class="row custom-dni">
                                 <!-- <div t-attf-class="form-group #{error.get('nationality') and 'o_has_error' or ''} col-xl-3 pr-0 custom-dni-nty">

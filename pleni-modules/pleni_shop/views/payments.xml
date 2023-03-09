@@ -172,6 +172,10 @@
             </span>
         </xpath>
 
+        <xpath expr="//div[@id='shipping_and_billing']/div[1]/b[1]" position="replace">
+            <b>Envío:</b>
+        </xpath>
+
     </template>
 
 </odoo>

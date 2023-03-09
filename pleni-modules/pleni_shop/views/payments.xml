@@ -163,17 +163,32 @@
             </div>
         </xpath>
 
-        <xpath expr="//div[@id='shipping_and_billing']/div[1]" position="before">
-            <span
-                t-if="not same_shipping and not only_services" 
-                style="color:#5e2129;font-style: italic;padding-bottom:10px;padding-top:5px;display:inline-block;">
-                    Su dirección fiscal no es la misma que la dirección de entrega. 
-                    Si desea cambiarlo, haga clic en el botón editar.
-            </span>
-        </xpath>
-
-        <xpath expr="//div[@id='shipping_and_billing']/div[1]/b[1]" position="replace">
-            <b>Envío:</b>
+        <xpath expr="//div[@id='shipping_and_billing']" position="replace">
+            <div class="card-body" id="shipping_and_billing">
+                <a class='float-right no-decoration' href='/shop/checkout'><i class="fa fa-edit"/> Editar</a>
+                <t t-set="same_shipping" t-value="bool(order.partner_shipping_id==order.partner_id or only_services)" />
+                <t t-if="same_shipping and not only_services">
+                    <div>
+                        <b>Envío:</b>
+                        <span t-esc='order.partner_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')" class="address-inline"/>
+                    </div>
+                </t>
+                <t t-else="">
+                    <span
+                        style="color:#5e2129;font-style: italic;padding-bottom:10px;padding-top:5px;display:inline-block;">
+                            Su dirección fiscal no es la misma que la dirección de entrega. 
+                            Si desea cambiarlo, haga clic en el botón editar.
+                    </span>
+                    <div>
+                        <b>Facturación:</b>
+                        <span t-esc='order.partner_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')" class="address-inline"/>
+                    </div>
+                    <div groups="sale.group_delivery_invoice_address">
+                        <b>Envío:</b>
+                        <span t-esc='order.partner_shipping_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')"  class="address-inline"/>
+                    </div>
+                </t>
+            </div>
         </xpath>
 
     </template>

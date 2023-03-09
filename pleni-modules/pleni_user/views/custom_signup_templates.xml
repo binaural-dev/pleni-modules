@@ -46,7 +46,9 @@
 
                             <div class="form-group col-xl-4 custom-grid">
                                 <div class="row custom-nty-label container_nationality_field">
-                                    <label class="col-form-label" for="name" id="label_nationality" style="padding-top: 0px; margin-top: 0px; margin-left: 15px;">Identification document (I.D.)</label>
+                                    <label class="col-form-label" for="name" id="label_nationality" style="padding-top: 0px; margin-top: 0px; margin-left: 15px;">
+                                        Documento de Identidad
+                                    </label>
                                 </div>
                                 <div class="row custom-dni">
                                     <div class="col-xl-3 pr-1 custom-dni-nty">

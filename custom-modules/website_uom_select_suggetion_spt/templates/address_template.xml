@@ -22,10 +22,9 @@
 						</t>
 						<t t-if="partner_id == website_sale_order.partner_shipping_id.id == website_sale_order.partner_invoice_id.id">
 							<div class="alert alert-warning" role="alert" t-if="not only_services">
-								<h4 class="alert-heading">¡Ten cuidado!</h4>
+								<!-- <h4 class="alert-heading">¡Ten cuidado!</h4> -->
 								<p groups="sale.group_delivery_invoice_address">
-            	                    Estás editando tus direcciones de <b>facturación y envío</b> al mismo tiempo!<br/>
-            	                    Si desea modificar su dirección de envío, cree una <a href='/my/account'>nueva direccion</a>.
+            	                    Si desea modificar su dirección de envío, cree una nueva <a href='/my/account'>nueva direccion</a>.
 							</p>
 						</div>
 					</t>
@@ -177,7 +176,7 @@
 		<t t-if=" not order.partner_id.parent_id">
 			<div class="row">
 				<div class="col-lg-12">
-					<h3 class="o_page_header mt8">Billing Address</h3>
+					<h3 class="o_page_header mt8">Dirección de facturación</h3>
 				</div>
 				<div class="col-lg-6 one_kanban">
 					<t t-call="website_sale.address_kanban">
@@ -186,6 +185,18 @@
 						<t t-set='readonly' t-value="1"/>
 					</t>
 				</div>
+			</div>
+		</t>
+		<t t-else="">
+			<div style="color: black;">
+				<div t-esc="order.partner_id.parent_id.name"></div>
+				<div t-esc='order.partner_id.parent_id' 
+					t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')" class="address-inline"/>
+
+				<span
+					style="color:#5e2129;font-style: italic;padding-bottom:10px;padding-top:5px;display:inline-block;">
+						Si quieres editar la dirección de facturación, comunícate con el equipo de Atención al Cliente de Pleni
+				</span>
 			</div>
 		</t>
 	</xpath>

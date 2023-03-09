@@ -13,7 +13,8 @@
         'stock',
         'sale',
         'sale_stock',
-        'product'
+        'product',
+        'binaural_contactos_configuraciones'
     ],
     'data': [
         'security/ir.model.access.csv',

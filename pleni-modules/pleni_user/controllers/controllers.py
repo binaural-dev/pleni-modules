@@ -14,7 +14,7 @@ class AuthSignupHome(Home):
         """ Shared helper that creates a res.partner out of a token """
         values = {key: qcontext.get(key) for key in ('login', 'name', 'password', 'company_type',
                                                      'country_id', 'prefix_vat', 'vat',
-                                                     'mobile', 'state_id', 'municipality_id', 'street',
+                                                     'mobile', 'state_id', 'municipality_id', 'street', 'parish_id',
                                                      'street2', 'city', 'zip', 'ref_point', 'dispatcher_instructions')}
         if not values:
             raise UserError(_("The form was not properly filled in."))
@@ -34,7 +34,7 @@ class AuthSignupHome(Home):
                                       'redirect', 'redirect_hostname', 'email', 'name', 'partner_id',
                                       'password', 'confirm_password', 'city', 'country_id', 'lang',
                                       'login', 'name', 'password', 'company_type',
-                                      'country_id', 'prefix_vat', 'vat',
+                                      'country_id', 'prefix_vat', 'vat', 'parish_id',
                                       'mobile', 'state_id', 'municipality_id', 'street',
                                       'street2', 'city', 'zip', 'ref_point', 'dispatcher_instructions',
                                       'commercial_name'}
@@ -77,6 +77,15 @@ class GetStatedById(http.Controller):
                         all_states = [{'id': state.id, 'name': state.name} for state in state_ids]
         return all_states
 
+    
+    @http.route('/getUserInfo', auth='none', type='json', cors='*')
+    def get_user_info(self):
+        request_pos = json.loads(request.httprequest.data)
+        env = api.Environment(http.request.cr, SUPERUSER_ID, {})
+        x = request_pos.get('params')
+        return []
+
+
 class GetCitiesById(http.Controller):
     @http.route('/getCitiesById', auth='none', type='json', cors='*')
     def get_cities_by_id(self):
@@ -92,7 +101,6 @@ class GetCitiesById(http.Controller):
                         all_cities = [{'id': city.id, 'name': city.name} for city in cities_ids]
         return all_cities
 
-
 class GetMunicipalitiesById(http.Controller):
     @http.route('/getMunicipalitiesById', auth='none', type='json', cors='*')
     def get_municipalities_by_id(self):
@@ -102,7 +110,7 @@ class GetMunicipalitiesById(http.Controller):
         if request_pos.get('params'):
             if 'input_state_id' in request_pos.get('params'):
                 state_id = request_pos.get('params').get('input_state_id')
-                if state_id is not None:
+                if state_id is not None and state_id is not '':
                     municipality_ids = env['res.country.municipality'].sudo().search([('state_id', '=', int(state_id))])
                     if municipality_ids:
                         all_municipalities = [{'id': municipality.id, 'name': municipality.name} for municipality in municipality_ids]
@@ -126,7 +134,7 @@ class GetParishesById(http.Controller):
 
 class CustomerPortal(CustomerPortal):
 
-    MANDATORY_BILLING_FIELDS = ['name', 'mobile', 'email', 'street', 'city', 'country_id', 'municipality_id', 'street2', 'street', 'vat', 'prefix_vat' ]
+    MANDATORY_BILLING_FIELDS = ['name', 'mobile', 'email', 'street', 'city', 'country_id', 'municipality_id', 'street2', 'street', 'vat', 'prefix_vat', 'parish_id' ]
     OPTIONAL_BILLING_FIELDS = ["zipcode", "state_id", "company_name", 'company_type','commercial_name']
     FIREBASE_FIELDS = ["register_all_notification","register_specific_notification"]
 
@@ -151,7 +159,12 @@ class CustomerPortal(CustomerPortal):
                         values[field] = int(values[field])
                     except:
                         values[field] = False
-                values.update({'zip': values.pop('zipcode', '')})
+                values.update(
+                    {
+                        'zip': values.pop('zipcode', ''),
+                        'type': 'contact'
+                    }
+                )
                 partner.sudo().write(values)
                 if redirect:
                     return request.redirect(redirect)
@@ -160,14 +173,14 @@ class CustomerPortal(CustomerPortal):
         countries = request.env['res.country'].sudo().search([])
         states = request.env['res.country.state'].sudo().search([])
         municipalities = request.env['res.country.municipality'].sudo().search([])
-        # parishes = request.env['res.country.municipality.parish'].sudo().search([])
+        parishes = request.env['res.country.parish'].sudo().search([])
 
         values.update({
             'partner': partner,
             'countries': countries,
             'states': states,
             'municipalities': municipalities,
-            # 'parishes': parishes,
+            'parishes': parishes,
             'has_check_vat': hasattr(request.env['res.partner'], 'check_vat'),
             'redirect': redirect,
             'page_name': 'my_details',
@@ -232,6 +245,20 @@ class WebsiteSale(http.Controller):
         if order.state != 'draft':
             request.website.sale_reset()
             return {}
+        
+        if not line_id:
+            prices = request.env['product.pricelist.item'].search(
+                [
+                    ('product_id', '=', product_id),
+                    ('pricelist_id', '=', order.pricelist_id.id),
+                ]
+            )
+
+            zero_price = all(item.fixed_price == 0.0 for item in prices)
+
+            if zero_price:
+                request.website.sale_reset()
+                return {}
 
         value = order._cart_update(product_id=product_id, line_id=line_id, add_qty=add_qty, set_qty=set_qty)
 
@@ -378,7 +405,7 @@ class ResUsersInherit(models.Model):
                     'mobile': values.get('mobile'),
                     'state_id': int(values.get('state_id')),
                     'municipality_id': int(values.get('municipality_id')),
-                    # 'parish_id': values.get('parish_id'),
+                    'parish_id': values.get('parish_id'),
                     'street': values.get('street'),
                     'street2': values.get('street2'),
                     'city': values.get('city'),

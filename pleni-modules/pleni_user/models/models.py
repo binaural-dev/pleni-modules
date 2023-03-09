@@ -12,6 +12,12 @@ class requiredFieldsResPartner(models.Model):
     rif_type = fields.Selection(
         [('J', 'J'), ('G', 'G'), ('E', 'E'), ('V', 'V')])
     identification_rif = fields.Char()
+    parish_id = fields.Many2one(
+        "res.country.parish",
+        "Parroquia",
+        tracking=True,
+        domain="[('municipality_id','=',municipality_id)]",
+    )
 
     def xor(self, tipo, numero):
         return bool((tipo and not numero) or (not tipo and numero) or (tipo and numero))

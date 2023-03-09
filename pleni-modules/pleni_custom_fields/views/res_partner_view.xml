@@ -50,7 +50,7 @@
       </xpath>
 
       <page name="sales_purchases" position="after">
-        <page name='horario' string="Horario">
+        <page name='horario' string="Horario de Recepción">
           <group>
             <group>
               <field name="monday_open" />

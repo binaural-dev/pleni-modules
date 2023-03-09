@@ -11,6 +11,7 @@
             <script type="text/javascript" src="/website_uom_select_suggetion_spt/static/src/js/variant_mixin.js"></script>
             <script type="text/javascript" src="/website_uom_select_suggetion_spt/static/src/js/website_sale.js"></script>
             <script type="text/javascript" src="/website_uom_select_suggetion_spt/static/src/js/warning_msg.js"></script>
+            <script type="text/javascript" src="/website_uom_select_suggetion_spt/static/src/js/address.js"></script>
         </xpath>
     </template>
 </odoo>

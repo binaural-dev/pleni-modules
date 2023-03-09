@@ -44,7 +44,9 @@
 
 						<div class="form-group col-xl-4 custom-grid">
                             <div class="row custom-nty-label container_nationality_field">
-                                <label class="col-form-label" for="name" id="label_nationality" style="padding-top: 0px; margin-top: 0px; margin-left: 15px;">Identification document (I.D.)</label>
+                                <label class="col-form-label" for="name" id="label_nationality" style="padding-top: 0px; margin-top: 0px; margin-left: 15px;">
+									Documento de Identidad
+								</label>
                             </div>
                             <div class="row custom-dni">
                                 <div class="form-group col-xl-3 pr-0 custom-dni-nty">
@@ -66,7 +68,9 @@
 
                         <div class="form-group col-xl-4 custom-grid" style="display: none;">
                             <div class="row custom-nty-label container_nationality_field">
-                                <label class="col-form-label" for="name" id="label_nationality" style="padding-top: 0px; margin-top: 0px; margin-left: 15px;">Identification document (I.D.)</label>
+                                <label class="col-form-label" for="name" id="label_nationality" style="padding-top: 0px; margin-top: 0px; margin-left: 15px;">
+									Documento de Identidad
+								</label>
                             </div>
                             <div class="row custom-dni">
                                 <!-- <div t-attf-class="form-group #{error.get('nationality') and 'o_has_error' or ''} col-xl-3 pr-0 custom-dni-nty">
@@ -150,58 +154,62 @@
     	                </div>
 
     	                <div t-attf-class="form-group #{error.get('state_id') and 'o_has_error' or ''} col-xl-4">
-    	                    <label class="col-form-label" for="state_id">State / Province</label>
+    	                    <label class="col-form-label" for="state_id">Estado</label>
     	                    <select name="state_id" id="state_select" t-attf-class="form-control browser-default #{error.get('state_id') and 'is-invalid' or ''}">
     	                        <option value="">select...</option>
     	                        <t t-foreach="states or []" t-as="state">
-    	                            <option t-att-value="state.id" style="display:none;" t-att-data-country_id="state.country_id.id" t-att-selected="state.id == partner.state_id.id">
+    	                            <option t-att-value="state.id"
+										t-att-selected="state.id == partner.state_id.id">
     	                                <t t-esc="state.name" />
     	                            </option>
     	                        </t>
     	                    </select>
     	                </div>
 
-                        <div t-attf-class="form-group #{error.get('city') and 'o_has_error' or ''} col-xl-4">
-    	                    <label class="col-form-label" for="city">City</label>
-    	                    <input type="text" name="city" t-attf-class="form-control #{error.get('city') and 'is-invalid' or ''}" t-att-value="city or partner.city" />
-    	                </div>
+                        <div t-attf-class="form-group #{error.get('city_id') and 'o_has_error' or ''} col-xl-4">
+								<label class="col-form-label" for="city">Ciudad</label>
+								<select name="city" class="form-control" id="city_select" t-attf-class="form-control #{error.get('city_id') and 'is-invalid' or ''}" 
+								t-att-value="city or partner.city">
+								</select>
+						</div>
 
                         <div t-attf-class="form-group #{error.get('municipality_id') and 'o_has_error' or ''} col-xl-4">
-    	                    <label class="col-form-label" for="municipality_id">Municipality</label>
+    	                    <label class="col-form-label" for="municipality_id">Municipio</label>
                             <select name="municipality_id" id="municipality_select" t-attf-class="form-control browser-default #{error.get('municipality_id') and 'is-invalid' or ''}">
     	                        <option value="">select...</option>
     	                        <t t-foreach="municipalities or []" t-as="municipality">
-    	                            <option t-att-value="municipality.id" style="display:none;" t-att-data-state_id="municipality.state_id.id" t-att-selected="municipality.id == partner.municipality_id.id">
+    	                            <option t-att-value="municipality.id"  t-att-data-state_id="municipality.state_id.id" t-att-selected="municipality.id == partner.municipality_id.id">
     	                                <t t-esc="municipality.name" />
     	                            </option>
     	                        </t>
     	                    </select>
     	                </div>
 
-                        <!-- <div t-attf-class="form-group #{error.get('parish_id') and 'o_has_error' or ''} col-xl-4">
-    	                    <label class="col-form-label" for="parish_id">Parish</label>
+                        <div t-attf-class="form-group #{error.get('parish_id') and 'o_has_error' or ''} col-xl-4">
+    	                    <label class="col-form-label" for="parish_id">Parroquia</label>
                             <select name="parish_id" id="parish_select" t-attf-class="form-control browser-default #{error.get('parish_id') and 'is-invalid' or ''}">
     	                        <option value="">select...</option>
     	                        <t t-foreach="parishes or []" t-as="parish">
     	                            <option t-att-value="parish.id" style="display:none;" t-att-data-municipality_id="parish.municipality_id.id" t-att-selected="parish.id == partner.parish_id.id">
     	                                <t t-esc="parish.name" />
     	                            </option>
+									<t t-esc="partner.parish_id.id" />
     	                        </t>
     	                    </select>
-    	                </div> -->
+    	                </div>
 
     	                <div class="clearfix" />
     	                <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''} col-xl-4">
-    	                    <label class="col-form-label" for="street">Street</label>
+    	                    <label class="col-form-label" for="street">Calle</label>
     	                    <input type="text" name="street" t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" t-att-value="street or partner.street"/>
     	                </div>
 						<div t-attf-class="form-group #{error.get('street_2') and 'o_has_error' or ''} col-xl-4">
-							<label class="col-form-label" for="street2">Street 2</label>
+							<label class="col-form-label" for="street2">Complemento de calle</label>
                         	<input type="text" name="street2" t-attf-class="form-control #{error.get('street2') and 'is-invalid' or ''}" t-att-value="street2 or partner.street2"/>
 						</div>
 
     	                <div t-attf-class="form-group #{error.get('zip') and 'o_has_error' or ''} col-xl-4">
-    	                    <label class="col-form-label" for="zipcode">Zip / Postal Code</label>
+    	                    <label class="col-form-label" for="zipcode">Código Postal</label>
     	                    <input type="text" name="zipcode" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}" t-att-value="zipcode or partner.zip" />
     	                </div>
 

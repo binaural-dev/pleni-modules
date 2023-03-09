@@ -166,6 +166,42 @@ class WebsiteSale(WebsiteSale):
         #     domain, limit=ppg, offset=pager['offset'], order=order_check)
         products = Product.search(
             domain, limit=ppg, offset=pager['offset'], order=self._get_search_order(post))
+
+        products_ids = []
+        for p in products:
+            product_item = request.env['product.product'].search([('product_tmpl_id', '=', p.id)])
+
+            if product_item:
+                pricelist_items = request.env['product.pricelist.item'].sudo().search(
+                    [
+                        ('pricelist_id','=',pricelist.id),
+                        ('product_id','=',product_item.id)
+                    ], 
+                    order= 'min_quantity asc'
+                )
+
+            if pricelist_items:
+                for price in pricelist_items:
+                    if price.fixed_price:
+                        if p.id not in products_ids:
+                            products_ids.append(p.id)
+
+        domain += [('id', 'in', products_ids)]
+        products = Product.search(
+            domain,
+            limit=ppg,
+            offset=pager['offset'],
+            order=self._get_search_order(post)
+        )
+
+        if not len(products_ids):
+            search_categories = Category.search(
+                [('product_tmpl_ids', 'in', products_ids)] + website_domain).parents_and_self
+            
+            catgs_array = []
+            catgs_array.append(('id', 'in', search_categories.ids))
+            categs = Category.search(catgs_array)
+
         # products = Product.search(
         #     domain, limit=ppg, offset=pager['offset'], order='times_sold desc')
 
@@ -399,6 +435,33 @@ class WebsiteSale(WebsiteSale):
 
         offset = pager['offset']
         products = search_product[offset: offset + ppg]
+
+        products_ids = []
+        pricelist_context, pricelist = self._get_pricelist_context()
+        for p in products:
+            product_item = request.env['product.product'].search([('product_tmpl_id', '=', p.id)])
+
+            if product_item:
+                pricelist_items = request.env['product.pricelist.item'].sudo().search(
+                    [
+                        ('pricelist_id','=',pricelist.id),
+                        ('product_id','=',product_item.id)
+                    ], 
+                    order= 'min_quantity asc'
+                )
+
+            if pricelist_items:
+                for price in pricelist_items:
+                    if price.fixed_price:
+                        if p.id not in products_ids:
+                            products_ids.append(p.id)
+
+        domain += [('id', 'in', products_ids)]
+
+        products = Product.search(
+            domain,
+            order=self._get_search_order(post)
+        )
 
         keep = QueryURL('/shop', category=category and int(category), search=None,tags=tag_list,attrib=attrib_list,
                         order=post.get('order'),brand=post.get('brand'),

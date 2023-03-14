@@ -24,12 +24,10 @@ class SaleOrderInherit(models.Model):
  
         if not lines_status:
             return 'draft'
-        if len(lines_status) > 1:
-            if lines_status[0] == 'cancel':
-                return 'cancel'
-        else:
-            if 'cancel' in lines_status:
-                return 'cancel'
+
+        if all(x == 'cancel' for x in lines_status):
+            return 'cancel'
+
         for delivery_status in ORDERS_DELIVERY_STATUS:
             if delivery_status in lines_status:
                 return delivery_status

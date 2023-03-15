@@ -11,7 +11,7 @@ class SaleOrderInherit(models.Model):
         for record in self:
             if record.partner_id:
                 so_count = self.env['sale.order'].search_count([('partner_id', '=', record.partner_id.id), ('state', 'not in', ['draft', 'cancel'])])
-                if so_count > 0:
+                if so_count > 4:
                     record.is_new_client = False
                 else:
                     record.is_new_client = True

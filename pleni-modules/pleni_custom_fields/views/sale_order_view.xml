@@ -42,7 +42,7 @@
       <field name="partner_id" position="after">
         <div class="o_td_label">
           <group>
-            <field name="is_new_client" string="¿Cliente Nuevo?" force_save="1" readonly="1" attrs="{'invisible':[('partner_id','=',False)]}"/> 
+            <field name="is_new_client" string="¿Nuevo Cliente? " force_save="1" readonly="1" attrs="{'invisible':[('partner_id','=',False)]}"/> 
           </group>
         </div>
       </field>

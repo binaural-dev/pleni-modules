@@ -220,12 +220,16 @@ odoo.define('pleni_user.custom_my_details_portal', function (require) {
         _onChangeCity: async function () {
             const inputStateId = $("select[name='state_id']").val();
             const allCities = await ajax.rpc('/getCitiesById', {'input_state_id': inputStateId});
+            const inputCityId = $("#city_id_aux")['0'].outerText;
             const cityId = document.getElementById('city_select');
             $('#city_select').empty()
             allCities.forEach(e => {
                 var opt = document.createElement('option');
-                opt.value = e.id;
+                opt.value = e.name;
                 opt.innerHTML = e.name;
+                if (String(inputCityId) === String(e.name)) {
+                    opt.setAttribute('selected', true)
+                }
                 cityId.appendChild(opt);
             });
         },

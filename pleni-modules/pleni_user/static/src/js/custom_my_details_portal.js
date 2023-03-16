@@ -225,9 +225,9 @@ odoo.define('pleni_user.custom_my_details_portal', function (require) {
             $('#city_select').empty()
             allCities.forEach(e => {
                 var opt = document.createElement('option');
-                opt.value = e.id;
+                opt.value = e.name;
                 opt.innerHTML = e.name;
-                if (String(inputCityId) === String(e.id)) {
+                if (String(inputCityId) === String(e.name)) {
                     opt.setAttribute('selected', true)
                 }
                 cityId.appendChild(opt);

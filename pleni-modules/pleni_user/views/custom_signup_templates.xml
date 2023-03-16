@@ -141,8 +141,8 @@
                                         <label class="text-center col-form-label" 
                                         style="font-weight: bold; font-size: large; margin-top: 32px;">
                                             Registra tu dirección de entrega
-                                            <button class="btn btn-primary as-btn" 
-                                            style="max-width:300px">Ahora</button>
+                                            <div class="btn btn-primary as-btn" 
+                                            style="max-width:300px">Ahora</div>
                                         </label>
                                     </div>
                                     <div class="collapse" id="collapseExample">
@@ -215,6 +215,76 @@
                                                     <label class="col-form-label" for="zip">ZIP</label>
                                                     <input type="text" name="zip" class="form-control" id="zip" value="1050"/>
                                                     <!--Default= 1050-->
+                                                </div>
+                                            </div>
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" style="margin-top:10px">
+                           <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckBillingAddress"/>
+                            <label class="form-check-label" for="flexCheckBillingAddress" 
+                                style="font-size:16px">
+                                Añadir dirección fiscal
+                            </label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 d-none" id="billing-address-accordion">
+                            <div class="row">
+                                <div class="accordion-item" style="width: 100%;">
+                                    <div class="col-lg-12" data-toggle="collapse-billing" 
+                                        href="#collapseExampleBilling" role="button" 
+                                        aria-expanded="false" aria-controls="collapseExample">
+                                        <label class="text-center col-form-label" 
+                                        style="font-weight: bold; font-size: large; margin-top: 32px;">
+                                            Registra tu dirección fiscal
+                                        </label>
+                                    </div>
+                                    <div class="collapse-billing" id="collapseExampleBilling">
+                                        <div class="row">
+
+                                            <div class="col-sm-12 col-xl-4">              
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="state">Estado</label>
+                                                    <select name="state_id_billing" class="form-control" id="state_select_billing">
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="state">Parroquia</label>
+                                                    <select name="parish_id_billing" class="form-control" id="parish_select_billing" />
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-12 col-xl-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="city">Ciudad</label>
+                                                    <select name="city_billing" class="form-control" id="city_select_billing">
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="street">Calle</label>
+                                                    <input type="text" name="street_billing" class="form-control" id="street_billing" 
+                                                        placeholder="Ej. Calle 1"/>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-12 col-xl-4">
+                                                <div id="municipality_div" class="form-group">
+                                                    <label class="col-form-label" for="state">Municipio</label>
+                                                    <select name="municipality_id_billing" class="form-control" 
+                                                    id="municipality_select_billing"/>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="street2">Complemento de calle</label>
+                                                    <input type="text" name="street2_billing" class="form-control" id="street_2_billing" placeholder="Ej. Esquina con calle 2"/>
                                                 </div>
                                             </div>
                                         </div>   

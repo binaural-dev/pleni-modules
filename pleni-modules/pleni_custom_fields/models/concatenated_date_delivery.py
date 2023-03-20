@@ -112,19 +112,20 @@ class SaleOrderInherit(models.Model):
 class StockPickingInherit(models.Model):
     _inherit = "stock.picking"
 
-    is_new_client = fields.Boolean(string='¿Cliente Nuevo?', compute='search_exists_so_with_partner', store=True)
+    is_new_client = fields.Integer(string='¿Cliente Nuevo?', compute='search_exists_so_with_partner', store=True)
 
     @api.depends('partner_id')
     def search_exists_so_with_partner(self):
         for record in self:
             if record.partner_id:
-                so_count = self.env['sale.order'].search_count([('partner_id', '=', record.partner_id.id), ('state', 'not in', ['draft', 'cancel'])])
-                if so_count > 4:
-                    record.is_new_client = False
-                else:
-                    record.is_new_client = True
-            else:
-                record.is_new_client = False
+                so_count = self.env['stock.picking'].search_count([('partner_id', '=', record.partner_id.id), ('state', 'not in', ['draft', 'cancel'])])
+                return so_count
+            #     if so_count > 4:
+            #         record.is_new_client = False
+            #     else:
+            #         record.is_new_client = True
+            # else:
+            #     record.is_new_client = False
 
     scheduled_date_stock = fields.Date(string='Fecha Programada de Entrega')
     am_pm = fields.Selection(

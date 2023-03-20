@@ -139,8 +139,26 @@ odoo.define('pleni_shop.custom_quickView', function (require) {
 
     function changeAmount() {
         setTimeout(async function() {
-            var uom = $('#uom_id').find("option:selected").data("uom_id");
+            let uom = $('#uom_id').find("option:selected").data("uom_id");
             if (!uom) return
+
+            const elem = document.getElementById("uom_id");
+            let uoms = [];
+            for(let i = 0; i < elem.options.length; i++) {
+                uoms.push(elem.options[i].getAttribute("data-uom_id"));
+            }
+
+            const uom_ids = await ajax.rpc('/getBiggestUom', { 'uoms': uoms, })
+            if (uom_ids.length > 1) {
+               let p = $('#uom_id').find("option:selected").removeAttr("selected");
+                uom_ids.forEach((element, index) => {
+                    if (index == 0) {
+                        $('#uom_id').val(element).attr('selected','selected');
+                    }
+                });
+            }
+
+            uom = $('#uom_id').find("option:selected").data("uom_id");
             const factor = await ajax.rpc('/getUomFactor', { 'uom_id': uom, })
             $('input[name="add_qty"]').val((1/factor).toFixed(2)).trigger('change');
         }, 300);

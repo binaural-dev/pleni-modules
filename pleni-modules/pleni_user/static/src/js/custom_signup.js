@@ -67,6 +67,7 @@ odoo.define('pleni_user.custom_signup', function (require) {
             //let inputCompanyTypeSelector = document.getElementById('company_type');
             const textValidation = document.getElementById('validationIdentification');
 
+
             if (newNationalityId === 'V' || newNationalityId === 'E' || newNationalityId === 'P') {
                 //inputCompanyTypeSelector.value = 'person';
                 nationalityId.value = newNationalityId;
@@ -155,7 +156,7 @@ odoo.define('pleni_user.custom_signup', function (require) {
 
 
             } else if (newNationalityId === 'J' || newNationalityId === 'G') {
-                inputCompanyTypeSelector.value = 'company';
+                //inputCompanyTypeSelector.value = 'company';
                 // rifId.value = `${newNationalityId}-${newIdentificationId}`;
                 inputCommercialName.setAttribute('style', 'display: block;');
                 labelPerson.setAttribute('style', 'display: none;');

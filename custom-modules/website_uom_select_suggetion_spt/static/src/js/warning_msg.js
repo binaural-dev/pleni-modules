@@ -27,7 +27,7 @@ odoo.define('website_uom_select_suggetion.warning_msg', function (require) {
      * @param {Array} combination
      */
     VariantMixin._onChangeCombinationStock = function (ev, $parent, combination) {
-        debugger;
+        //debugger;
         var product_id = 0;
         // needed for list view of variants
         if ($parent.find('input.product_id:checked').length) {
@@ -75,7 +75,7 @@ odoo.define('website_uom_select_suggetion.warning_msg', function (require) {
 
         ajax.jsonRpc('/sale-order','call', combination)
         .then(function(val){
-            debugger
+            //debugger
             
             var uom = val['uom']
             var qty = val['qty']
@@ -83,7 +83,7 @@ odoo.define('website_uom_select_suggetion.warning_msg', function (require) {
             combination['ordered_qty']= qty
 
             xml_load.then(function () {
-                debugger;
+                //debugger;
             
                 $('.oe_website_sale')
                     .find('.availability_message_' + combination.product_template)

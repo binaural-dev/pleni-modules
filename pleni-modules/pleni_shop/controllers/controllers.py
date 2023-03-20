@@ -13,6 +13,16 @@ class GetUomFactor(http.Controller):
 		factor = request.env['uom.uom'].sudo().browse(uom_id).factor
 		return factor
 
+	@http.route('/getBiggestUom', auth='none', type='json', cors='*')
+	def get_biggest_uom(self, uoms, **kwarg):
+		if not len(uoms): return False
+		uoms = request.env['uom.uom'].sudo().search([('id', 'in', uoms)], order= 'factor asc')
+		uom_ids = []
+		for item in uoms:
+			uom_ids.append(item.name)
+		return uom_ids
+
+
 class GetDisplayPrice(http.Controller):
 	@http.route('/getDisplayPrice', auth='none', type='json', cors='*')
 	def get_display_price(self, add_qty, product_id, product_template_id, pricelist_id, **kwarg):

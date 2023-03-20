@@ -18,6 +18,7 @@ odoo.define('pleni_shop.custom_quickView', function (require) {
             {   
                 var sale = new publicWidget.registry.WebsiteSale();
                 changeAmount();
+                getBiggestUom();
                 $(".quick_cover").append(data);
                 $(".quick-cover-overlay").fadeIn();
                 sale.init();
@@ -31,7 +32,6 @@ odoo.define('pleni_shop.custom_quickView', function (require) {
                 });
                 // Add to cart from Quick View
                 $(".a-submit").on("click", async function(event) {
-
                     const user_not_logged = await ajax.rpc('/get_user_logged')
                     if (user_not_logged) {
                         window.location = "/web/login";
@@ -49,7 +49,6 @@ odoo.define('pleni_shop.custom_quickView', function (require) {
                             'input[type="hidden"][name="product_id"]',
                             'input[type="radio"][name="product_id"]:checked'
                         ];
-                    
                         var productReady = sale.selectOrCreateProduct(
                             $form,
                             parseInt($form.find(productSelector.join(', ')).first().val(), 10),
@@ -60,7 +59,7 @@ odoo.define('pleni_shop.custom_quickView', function (require) {
                         const factor = await ajax.rpc('/getUomFactor', {'uom_id': uom})
                         return productReady.then(function (productId) {
                             $form.find(productSelector.join(', ')).val(productId);
-                        
+                            let path = (window.location.pathname.includes('page'))? '': window.location.pathname
                             self.rootProduct = {
                                 product_id: productId,
                                 quantity: (parseFloat($form.find('input[name="add_qty"]').val())*factor).toFixed(0) || 1,
@@ -69,9 +68,9 @@ odoo.define('pleni_shop.custom_quickView', function (require) {
                                 variant_values: self.getSelectedVariantValues($form.find('.js_product')),
                                 no_variant_attribute_values: self.getNoVariantAttributeValues($form.find('.js_product')),
                                 action: 'add_product_from_quick_view',
-                                path: window.location.pathname + window.location.search
+                                path: location.protocol + '//' + location.host 
+                                    + path + window.location.search,
                             };
-                        
                             return self._onProductReady();
                         });
                     
@@ -142,12 +141,23 @@ odoo.define('pleni_shop.custom_quickView', function (require) {
             let uom = $('#uom_id').find("option:selected").data("uom_id");
             if (!uom) return
 
+            uom = $('#uom_id').find("option:selected").data("uom_id");
+            const factor = await ajax.rpc('/getUomFactor', { 'uom_id': uom, })
+            $('input[name="add_qty"]').val((1/factor).toFixed(2)).trigger('change');
+        }, 300);
+    }
+
+    async function getBiggestUom() {
+        setTimeout(async function() {
+            let uom = $('#uom_id').find("option:selected").data("uom_id");
+            if (!uom) return
+    
             const elem = document.getElementById("uom_id");
             let uoms = [];
             for(let i = 0; i < elem.options.length; i++) {
                 uoms.push(elem.options[i].getAttribute("data-uom_id"));
             }
-
+    
             const uom_ids = await ajax.rpc('/getBiggestUom', { 'uoms': uoms, })
             if (uom_ids.length > 1) {
                let p = $('#uom_id').find("option:selected").removeAttr("selected");
@@ -157,11 +167,12 @@ odoo.define('pleni_shop.custom_quickView', function (require) {
                     }
                 });
             }
-
+    
             uom = $('#uom_id').find("option:selected").data("uom_id");
             const factor = await ajax.rpc('/getUomFactor', { 'uom_id': uom, })
             $('input[name="add_qty"]').val((1/factor).toFixed(2)).trigger('change');
-        }, 300);
+        }, 600);
+
     }
     
     core.action_registry.add('pleni_shop.custom_quickView', publicWidget);

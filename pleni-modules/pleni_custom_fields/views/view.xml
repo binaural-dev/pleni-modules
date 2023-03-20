@@ -13,6 +13,13 @@
           <field name="json_popover" widget="stock_rescheduling_popover" attrs="{'invisible': [('json_popover', '=', False)]}" />
         </div>
       </xpath>
+      <!-- <field name="partner_id" position="after">
+        <div class="o_td_label">
+          <group>
+            <field name="is_new_client" string="¿Cliente Nuevo?" force_save="1" readonly="1"/> 
+          </group>
+        </div>
+      </field> -->
     </field>
   </record>
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields
+from odoo import models, fields, api
 from datetime import datetime
 
 class ResPartnerInherit(models.Model):
@@ -72,6 +72,8 @@ class ResPartnerInherit(models.Model):
     sunday_from = fields.Selection(hours_of_the_day, string="D. Desde")
     sunday_to = fields.Selection(hours_of_the_day, string="D. a")
 
+    # sale_order_count = fields.Char(compute='_get_sale_order_count', string='Sale Order Count')
+
     def _get_day_name(self, delivery_date):
         day = delivery_date.strftime("%A")
         
@@ -97,4 +99,12 @@ class ResPartnerInherit(models.Model):
             return f'Domingo: {self.sunday_from}-{self.sunday_to}'
         
         return ''
+
+    # def _get_sale_order_count(self, partner_id):
+    #         sale_order_count = self.env['sale.order'].search_count([('partner_id', '=', partner_id.id), ('state', 'not in', ['draft', 'cancel'])])
+    #         # return sale_order_count
+    #         if sale_order_count > 4:
+    #             return "Cliente Nuevo"
+    #         else:
+    #             return ""
 

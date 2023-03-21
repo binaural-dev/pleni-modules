@@ -227,7 +227,7 @@
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckBillingAddress"/>
                             <label class="form-check-label" for="flexCheckBillingAddress" 
                                 style="font-size:16px">
-                                Añadir dirección fiscal
+                                ¿La dirección entrega es diferente a la dirección de fiscal?, añade la dirección fiscal
                             </label>
                             </div>
                         </div>

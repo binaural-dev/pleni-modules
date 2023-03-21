@@ -399,7 +399,8 @@ class ResUsersInherit(models.Model):
             }
 
             city_id_delivery = self.env['res.country.city'].search([
-                ('name', '=', values.get('city'))
+                ('name', '=', values.get('city')),
+                ('state_id', '=', int(values.get('state_id')))
             ])
 
             new_user = self._signup_create_user(original_values)
@@ -407,7 +408,8 @@ class ResUsersInherit(models.Model):
 
                 if values.get('street_billing'):
                     city_id_billing = self.env['res.country.city'].search([
-                        ('name', '=', values.get('city_billing'))
+                        ('name', '=', values.get('city_billing')),
+                        ('state_id', '=', int(values.get('state_id_billing')))
                     ])
 
                     new_user.partner_id.write({

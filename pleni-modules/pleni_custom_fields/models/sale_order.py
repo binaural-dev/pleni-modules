@@ -17,3 +17,16 @@ class SaleOrderInherit(models.Model):
                     record.is_new_client = True
             else:
                 record.is_new_client = False
+
+class AccountMoveInherit(models.Model):
+    _inherit = 'account.move'
+
+    new_client = fields.Integer(string='¿Cliente Nuevo?', compute='_get_sale_order_count')
+
+    def _get_sale_order_count(self, partner_id):
+            sale_order_count = self.env['sale.order'].search_count([('partner_id', '=', partner_id.id), ('state', 'not in', ['draft', 'cancel'])])
+            # return sale_order_count
+            if sale_order_count <= 4:
+                return "Cliente Nuevo"
+            else:
+                return ""

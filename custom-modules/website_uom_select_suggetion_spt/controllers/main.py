@@ -190,7 +190,7 @@ class KitsVariantController(VariantController):
         show_discount = False
         for item in pricelist_items:
             if real_qty >= item.min_quantity:
-                price = item.fixed_price
+                #price = item.fixed_price
                 if uom.factor != 0:
                     if 1 < item.min_quantity <= 1 / uom.factor:
                         show_discount = True

@@ -15,6 +15,16 @@ _logger = logging.getLogger(__name__)
 class SaleOrderInherit(models.Model):
     _inherit = "sale.order"
 
+    def _get_warehouse_from_pricelist(self, pricelist):
+        if 'caracas' in pricelist.name.lower():
+            return self.env['stock.warehouse'].search([('name', '=', 'Centro de Distribución La Yaguara')])
+
+        if 'valencia' in pricelist.name.lower():
+            return self.env['stock.warehouse'].search([('name', '=', 'Centro de Distribución Valencia')])
+
+        if 'barquisimeto' in pricelist.name.lower():
+            return self.env['stock.warehouse'].search([('name', '=', 'Centro de Distribución Cima')])
+
     def _get_new_currency_rate(self):
         return self.env['res.currency'].browse(3).rate
 
@@ -64,6 +74,12 @@ class SaleOrderInherit(models.Model):
                         price_dict[key]['quantity']
 
         discount = round(discount, 2)
+
+        warehouse_id = self._get_warehouse_from_pricelist(pricelist)
+        order = self.sudo().browse(self.id)
+        order.update(
+            {'warehouse_id': warehouse_id.id}
+        )
 
         return {
             'subtotal': subtotal,

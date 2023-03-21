@@ -29,7 +29,9 @@ odoo.define('pleni_user.custom_signup', function (require) {
             'input #vat': '_onChangeNewIdentificationId',
             'change #country_select': '_onChangeCountry',
             'change #state_select': '_onChangeState',
+            'change #state_select_billing': '_onChangeStateBilling',
             'change #municipality_select': '_onChangeMunicipality',
+            'change #municipality_select_billing': '_onChangeMunicipalityBilling',
             'click .toggle-password': '_showEyesPassword',
             'click .toggle-confirm-password': '_showEyesConfirmPassword',
             'input #name' : '_onChangeName',
@@ -37,6 +39,7 @@ odoo.define('pleni_user.custom_signup', function (require) {
             'input #login' : '_onChangeEmail',
             'focusout #telephone': '_onChangeTelephone',
             'input #confirm_password' : '_onChangeConfirmPassword',
+            'click #flexCheckBillingAddress': '_showBillingAddress',
         },
         /**
          * @constructor
@@ -46,6 +49,7 @@ odoo.define('pleni_user.custom_signup', function (require) {
             if (countryId != null) {
                 countryId.setAttribute("selected", "selected");
                 this._onChangeCountry();
+                this._onChangeCountryBilling();
             }
             checkForm();
         },
@@ -279,6 +283,24 @@ odoo.define('pleni_user.custom_signup', function (require) {
         /**
          * @private
          */
+        _onChangeCountryBilling: async function () {
+            const inputCountryId = $("select[name='country_id']").val();
+            const allCountries = await ajax.rpc('/getStatesById', {'input_country_id': 238});
+            const allCountriesFiltered = allCountries.filter(item => allowedStates.includes(item.name));
+            const stateId = document.getElementById('state_select_billing');
+            $('#state_select_billing').empty()
+            allCountriesFiltered.forEach(e => {
+                var opt = document.createElement('option');
+                opt.value = e.id;
+                opt.innerHTML = e.name;
+                stateId.appendChild(opt);
+            });
+            this._onChangeStateBilling()
+        },
+
+        /**
+         * @private
+         */
         _onChangeState: async function () {
             const inputStateId = $("select[name='state_id']").val();
             const allMunicipalities = await ajax.rpc('/getMunicipalitiesById', {'input_state_id': inputStateId});
@@ -294,6 +316,24 @@ odoo.define('pleni_user.custom_signup', function (require) {
             this._onChangeMunicipality();
         },
 
+        /**
+         * @private
+         */
+        _onChangeStateBilling: async function () {
+            const inputStateId = $("select[name='state_id_billing']").val();
+            const allMunicipalities = await ajax.rpc('/getMunicipalitiesById', {'input_state_id': inputStateId});
+            const municipalityId = document.getElementById('municipality_select_billing');
+            $('#municipality_select_billing').empty()
+            allMunicipalities.forEach(e => {
+                var opt = document.createElement('option');
+                opt.value = e.id;
+                opt.innerHTML = e.name;
+                municipalityId.appendChild(opt);
+            });
+            this._onChangeCityBilling();
+            this._onChangeMunicipalityBilling();
+        },
+
         _onChangeCity: async function () {
             const inputStateId = $("select[name='state_id']").val();
             const allCities = await ajax.rpc('/getCitiesById', {'input_state_id': inputStateId});
@@ -301,11 +341,25 @@ odoo.define('pleni_user.custom_signup', function (require) {
             $('#city_select').empty()
             allCities.forEach(e => {
                 var opt = document.createElement('option');
-                opt.value = e.id;
+                opt.value = e.name;
                 opt.innerHTML = e.name;
                 cityId.appendChild(opt);
             });
         },
+
+        _onChangeCityBilling: async function () {
+            const inputStateId = $("select[name='state_id_billing']").val();
+            const allCities = await ajax.rpc('/getCitiesById', {'input_state_id': inputStateId});
+            const cityId = document.getElementById('city_select_billing');
+            $('#city_select_billing').empty()
+            allCities.forEach(e => {
+                var opt = document.createElement('option');
+                opt.value = e.name;
+                opt.innerHTML = e.name;
+                cityId.appendChild(opt);
+            });
+        },
+
 
         /**
          * @private
@@ -315,6 +369,22 @@ odoo.define('pleni_user.custom_signup', function (require) {
             const allParishes = await ajax.rpc('/getParishesById', {'input_municipality_id': inputMunicipalityId});
             const parishId = document.getElementById('parish_select');
             $('#parish_select').empty()
+            allParishes.forEach(e => {
+                var opt = document.createElement('option');
+                opt.value = e.id;
+                opt.innerHTML = e.name;
+                parishId.appendChild(opt);
+            });
+        },
+
+        /**
+         * @private
+         */
+        _onChangeMunicipalityBilling: async function() {
+            const inputMunicipalityId = $("select[name='municipality_id_billing']").val();
+            const allParishes = await ajax.rpc('/getParishesById', {'input_municipality_id': inputMunicipalityId});
+            const parishId = document.getElementById('parish_select_billing');
+            $('#parish_select_billing').empty()
             allParishes.forEach(e => {
                 var opt = document.createElement('option');
                 opt.value = e.id;
@@ -345,6 +415,11 @@ odoo.define('pleni_user.custom_signup', function (require) {
             } else {
               input.attr("type", "password");
             }
+        },
+
+        _showBillingAddress: function(ev) {
+            const billingAddressContainer = $("#billing-address-accordion");
+            billingAddressContainer.toggleClass("d-none");
         }
     });
 

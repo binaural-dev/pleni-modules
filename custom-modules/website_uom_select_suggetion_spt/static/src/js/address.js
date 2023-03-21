@@ -84,7 +84,7 @@ odoo.define('pleni.website_sale_bin', function (require) {
             $('#city_select').empty()
             allCities.forEach(e => {
                 var opt = document.createElement('option');
-                opt.value = e.id;
+                opt.value = e.name;
                 opt.innerHTML = e.name;
                 cityId.appendChild(opt);
             });

@@ -126,6 +126,16 @@ class SaleOrderInherit(models.Model):
 class StockPickingInherit(models.Model):
     _inherit = "stock.picking"
 
+    new_client = fields.Integer(string='¿Cliente Nuevo?', compute='_get_sale_order_count')
+
+    def _get_sale_order_count(self, partner_id):
+            sale_order_count = self.env['sale.order'].search_count([('partner_id', '=', partner_id.id), ('state', 'not in', ['draft', 'cancel'])])
+            # return sale_order_count
+            if sale_order_count <= 4:
+                return "CN"
+            else:
+                return ""
+
     is_new_client = fields.Integer(string='¿Cliente Nuevo?', compute='search_exists_so_with_partner', store=True)
 
     @api.depends('partner_id')

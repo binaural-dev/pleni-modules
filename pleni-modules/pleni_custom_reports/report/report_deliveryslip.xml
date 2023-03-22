@@ -15,6 +15,7 @@
                   <t t-if="partner.commercial_name">
                     <div style="white-space: nowrap; margin-right: 0px;">
                       <strong t-field="partner.commercial_name"></strong>
+                      <strong t-esc="o._get_sale_order_count(partner.parent_id)"></strong>
                     </div>
                   </t>
                   <div style="white-space: nowrap; margin-right: 0px;">

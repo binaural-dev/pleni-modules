@@ -15,7 +15,10 @@ class AuthSignupHome(Home):
         values = {key: qcontext.get(key) for key in ('login', 'name', 'password', 'company_type',
                                                      'country_id', 'prefix_vat', 'vat',
                                                      'mobile', 'state_id', 'municipality_id', 'street', 'parish_id',
-                                                     'street2', 'city', 'zip', 'ref_point', 'dispatcher_instructions')}
+                                                     'street2', 'city', 'zip', 'ref_point', 'dispatcher_instructions',
+                                                     'state_id_billing', 'municipality_id_billing', 'street_billing',
+                                                     'parish_id_billing', 'city_billing', 'street2_billing'
+                                                     )}
         if not values:
             raise UserError(_("The form was not properly filled in."))
         if values.get('password') != qcontext.get('confirm_password'):
@@ -36,8 +39,10 @@ class AuthSignupHome(Home):
                                       'login', 'name', 'password', 'company_type',
                                       'country_id', 'prefix_vat', 'vat', 'parish_id',
                                       'mobile', 'state_id', 'municipality_id', 'street',
-                                      'street2', 'city', 'zip', 'ref_point', 'dispatcher_instructions',
-                                      'commercial_name'}
+                                      'street2', 'city', 'zip', 'ref_point', 'dispatcher_instructions','commercial_name',
+                                        'state_id_billing', 'municipality_id_billing', 'street_billing',
+                                        'parish_id_billing', 'city_billing', 'street2_billing'
+                                      }
 
         qcontext = {k: v for (k, v) in request.params.items() if k in NEW_SIGN_UP_REQUEST_PARAMS}
         qcontext.update(self.get_auth_signup_config())
@@ -393,26 +398,81 @@ class ResUsersInherit(models.Model):
                 "active": True
             }
 
+            city_id_delivery = self.env['res.country.city'].search([
+                ('name', '=', values.get('city')),
+                ('state_id', '=', int(values.get('state_id')))
+            ])
+
             new_user = self._signup_create_user(original_values)
             if new_user.partner_id:
-                new_user.partner_id.write({
-                    'company_type': values.get('company_type'),
-                    'email': values.get('login'),
-                    'lang': 'es_VE',
-                    'country_id': 238,
-                    'prefix_vat': values.get('prefix_vat'),
-                    'vat': values.get('vat'),
-                    'mobile': values.get('mobile'),
-                    'state_id': int(values.get('state_id')),
-                    'municipality_id': int(values.get('municipality_id')),
-                    'parish_id': values.get('parish_id'),
-                    'street': values.get('street'),
-                    'street2': values.get('street2'),
-                    'city': values.get('city'),
-                    'zip': values.get('zip'),
-                    'ref_point': values.get('ref_point'),
-                    'dispatcher_instructions': values.get('dispatcher_instructions'),
-                    'relation_us': 'client',
-                })
+
+                if values.get('street_billing'):
+                    city_id_billing = self.env['res.country.city'].search([
+                        ('name', '=', values.get('city_billing')),
+                        ('state_id', '=', int(values.get('state_id_billing')))
+                    ])
+
+                    new_user.partner_id.write({
+                        'company_type': values.get('company_type'),
+                        'email': values.get('login'),
+                        'lang': 'es_VE',
+                        'country_id': 238,
+                        'prefix_vat': values.get('prefix_vat'),
+                        'vat': values.get('vat'),
+                        'mobile': values.get('mobile'),
+                        'state_id': int(values.get('state_id_billing')),
+                        'municipality_id': int(values.get('municipality_id_billing')),
+                        'parish_id': values.get('parish_id_billing'),
+                        'street': values.get('street_billing'),
+                        'street2': values.get('street2_billing'),
+                        'city': values.get('city_billing'),
+                        'zip': values.get('zip'),
+                        'relation_us': 'client',
+                        'city_id': city_id_billing.id,
+                    })
+
+                    self.env['res.partner'].create({
+                        'name': values.get('name'),
+                        'parent_id':  new_user.partner_id.id,
+                        'type': 'delivery',
+                        'email': values.get('login'),
+                        'lang': 'es_VE',
+                        'country_id': 238,
+                        'prefix_vat': values.get('prefix_vat'),
+                        'vat': values.get('vat'),
+                        'mobile': values.get('mobile'),
+                        'state_id': int(values.get('state_id')),
+                        'municipality_id': int(values.get('municipality_id')),
+                        'parish_id': values.get('parish_id'),
+                        'street': values.get('street'),
+                        'street2': values.get('street2'),
+                        'city': values.get('city'),
+                        'zip': values.get('zip'),
+                        'relation_us': 'client',
+                        'ref_point': values.get('ref_point'),
+                        'dispatcher_instructions': values.get('dispatcher_instructions'),
+                        'city_id': city_id_delivery.id
+                    })
+                else:
+                    new_user.partner_id.write({
+                        'company_type': values.get('company_type'),
+                        'email': values.get('login'),
+                        'lang': 'es_VE',
+                        'country_id': 238,
+                        'prefix_vat': values.get('prefix_vat'),
+                        'vat': values.get('vat'),
+                        'mobile': values.get('mobile'),
+                        'state_id': int(values.get('state_id')),
+                        'municipality_id': int(values.get('municipality_id')),
+                        'parish_id': values.get('parish_id'),
+                        'street': values.get('street'),
+                        'street2': values.get('street2'),
+                        'city': values.get('city'),
+                        'zip': values.get('zip'),
+                        'ref_point': values.get('ref_point'),
+                        'dispatcher_instructions': values.get('dispatcher_instructions'),
+                        'relation_us': 'client',
+                        'city_id': city_id_delivery.id
+                    })
 
         return self.env.cr.dbname, values.get('login'), values.get('password')

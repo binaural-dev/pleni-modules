@@ -90,6 +90,10 @@
                         let dateName = new Date(tomorrow);
                         let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         document.getElementById("date-name").innerHTML = dateName.toLocaleDateString('es-MX', options)
+                        
+                        document.getElementById("select-am").setAttribute('selected', '');
+                        document.getElementById("select-am").removeAttribute('disabled');
+                        document.getElementById("select-pm").removeAttribute('selected');
                     }
                 } else {
                     tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 1);
@@ -139,6 +143,18 @@
                         document.getElementById("select-pm").removeAttribute('selected');
                     }
                 });
+
+                localStorage.setItem("dateInit", new Date().getMinutes().toString());
+
+                window.onfocus = function () {
+                    let currentDate = new Date().getMinutes();
+                    let date = localStorage.getItem('dateInit');
+
+                    if (currentDate - parseInt(date) > 60) {
+                        location.reload(); 
+                    }
+                };
+
             </script>
         </xpath>
 

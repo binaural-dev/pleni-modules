@@ -159,58 +159,53 @@
                                             </select>
                                         </div>
 
-                                        <div class="row">
+                                        <div class="row px-3">
 
-                                            <div class="col-sm-12 col-xl-4">              
-                                                <div class="form-group">
+                                                <div class="col col-12 col-xl-4 form-group">
                                                     <label class="col-form-label" for="state">Estado</label>
                                                     <select name="state_id" class="form-control" id="state_select">
                                                     </select>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-form-label" for="state">Parroquia</label>
-                                                    <select name="parish_id" class="form-control" id="parish_select" />
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-form-label" for="reference_point">Punto de referencia</label>
-                                                    <input type="text" name="ref_point" t-att-value="ref_point" id="reference_point" class="form-control" placeholder="Ej. CC San Ignacio"/>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-12 col-xl-4">
-                                                <div class="form-group">
+                                                <div class="col col-12 col-xl-4 form-group">
                                                     <label class="col-form-label" for="city">Ciudad</label>
                                                     <select name="city" class="form-control" id="city_select">
                                                     </select>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div id="municipality_div" class="col col-12 col-xl-4 form-group">
+                                                    <label class="col-form-label" for="state">Municipio</label>
+                                                    <select name="municipality_id" class="form-control" id="municipality_select"/>
+                                                </div>
+
+                                                <div class="col col-12 col-xl-4 form-group">
+                                                    <label class="col-form-label" for="state">Parroquia</label>
+                                                    <select name="parish_id" class="form-control" id="parish_select" />
+                                                </div>
+
+                                                <div class="col col-12 col-xl-4 form-group">
                                                     <label class="col-form-label" for="street">Calle</label>
                                                     <input type="text" name="street" class="form-control" id="street" 
                                                         placeholder="Ej. Calle 1"/>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-form-label" for="name">Instrucciones al despachador</label>
-                                                    <input type="text" name="dispatcher_instructions" t-att-value="dispatcher_instructions" id="dispatcher_instructions" class="form-control" placeholder="Pasando el colegio San Ignacio"/>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-12 col-xl-4">
-                                                <div id="municipality_div" class="form-group">
-                                                    <label class="col-form-label" for="state">Municipio</label>
-                                                    <select name="municipality_id" class="form-control" id="municipality_select"/>
-                                                </div>
-
-
-                                                <div class="form-group">
+                                                <div class="col col-12 col-xl-4 form-group">
                                                     <label class="col-form-label" for="street2">Complemento de calle</label>
                                                     <input type="text" name="street2" class="form-control" id="street_2" placeholder="Ej. Esquina con calle 2"/>
                                                 </div>
 
+                                                <div class="col col-12 col-xl-4 form-group">
+                                                    <label class="col-form-label" for="reference_point">Punto de referencia</label>
+                                                    <input type="text" name="ref_point" t-att-value="ref_point" id="reference_point" class="form-control" placeholder="Ej. CC San Ignacio"/>
+                                                </div>
+
+
+                                                <div class="col col-12 col-xl-4 form-group">
+                                                    <label class="col-form-label" for="name">Instrucciones al despachador</label>
+                                                    <input type="text" name="dispatcher_instructions" t-att-value="dispatcher_instructions" id="dispatcher_instructions" class="form-control" placeholder="Pasando el colegio San Ignacio"/>
+                                                </div>
+
+                                            <div class="col-sm-12">
                                                 <div class="form-group" style="display: none;">
                                                     <label class="col-form-label" for="zip">ZIP</label>
                                                     <input type="text" name="zip" class="form-control" id="zip" value="1050"/>
@@ -244,49 +239,41 @@
                                         </label>
                                     </div>
                                     <div class="collapse-billing" id="collapseExampleBilling">
-                                        <div class="row">
+                                        <div class="row px-3">
 
-                                            <div class="col-sm-12 col-xl-4">              
-                                                <div class="form-group">
+                                                <div class="col col-12 col-xl-4 form-group">
                                                     <label class="col-form-label" for="state">Estado</label>
                                                     <select name="state_id_billing" class="form-control" id="state_select_billing">
                                                     </select>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-form-label" for="state">Parroquia</label>
-                                                    <select name="parish_id_billing" class="form-control" id="parish_select_billing" />
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-12 col-xl-4">
-                                                <div class="form-group">
+                                                <div class="col col-12 col-xl-4 form-group">
                                                     <label class="col-form-label" for="city">Ciudad</label>
                                                     <select name="city_billing" class="form-control" id="city_select_billing">
                                                     </select>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-form-label" for="street">Calle</label>
-                                                    <input type="text" name="street_billing" class="form-control" id="street_billing" 
-                                                        placeholder="Ej. Calle 1"/>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-12 col-xl-4">
-                                                <div id="municipality_div" class="form-group">
+                                                <div id="municipality_div" class="col col-12 col-xl-4 form-group">
                                                     <label class="col-form-label" for="state">Municipio</label>
                                                     <select name="municipality_id_billing" class="form-control" 
                                                     id="municipality_select_billing"/>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="col col-12 col-xl-4 form-group">
+                                                    <label class="col-form-label" for="state">Parroquia</label>
+                                                    <select name="parish_id_billing" class="form-control" id="parish_select_billing" />
+                                                </div>
+
+                                                <div class="col col-12 col-xl-4 form-group">
+                                                    <label class="col-form-label" for="street">Calle</label>
+                                                    <input type="text" name="street_billing" class="form-control" id="street_billing" 
+                                                        placeholder="Ej. Calle 1"/>
+                                                </div>
+
+                                                <div class="col col-12 col-xl-4 form-group">
                                                     <label class="col-form-label" for="street2">Complemento de calle</label>
                                                     <input type="text" name="street2_billing" class="form-control" id="street_2_billing" placeholder="Ej. Esquina con calle 2"/>
                                                 </div>
-                                            </div>
                                         </div>   
                                     </div>
                                 </div>

@@ -27,6 +27,6 @@ class AccountMoveInherit(models.Model):
             sale_order_count = self.env['sale.order'].search_count([('partner_id', '=', partner_id.id), ('state', 'not in', ['draft', 'cancel'])])
             # return sale_order_count
             if sale_order_count <= 4:
-                return "Cliente Nuevo"
+                return "NC"
             else:
                 return ""

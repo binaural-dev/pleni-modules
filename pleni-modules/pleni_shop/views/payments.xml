@@ -150,7 +150,7 @@
                     let currentDate = new Date().getMinutes();
                     let date = localStorage.getItem('dateInit');
 
-                    if (currentDate - parseInt(date) > 60) {
+                    if (currentDate - parseInt(date) > 5) {
                         location.reload(); 
                     }
                 };

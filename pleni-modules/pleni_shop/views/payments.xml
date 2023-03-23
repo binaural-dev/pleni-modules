@@ -73,7 +73,7 @@
                     document.getElementById("select-am").setAttribute('disabled', true);
                     document.getElementById("select-pm").setAttribute('selected', true);
                 }
-                if (todayHour > 17 ) {
+                if (todayHour > 16 ) {
                     if (todayMinutes > 0) {
                         tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 2);
                         tomorrow_date = new Date(tomorrow).toLocaleDateString("en-US", {timeZone: "America/Caracas"}).split("/")

@@ -144,16 +144,19 @@
                     }
                 });
 
-                localStorage.setItem("dateInit", new Date().getMinutes().toString());
+                localStorage.setItem("dateInit", new Date().toString());
 
                 window.onfocus = function () {
-                    let currentDate = new Date().getMinutes();
+                    let currentDate = new Date();
                     let date = localStorage.getItem('dateInit');
 
-                    if (currentDate - parseInt(date) > 5) {
+                    if (currentDate - Date.parse(date) > 60000) {
                         location.reload(); 
                     }
                 };
+
+                window.blur();
+                setTimeout(window.onfocus, 0);
 
             </script>
         </xpath>

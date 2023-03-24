@@ -31,17 +31,17 @@ class ResPartnerInherit(models.Model):
                                               ('seller','Vendedor')], string="Relación con Nosotros")
 
     hours_of_the_day = [
-        ('7:00am', '7: 00am'),
-        ('8:00am', '8: 00am'),
-        ('9:00am', '9: 00am'),
-        ('10:00am', '10: 00am'),
-        ('11:00am', '11: 00am'),
-        ('12:00pm', '12: 00pm'),
-        ('1:00pm', '1: 00pm'),
-        ('2:00pm', '2: 00pm'),
-        ('3:00pm', '3: 00pm'),
-        ('4:00pm', '4: 00pm'),
-        ('5:00pm', '5: 00pm'), 
+        ('07:00', '7:00 am'),
+        ('08:00', '8:00 am'),
+        ('09:00', '9:00 am'),
+        ('10:00', '10:00 am'),
+        ('11:00', '11:00 am'),
+        ('12:00', '12:00 pm'),
+        ('13:00', '1:00 pm'),
+        ('14:00', '2:00 pm'),
+        ('15:00', '3:00 pm'),
+        ('16:00', '4:00 pm'),
+        ('17:00', '5:00 pm'), 
     ]
 
     monday_open = fields.Boolean(string='Lunes Abierto', default=False)

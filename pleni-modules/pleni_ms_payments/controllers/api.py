@@ -6,12 +6,12 @@ import base64
 import json
 
 # Dictionary for payment status
-payment_status = {
-    'pending': 'Pago por Verificar',
-    'verified': 'Pago Verificado',
-    'partial': 'Pago Parcial',
-    'not_verified': 'Pago no Verificado',
-}
+payment_status = [
+    'pending',
+    'verified',
+    'partial',
+    'not_verified',
+]
 
 # Dictionary for payment methods
 payment_methods = {
@@ -33,7 +33,7 @@ class SaleOrderInfo(http.Controller):
         order = {
             "id": sale_order.id,
             "name": sale_order.name,
-            "payment_state": payment_status[sale_order.payment_state],
+            "payment_state": sale_order.payment_state,
             "payment_methods": sale_order.payment_methods.name
         }
 
@@ -109,7 +109,7 @@ class SaleOrderInfo(http.Controller):
                 "sale_order": {
                     "id": updated_sale_order.id,
                     "name": updated_sale_order.name,
-                    "payment_state": payment_status[updated_sale_order.payment_state],
+                    "payment_state": updated_sale_order.payment_state,
                     "payment_methods": updated_sale_order.payment_methods.name
                 }
             }

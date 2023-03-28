@@ -4,9 +4,7 @@ from odoo import models, fields, api
 class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
 
-    payment_state = fields.Char(string='Estado de Pago')
-
-    payment_method = fields.Char(string='Método de Pago')
+    payment_state = fields.Char(string='Estado de Pago', store='')
 
     is_new_client = fields.Boolean(string='¿Cliente Nuevo?', compute='search_exists_so_with_partner', store=True)
 

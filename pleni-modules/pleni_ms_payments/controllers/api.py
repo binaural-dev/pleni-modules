@@ -33,7 +33,7 @@ class SaleOrderInfo(http.Controller):
         order = {
             "id": sale_order.id,
             "name": sale_order.name,
-            "payment_state": sale_order.payment_state,
+            "payment_state": payment_status[sale_order.payment_state],
             "payment_methods": sale_order.payment_methods.name
         }
 
@@ -109,7 +109,7 @@ class SaleOrderInfo(http.Controller):
                 "sale_order": {
                     "id": updated_sale_order.id,
                     "name": updated_sale_order.name,
-                    "payment_state": updated_sale_order.payment_state,
+                    "payment_state": payment_status[updated_sale_order.payment_state],
                     "payment_methods": updated_sale_order.payment_methods.name
                 }
             }

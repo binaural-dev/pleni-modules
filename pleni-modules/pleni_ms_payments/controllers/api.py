@@ -66,8 +66,8 @@ class SaleOrderInfo(http.Controller):
         # Get body data
         data = request.jsonrequest
         payment_state = data['payment_state']
-        payment_id = data['payment_id']
-        acquirer_id = payment_methods[payment_id]
+        payment_method = data['payment_method']
+        acquirer_id = payment_methods[payment_method]
 
         # If not payment state
         if not payment_state:
@@ -84,14 +84,14 @@ class SaleOrderInfo(http.Controller):
             }
         
         # If not payment method
-        if not payment_id:
+        if not payment_method:
             return {
                 "code": 400,
                 "message": "Payment method is required"
             }
         
         # If not any of the dictionary
-        if payment_id not in payment_methods:
+        if payment_method not in payment_methods:
             return {
                 "code": 400,
                 "message": "Payment method is not valid"

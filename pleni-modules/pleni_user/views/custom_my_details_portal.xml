@@ -158,7 +158,6 @@
 						</div>
 						<t t-foreach="request.env['res.partner'].search([('id', 'child_of', partner.commercial_partner_id.ids), 
 						'|', ('type', 'in', ['delivery', 'other']), ('id', '=', partner.commercial_partner_id.id)])" t-as="address">
-
 							<div class="col col-12 col-lg-3  py-2">
 								<div class="address-card">
 									<div style="text-align: center;padding-top:10px">
@@ -179,14 +178,26 @@
 										<t t-set='readonly' t-value="1"/>
 									</t>
 									<t t-set="address_url" t-value="'/my/addresses/%s' % (address.id)"/>
-										
-									<div style="text-align: center; padding-bottom:5px">
-										<a t-att-href="address_url">
-											<span style="font-size:14px;">
-												Editar
-											</span>
-										</a>
-									</div>
+
+									<t t-if="address.id != partner.parent_id.id">
+										<div style="text-align: center; padding-bottom:5px">
+											<a t-att-href="address_url">
+												<span style="font-size:14px;">
+													Editar
+												</span>
+											</a>
+										</div>
+									</t>
+									<t t-else="">
+										<div style="text-align: center; padding-bottom:5px">
+											<a t-att-href="address_url" style="pointer-events: none; cursor: default">
+												<span
+													style="font-size: 10px;color:#5e2129;font-style: italic;display:inline-block;">
+														Si quieres editar la dirección de facturación, comunícate con el equipo de Atención al Cliente de Pleni
+												</span>
+											</a>
+										</div>
+									</t>
 								</div>
 							</div>
 

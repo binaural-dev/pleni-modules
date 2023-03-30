@@ -39,7 +39,10 @@
     	                </div>
 
                          <div class="col-lg-12">
-                            <label class="text-center col-form-label" style="font-weight: bold; font-size: large;">Actualiza tus datos</label>
+                            <label class="text-center col-form-label" style="font-weight: bold; font-size: large;">
+								Perfil
+							</label>
+							<hr class="solid" style="border-top: 2px solid #bbb; margin-top:0px"/>
                         </div>
 
 						<div class="form-group col-xl-4 custom-grid">
@@ -119,121 +122,239 @@
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <div class="row">
-
-                        <div class="col-lg-12">
-                            <label class="text-center col-form-label" style="font-weight: bold; font-size: large; margin-top: 32px;">Actualiza tu dirección fiscal</label>
-                        </div>
-
-						<div class="clearfix" />
-						<div t-attf-class="form-group #{error.get('company_type') and 'o_has_error' or ''} col-xl-4" style="display: none;">
-							<label class="col-form-label" for="name">Company type</label>
-                    		<select t-attf-class="form-control browser-default #{error.get('company_name') and 'is-invalid' or ''}" name="company_type" id="company_type">
-                    		    <option value='person'
-                                    t-att-selected="None if partner.is_company else True">
-                                    Individual
-                                </option>
-                    		    <option value='company'
-                                    t-att-selected="True if partner.is_company else None">
-                                    Company
-                                </option>
-                    		</select>
+					<div class="col-lg-12 pl-0 pr-0">
+						<div class="row">
+							<div class="col-lg-12">
+								<label class="text-center col-form-label" style="font-weight: bold; font-size: large; margin-top: 32px;">
+									Direcciones<span t-esc="index"/>
+								</label>
+								<hr class="solid" style="border-top: 2px solid #bbb; margin-top:0px"/>
+							</div>
 						</div>
+					</div>
+					<div class="row pt-3">
+						<t t-set="index" t-value="0"/>
+						<div class="col col-12 col-lg-3  py-2">
+							<div class="address-card">
+								<div style="text-align: center;padding-top:8px">
+									<strong style="font-size:15px;">
+										Agrega una nueva
+									</strong>
+								</div>
+								<div style="text-align: center;">
+									<strong style="font-size:15px;">
+										dirección de entrega
+									</strong>
+								</div>
+								<t t-set="address_url" t-value="'/my/addresses/add/%s' % (partner.id)"/>
+								<div style="text-align: center;">
+									<a t-att-href="address_url">
+										<div class="btn btn-primary as-btn my-5">
+											Agregar
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+						<t t-foreach="request.env['res.partner'].search([('id', 'child_of', partner.commercial_partner_id.ids), 
+						'|', ('type', 'in', ['delivery', 'other']), ('id', '=', partner.commercial_partner_id.id)])" t-as="address">
 
-
-                        <div t-attf-class="form-group #{error.get('country_id') and 'o_has_error' or ''} col-xl-4" style="display: none;">
-    	                    <label class="col-form-label" for="country_id">Country</label>
-    	                    <select name="country_id" t-attf-class="form-control browser-default #{error.get('country_id') and 'is-invalid' or ''}">
-    	                        <option value="">Country...</option>
-    	                        <t t-foreach="countries or []" t-as="country">
-    	                            <option t-att-value="country.id" t-att-selected="country.id == int(country_id) if country_id else country.id == partner.country_id.id">
-    	                                <t t-esc="country.name" />
-    	                            </option>
-    	                        </t>
-    	                    </select>
-    	                </div>
-
-    	                <div t-attf-class="form-group #{error.get('state_id') and 'o_has_error' or ''} col-xl-4">
-    	                    <label class="col-form-label" for="state_id">Estado</label>
-    	                    <select name="state_id" id="state_select" t-attf-class="form-control browser-default #{error.get('state_id') and 'is-invalid' or ''}">
-    	                        <option value="">select...</option>
-    	                        <t t-foreach="states or []" t-as="state">
-    	                            <option t-att-value="state.id"
-										t-att-selected="state.id == partner.state_id.id">
-    	                                <t t-esc="state.name" />
-    	                            </option>
-    	                        </t>
-    	                    </select>
-    	                </div>
-
-                        <div t-attf-class="form-group #{error.get('city_id') and 'o_has_error' or ''} col-xl-4">
-								<label class="col-form-label" for="city">Ciudad</label>
-								<span t-esc="partner.city" id="city_id_aux" style="opacity:0"/>
-								<select name="city" class="form-control" id="city_select"
-									t-attf-class="form-control browser-default #{error.get('state_id') and 'is-invalid' or ''}">
-									<option value="">select...</option>
-									<t t-foreach="cities or []" t-as="city">
-										<option t-att-value="city.id"
-											t-att-selected="city.id == partner.city">
-											<t t-esc="city.name" />
-										</option>
+							<div class="col col-12 col-lg-3  py-2">
+								<div class="address-card">
+									<div style="text-align: center;padding-top:10px">
+										<t t-if="not address.parent_id">
+											<strong style="font-size:15px;">
+												Dirección Fiscal
+											</strong>
+										</t>
+										<t t-else="">
+											<strong style="font-size:15px;">
+												Dirección de Entrega
+											</strong>
+										</t>
+									</div>
+									<t t-call="website_sale.address_kanban">
+										<t t-set='contact' t-value="address"/>
+										<t t-set='selected' t-value="1"/>
+										<t t-set='readonly' t-value="1"/>
 									</t>
-								</select>
-						</div>
+									<t t-set="address_url" t-value="'/my/addresses/%s' % (address.id)"/>
+										
+									<div style="text-align: center; padding-bottom:5px">
+										<a t-att-href="address_url">
+											<span style="font-size:14px;">
+												Editar
+											</span>
+										</a>
+									</div>
+								</div>
+							</div>
 
-                        <div t-attf-class="form-group #{error.get('municipality_id') and 'o_has_error' or ''} col-xl-4">
-    	                    <label class="col-form-label" for="municipality_id">Municipio</label>
-                            <select name="municipality_id" id="municipality_select" 
-								t-attf-class="form-control browser-default #{error.get('municipality_id') and 'is-invalid' or ''}">
-    	                        <option value="">select...</option>
-    	                        <t t-foreach="municipalities or []" t-as="municipality">
-    	                            <option t-att-value="municipality.id"  t-att-data-state_id="municipality.state_id.id" t-att-selected="municipality.id == partner.municipality_id.id">
-    	                                <t t-esc="municipality.name" />
-    	                            </option>
-    	                        </t>
-    	                    </select>
-    	                </div>
-
-                        <div t-attf-class="form-group #{error.get('parish_id') and 'o_has_error' or ''} col-xl-4">
-    	                    <label class="col-form-label" for="parish_id">Parroquia</label>
-                            <select name="parish_id" id="parish_select" t-attf-class="form-control browser-default #{error.get('parish_id') and 'is-invalid' or ''}">
-    	                        <option value="">select...</option>
-    	                        <t t-foreach="parishes or []" t-as="parish">
-    	                            <option t-att-value="parish.id" style="display:none;" t-att-data-municipality_id="parish.municipality_id.id" t-att-selected="parish.id == partner.parish_id.id">
-    	                                <t t-esc="parish.name" />
-    	                            </option>
-									<t t-esc="partner.parish_id.id" />
-    	                        </t>
-    	                    </select>
-    	                </div>
-
-    	                <div class="clearfix" />
-    	                <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''} col-xl-4">
-    	                    <label class="col-form-label" for="street">Calle</label>
-    	                    <input type="text" name="street" t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" t-att-value="street or partner.street"/>
-    	                </div>
-						<div t-attf-class="form-group #{error.get('street_2') and 'o_has_error' or ''} col-xl-4">
-							<label class="col-form-label" for="street2">Complemento de calle</label>
-                        	<input type="text" name="street2" t-attf-class="form-control #{error.get('street2') and 'is-invalid' or ''}" t-att-value="street2 or partner.street2"/>
-						</div>
-
-    	                <div t-attf-class="form-group #{error.get('zip') and 'o_has_error' or ''} col-xl-4">
-    	                    <label class="col-form-label" for="zipcode">Código Postal</label>
-    	                    <input type="text" name="zipcode" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}" t-att-value="zipcode or partner.zip" />
-    	                </div>
-
-                        <div class="clearfix" />
-
-    	                <input type="hidden" name="redirect" t-att-value="redirect"/>
-    	            </div>
+							<t t-set="index" t-value="index + 1"/>
+						</t>
+					</div>
     	        </div>
                 <div class="clearfix">
-                    <button type="submit" class="btn btn-primary float-right mb32 ">
+                    <button type="submit" class="btn float-right btn-primary as-btn mt-5">
                         Confirmar
                         <span class="fa fa-long-arrow-right" />
                     </button>
                 </div>
     	    </div>
+
+			<style>
+				.address-card{
+					border: 2px solid #E4AE25;
+				}
+
+				.border-primary {
+					border: 'none' !important;
+				}
+			</style>
+
+			<script type="text/javascript">
+				document.querySelectorAll('input[type="submit"]').forEach(function (element) {
+					element.style.display = 'none';
+				});
+
+				document.querySelectorAll('i[class="fa fa-edit"]').forEach(function (element) {
+					element.style.display = 'none';
+				});
+
+				document.querySelectorAll('div[class="card border border-primary"]').forEach(function (element) {
+					element.classList.remove("border-primary");
+					element.classList.remove("card");
+					element.classList.remove("border");
+				});
+
+			</script>
 		</xpath>
     </template>
+
+	<template id="edit_address">
+    	<t t-call="website.layout">
+			<form t-action="'/my/address/edit/%s' % (partner.id)" method="post">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+				<div class="row o_portal_details_address" style="padding:40px">
+
+					<input type="hidden" name="state_id_input" t-att-value="partner.state_id.id"/>
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="state">Estado</label>
+						<select name="state_id" class="form-control" id="state_select">
+						</select>
+					</div>
+
+					<input type="hidden" name="city_id_input" t-att-value="partner.city"/>
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="city">Ciudad</label>
+						<select name="city" class="form-control" id="city_select">
+						</select>
+					</div>
+
+					<input type="hidden" name="municipality_id_input" t-att-value="partner.municipality_id.id"/>
+					<div id="municipality_div" class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="state">Municipio</label>
+						<select name="municipality_id" class="form-control" id="municipality_select"/>
+					</div>
+
+					<input type="hidden" name="parish_id_input" t-att-value="partner.parish_id.id"/>
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="state">Parroquia</label>
+						<select name="parish_id" class="form-control" id="parish_select" />
+					</div>
+
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="street">Calle</label>
+						<input type="text" name="street" class="form-control" id="street" 
+							t-att-value="partner.street"/>
+					</div>
+
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="street2">Complemento de calle</label>
+						<input type="text" name="street2" class="form-control" id="street_2" 
+						t-att-value="partner.street2"/>
+					</div>
+
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="reference_point">Punto de referencia</label>
+						<input type="text" name="ref_point" id="reference_point" class="form-control" 
+						t-att-value="partner.ref_point"/>
+					</div>
+
+
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="name">Instrucciones al despachador</label>
+						<input type="text" name="dispatcher_instructions" 
+						t-att-value="partner.dispatcher_instructions" 
+						id="dispatcher_instructions" class="form-control"/>
+					</div>
+				</div>
+				<div class="clearfix">
+                    <button type="submit" class="btn btn-primary as-btn mt-2 mb-4 ml-5">
+                        Confirmar
+                        <span class="fa fa-long-arrow-right" />
+                    </button>
+                </div>
+			</form>
+		</t>
+	</template>
+
+	<template id="add_address">
+    	<t t-call="website.layout">
+			<form t-action="'/my/address/edit/%s' % (partner.id)" method="post">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+				<div class="row o_portal_details_address_add" style="padding:40px">
+
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="state">Estado</label>
+						<select name="state_id" class="form-control" id="state_select">
+						</select>
+					</div>
+
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="city">Ciudad</label>
+						<select name="city" class="form-control" id="city_select">
+						</select>
+					</div>
+
+					<div id="municipality_div" class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="state">Municipio</label>
+						<select name="municipality_id" class="form-control" id="municipality_select"/>
+					</div>
+
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="state">Parroquia</label>
+						<select name="parish_id" class="form-control" id="parish_select" />
+					</div>
+
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="street">Calle</label>
+						<input type="text" name="street" class="form-control" id="street"/>
+					</div>
+
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="street2">Complemento de calle</label>
+						<input type="text" name="street2" class="form-control" id="street_2"/>
+					</div>
+
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="reference_point">Punto de referencia</label>
+						<input type="text" name="ref_point" id="reference_point" class="form-control"/>
+					</div>
+
+					<div class="col col-12 col-xl-4 form-group">
+						<label class="col-form-label" for="name">Instrucciones al despachador</label>
+						<input type="text" name="dispatcher_instructions" 
+						id="dispatcher_instructions" class="form-control"/>
+					</div>
+				</div>
+				<div class="clearfix">
+                    <button type="submit" class="btn btn-primary as-btn mt-2 mb-4 ml-5">
+                        Confirmar
+                        <span class="fa fa-long-arrow-right" />
+                    </button>
+                </div>
+			</form>
+		</t>
+	</template>
 </odoo>

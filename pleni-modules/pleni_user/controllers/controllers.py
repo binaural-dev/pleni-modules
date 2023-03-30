@@ -241,7 +241,9 @@ class CustomerPortal(CustomerPortal):
 
     @http.route(['/my/addresses/<int:address_id>'], type='http', auth="public", website=True, csrf=False)
     def addresses(self, address_id, access_token=None, **kw):
-        MANDATORY_FIELDS = ['street', 'city', 'municipality_id', 'street2', 'state_id', 'parish_id' ]
+        MANDATORY_FIELDS = ['street', 'city', 'municipality_id', 
+            'street2', 'state_id', 'parish_id', 'ref_point',  'dispatcher_instructions'
+        ]
         values = {}
         partner = request.env['res.partner'].search([('id', '=', address_id)])
 
@@ -264,13 +266,17 @@ class CustomerPortal(CustomerPortal):
                 'street2': values.get('street2'),
                 'city': values.get('city'),
                 'city_id': city_id_delivery.id,
+                'ref_point': values.get('ref_point'),
+                'dispatcher_instructions': values.get('dispatcher_instructions'),
             })
 
             return request.redirect('/my/account')
 
     @http.route(['/my/addresses/add/<int:address_id>'], type='http', auth="public", website=True, csrf=False)
     def addresses_add(self, address_id, access_token=None, **kw):
-        MANDATORY_FIELDS = ['street', 'city', 'municipality_id', 'street2', 'state_id', 'parish_id' ]
+        MANDATORY_FIELDS = ['street', 'city', 'municipality_id', 
+            'street2', 'state_id', 'parish_id', 'ref_point',  'dispatcher_instructions'
+        ]
         values = {}
         partner = request.env['res.partner'].search([('id', '=', address_id)])
 

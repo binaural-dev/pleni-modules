@@ -121,12 +121,81 @@
     	                </div>
                     </div>
                 </div>
+				<div class="col-lg-12">
+					<div class="col-lg-12 pl-0 pr-0">
+						<div class="row">
+							<div class="col-lg-12">
+								<label class="text-center col-form-label" style="font-weight: bold; font-size: large; margin-top: 32px;">
+									Dirección Fiscal
+								</label>
+								<hr class="solid" style="border-top: 2px solid #bbb; margin-top:0px"/>
+							</div>
+						</div>
+					</div>
+					<div class="row pt-3">
+						<t t-set="len_address" t-value="len(request.env['res.partner'].search([('id', 'child_of', partner.commercial_partner_id.ids), 
+							'|', ('type', 'in', ['delivery', 'other']), ('id', '=', partner.commercial_partner_id.id)]))"/>
+						<t t-foreach="request.env['res.partner'].search([('id', 'child_of', partner.commercial_partner_id.ids), 
+							'|', ('type', 'in', ['delivery', 'other']), ('id', '=', partner.commercial_partner_id.id)])" t-as="address">
+							<div t-if="partner.parent_id.id and address.id == partner.parent_id.id" class="col col-12 col-lg-3  py-2">
+								<div class="address-card">
+									<div style="text-align:left;padding-top:10px; padding-left:20px">
+										<strong style="font-size:15px;">
+											Dirección Fiscal
+										</strong>
+									</div>
+									<t t-call="website_sale.address_kanban">
+										<t t-set='contact' t-value="address"/>
+										<t t-set='selected' t-value="1"/>
+										<t t-set='readonly' t-value="1"/>
+									</t>
+
+									<t t-set="address_url" t-value="'/my/addresses/%s' % (address.id)"/>
+									<div style="text-align: center; padding-bottom:5px">
+										<a t-att-href="address_url" style="pointer-events: none; cursor: default">
+											<span
+												style="font-size: 10px;color:#5e2129;font-style: italic;display:inline-block;">
+													Si quieres editar la dirección de facturación, comunícate con el equipo de Atención al Cliente de Pleni
+											</span>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div t-if="not partner.parent_id.id and address.id == partner.id" class="col col-12 col-lg-3  py-2">
+								<div class="address-card">
+									<div style="text-align: left;padding-top:10px;  padding-left:20px">
+										<strong style="font-size:15px;">
+											Dirección Fiscal
+											<span t-if="len_address == 1">
+												y Dirección de Entrega
+											</span>
+										</strong>
+									</div>
+									<t t-call="website_sale.address_kanban">
+										<t t-set='contact' t-value="address"/>
+										<t t-set='selected' t-value="1"/>
+										<t t-set='readonly' t-value="1"/>
+									</t>
+
+									<t t-set="address_url" t-value="'/my/addresses/%s' % (address.id)"/>
+									<div style="text-align: center; padding-bottom:5px">
+										<a t-att-href="address_url">
+											<span style="font-size:14px;">
+												Editar
+											</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</t>
+					</div>
+				</div>
                 <div class="col-lg-12">
 					<div class="col-lg-12 pl-0 pr-0">
 						<div class="row">
 							<div class="col-lg-12">
 								<label class="text-center col-form-label" style="font-weight: bold; font-size: large; margin-top: 32px;">
-									Direcciones<span t-esc="index"/>
+									Direcciones de Entrega
 								</label>
 								<hr class="solid" style="border-top: 2px solid #bbb; margin-top:0px"/>
 							</div>
@@ -156,21 +225,14 @@
 								</div>
 							</div>
 						</div>
-						<t t-foreach="request.env['res.partner'].search([('id', 'child_of', partner.commercial_partner_id.ids), 
-						'|', ('type', 'in', ['delivery', 'other']), ('id', '=', partner.commercial_partner_id.id)])" t-as="address">
-							<div class="col col-12 col-lg-3  py-2">
+						<t t-foreach="request.env['res.partner'].search([('id', 'child_of', partner.id), 
+						'|', ('type', 'in', ['delivery', 'other']), ('id', '=', partner.id)])" t-as="address">
+							<div t-if="address.parent_id" class="col col-12 col-lg-3  py-2">
 								<div class="address-card">
-									<div style="text-align: center;padding-top:10px">
-										<t t-if="not address.parent_id">
-											<strong style="font-size:15px;">
-												Dirección Fiscal
-											</strong>
-										</t>
-										<t t-else="">
-											<strong style="font-size:15px;">
-												Dirección de Entrega
-											</strong>
-										</t>
+									<div style="text-align:left;padding-top:10px; padding-left:20px">
+										<strong style="font-size:15px;">
+											Dirección de Entrega
+										</strong>
 									</div>
 									<t t-call="website_sale.address_kanban">
 										<t t-set='contact' t-value="address"/>
@@ -180,7 +242,7 @@
 									<t t-set="address_url" t-value="'/my/addresses/%s' % (address.id)"/>
 
 									<t t-if="address.id != partner.parent_id.id">
-										<div style="text-align: center; padding-bottom:5px">
+										<div style="text-align: center; padding-bottom:5px;">
 											<a t-att-href="address_url">
 												<span style="font-size:14px;">
 													Editar

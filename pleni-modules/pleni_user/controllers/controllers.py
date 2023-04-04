@@ -66,6 +66,16 @@ class AuthSignupHome(Home):
         email = request.env['res.partner'].sudo().search([('email', '=', emailSaved)])
         return True if email else False
 
+    @http.route('/getIsNewClient', auth='none', type='json', cors='*')
+    def get_is_new_client(self):
+        if request.session.uid:
+            user = request.env['res.users'].sudo().browse(request.session.uid)
+            partner_id = user.partner_id.id
+            
+            sale_order_count = request.env['sale.order'].sudo().search_count([('partner_id', '=', partner_id), ('state', 'not in', ['draft', 'cancel'])])
+            return True if sale_order_count == 0 else False
+        return True
+
 
 class GetStatedById(http.Controller):
     @http.route('/getStatesById', auth='none', type='json', cors='*')

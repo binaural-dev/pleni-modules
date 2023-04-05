@@ -2,6 +2,7 @@ odoo.define('theme_laze.product', function(require) {
 "use strict";
 
 const publicWidget = require('web.public.widget');
+const ajax = require('web.ajax');
 
 publicWidget.registry.product = publicWidget.Widget.extend({
     selector: "#wrapwrap",
@@ -14,6 +15,16 @@ publicWidget.registry.product = publicWidget.Widget.extend({
         self = this;
         this._super.apply(this, arguments);
         self.displayHeader();
+        self._getIsNewClient();
+    },
+    _getIsNewClient: async function(ev) {
+        let isNewClient = await ajax.rpc('/getIsNewClient');
+        if (!isNewClient){
+            $.each($('.header-top'), function (index, item) {
+                $(item).css('display', 'none')
+                $(this).css('pointer-events','none');
+            });
+        }
     },
     _changePreImg:function(ev){
         ev.preventDefault();

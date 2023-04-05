@@ -190,4 +190,44 @@
         />
       </xpath>
     </template>
+
+    <template id="pricelist_view_by_city">
+      <table>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+        </tr>
+          <t t-foreach="pricelist" t-as="product">
+            <tr t-if="product.fixed_price != 0.0">
+              <td><t t-esc="product.product_id.name"/></td>
+              <td>
+                <t t-foreach='product.product_id.product_uom_ids' t-as='uom'>
+                  <t t-set="real_qty" t-value="1 / uom.factor"></t>
+                    <div>
+                      $ <t t-esc="round(product.fixed_price*real_qty,2)"/> <span t-esc="uom.name"></span>
+                    </div>
+                </t>
+              </td>
+            </tr>
+        </t>
+      </table>
+      <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 90%;
+          margin: 0 auto;
+        }
+
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+      </style>
+    </template>
 </odoo>

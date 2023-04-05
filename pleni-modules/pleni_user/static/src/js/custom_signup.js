@@ -39,6 +39,7 @@ odoo.define('pleni_user.custom_signup', function (require) {
             'input #login' : '_onChangeEmail',
             'focusout #telephone': '_onChangeTelephone',
             'input #confirm_password' : '_onChangeConfirmPassword',
+            'input #dispatcher_instructions' : '_onChangeDispatcherInstructions',
             'click #flexCheckBillingAddress': '_showBillingAddress',
         },
         /**
@@ -420,6 +421,15 @@ odoo.define('pleni_user.custom_signup', function (require) {
         _showBillingAddress: function(ev) {
             const billingAddressContainer = $("#billing-address-accordion");
             billingAddressContainer.toggleClass("d-none");
+        },
+
+
+        _onChangeDispatcherInstructions: function(ev) {
+            if (ev.target.value.length === 1) {
+                const container = $("#flexCheckBillingAddressContainer");
+                container.toggleClass("d-none");
+            }
+
         }
     });
 

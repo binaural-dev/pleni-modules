@@ -197,19 +197,17 @@
           <th>Producto</th>
           <th>Precio</th>
         </tr>
-          <t t-foreach="pricelist" t-as="product">
-            <tr t-if="product.fixed_price != 0.0">
-              <td><t t-esc="product.product_id.name"/></td>
+        <t t-foreach="pricelist" t-as="product">
+            <tr>
+              <td><t t-esc="product['name']"/></td>
               <td>
-                <t t-foreach='product.product_id.product_uom_ids' t-as='uom'>
-                  <t t-set="real_qty" t-value="1 / uom.factor"></t>
-                    <div>
-                      $ <t t-esc="round(product.fixed_price*real_qty,2)"/> <span t-esc="uom.name"></span>
-                    </div>
+                <t t-if="'detail' in product" t-foreach="product['detail']" t-as="price">
+                  $ <t t-esc="price['price']"/>
+                  <t t-esc="price['uom']"/> /
                 </t>
               </td>
             </tr>
-        </t>
+          </t>
       </table>
       <style>
         table {

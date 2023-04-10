@@ -40,3 +40,41 @@ class GetProductPricelist(WebsiteSale):
 	def get_product_Pricelist(self, **kwarg):
 		order = request.website.sale_get_order()
 		return order.pricelist_id.id
+
+class WebsiteSaleInherit(WebsiteSale):
+	@http.route(['/precios/<string:city_name>'], type='http', auth="public", website=True, csrf=False)
+	def prices(self, city_name, access_token=None, **kw):
+		values = {
+			'pricelist': []
+		}
+
+		if not city_name:
+			return request.render("pleni_shop.pricelist_view_by_city", values)
+
+		city = request.env['product.pricelist'].sudo().search([('name', '=', city_name.title())],
+			order="id DESC", limit=1
+		)
+
+		if not city:
+			return request.render("pleni_shop.pricelist_view_by_city", values)
+
+		pricelist = request.env['product.pricelist.item'].sudo().search([('pricelist_id', '=', city.id)])
+
+		if not pricelist:
+			return request.render("pleni_shop.pricelist_view_by_city", values)
+
+		pricelist = sorted(pricelist, key=lambda k: k['name'])
+
+		product_names = set()
+		new_list = []
+
+		for obj in pricelist:
+			if obj.name not in product_names:
+				new_list.append(obj)
+				product_names.add(obj.name)
+				
+		values = {
+            'pricelist': new_list
+        }
+
+		return request.render("pleni_shop.pricelist_view_by_city", values)

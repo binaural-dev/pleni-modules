@@ -66,6 +66,16 @@ class AuthSignupHome(Home):
         email = request.env['res.partner'].sudo().search([('email', '=', emailSaved)])
         return True if email else False
 
+    @http.route('/getIsNewClient', auth='none', type='json', cors='*')
+    def get_is_new_client(self):
+        if request.session.uid:
+            user = request.env['res.users'].sudo().browse(request.session.uid)
+            partner_id = user.partner_id.id
+            
+            sale_order_count = request.env['sale.order'].sudo().search_count([('partner_id', '=', partner_id), ('state', 'not in', ['draft', 'cancel'])])
+            return True if sale_order_count == 0 else False
+        return True
+
 
 class GetStatedById(http.Controller):
     @http.route('/getStatesById', auth='none', type='json', cors='*')
@@ -139,9 +149,9 @@ class GetParishesById(http.Controller):
 
 class CustomerPortal(CustomerPortal):
 
-    MANDATORY_BILLING_FIELDS = ['name', 'mobile', 'email', 'street', 'city', 'country_id', 'municipality_id', 'street2', 'street', 'vat', 'prefix_vat', 'parish_id' ]
+    MANDATORY_BILLING_FIELDS = ['name', 'mobile', 'email', 'vat', 'prefix_vat' ]
     OPTIONAL_BILLING_FIELDS = ["zipcode", "state_id", "company_name", 'company_type','commercial_name']
-    FIREBASE_FIELDS = ["register_all_notification","register_specific_notification"]
+    FIREBASE_FIELDS = ["register_all_notification","register_specific_notification", "partner_id"]
 
     @route(['/my/account'], type='http', auth='user', website=True)
     def account(self, redirect=None, **post):
@@ -171,9 +181,9 @@ class CustomerPortal(CustomerPortal):
                     }
                 )
                 partner.sudo().write(values)
-                if redirect:
-                    return request.redirect(redirect)
-                return request.redirect('/my/home')
+                # if redirect:
+                #     return request.redirect(redirect)
+                return request.redirect('/my/account')
 
         countries = request.env['res.country'].sudo().search([])
         states = request.env['res.country.state'].sudo().search([])
@@ -239,6 +249,82 @@ class CustomerPortal(CustomerPortal):
 
         return error, error_message
 
+    @http.route(['/my/addresses/<int:address_id>'], type='http', auth="public", website=True, csrf=False)
+    def addresses(self, address_id, access_token=None, **kw):
+        MANDATORY_FIELDS = ['street', 'city', 'municipality_id', 
+            'street2', 'state_id', 'parish_id', 'ref_point',  'dispatcher_instructions'
+        ]
+        values = {}
+        partner = request.env['res.partner'].search([('id', '=', address_id)])
+
+        if request.httprequest.method == 'GET':
+            values['partner'] = partner
+            return request.render("pleni_user.edit_address", values)
+        
+        if kw and request.httprequest.method == 'POST':
+            values = {key: kw[key] for key in MANDATORY_FIELDS}
+            
+            city_id_delivery = request.env['res.country.city'].search([
+                ('name', '=', values.get('city')),
+                ('state_id', '=', int(values.get('state_id')))
+            ])
+            partner.sudo().write({
+                'state_id': int(values.get('state_id')),
+                'municipality_id': int(values.get('municipality_id')),
+                'parish_id': int(values.get('parish_id')),
+                'street': values.get('street'),
+                'street2': values.get('street2'),
+                'city': values.get('city'),
+                'city_id': city_id_delivery.id,
+                'ref_point': values.get('ref_point'),
+                'dispatcher_instructions': values.get('dispatcher_instructions'),
+            })
+
+            return request.redirect('/my/account')
+
+    @http.route(['/my/addresses/add/<int:address_id>'], type='http', auth="public", website=True, csrf=False)
+    def addresses_add(self, address_id, access_token=None, **kw):
+        MANDATORY_FIELDS = ['street', 'city', 'municipality_id', 
+            'street2', 'state_id', 'parish_id', 'ref_point',  'dispatcher_instructions'
+        ]
+        values = {}
+        partner = request.env['res.partner'].search([('id', '=', address_id)])
+
+        if request.httprequest.method == 'GET':
+            return request.render("pleni_user.add_address", {})
+
+        if kw and request.httprequest.method == 'POST':
+            values = {key: kw[key] for key in MANDATORY_FIELDS}
+            
+            city_id_delivery = request.env['res.country.city'].search([
+                ('name', '=', values.get('city')),
+                ('state_id', '=', int(values.get('state_id')))
+            ])
+
+            request.env['res.partner'].sudo().create({
+                'name': partner.name,
+                'parent_id':  partner.id,
+                'type': 'delivery',
+                'email': partner.email,
+                'lang': 'es_VE',
+                'country_id': 238,
+                'prefix_vat': partner.prefix_vat,
+                'vat': partner.vat,
+                'mobile': partner.mobile,
+                'state_id': int(values.get('state_id')),
+                'municipality_id': int(values.get('municipality_id')),
+                'parish_id': values.get('parish_id'),
+                'street': values.get('street'),
+                'street2': values.get('street2'),
+                'city': values.get('city'),
+                'zip': partner.zip,
+                'relation_us': 'client',
+                'ref_point': values.get('ref_point'),
+                'dispatcher_instructions': values.get('dispatcher_instructions'),
+                'city_id': city_id_delivery.id
+            })
+
+            return request.redirect('/my/account')
 
 class WebsiteSale(http.Controller):
 
@@ -464,7 +550,7 @@ class ResUsersInherit(models.Model):
                         'mobile': values.get('mobile'),
                         'state_id': int(values.get('state_id')),
                         'municipality_id': int(values.get('municipality_id')),
-                        'parish_id': values.get('parish_id'),
+                        'parish_id': int(values.get('parish_id')),
                         'street': values.get('street'),
                         'street2': values.get('street2'),
                         'city': values.get('city'),

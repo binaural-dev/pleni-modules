@@ -73,7 +73,7 @@
                     document.getElementById("select-am").setAttribute('disabled', true);
                     document.getElementById("select-pm").setAttribute('selected', true);
                 }
-                if (todayHour > 17 ) {
+                if (todayHour > 16 ) {
                     if (todayMinutes > 0) {
                         tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 2);
                         tomorrow_date = new Date(tomorrow).toLocaleDateString("en-US", {timeZone: "America/Caracas"}).split("/")
@@ -90,6 +90,10 @@
                         let dateName = new Date(tomorrow);
                         let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         document.getElementById("date-name").innerHTML = dateName.toLocaleDateString('es-MX', options)
+                        
+                        document.getElementById("select-am").setAttribute('selected', '');
+                        document.getElementById("select-am").removeAttribute('disabled');
+                        document.getElementById("select-pm").removeAttribute('selected');
                     }
                 } else {
                     tomorrow = todayTimeZone.setDate(todayTimeZone.getDate() + 1);
@@ -139,6 +143,21 @@
                         document.getElementById("select-pm").removeAttribute('selected');
                     }
                 });
+
+                localStorage.setItem("dateInit", new Date().toString());
+
+                window.onfocus = function () {
+                    let currentDate = new Date();
+                    let date = localStorage.getItem('dateInit');
+
+                    if (currentDate - Date.parse(date) > 60000) {
+                        location.reload(); 
+                    }
+                };
+
+                window.blur();
+                setTimeout(window.onfocus, 0);
+
             </script>
         </xpath>
 

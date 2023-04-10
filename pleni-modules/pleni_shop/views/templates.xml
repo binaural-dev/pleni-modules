@@ -190,4 +190,42 @@
         />
       </xpath>
     </template>
+
+    <template id="pricelist_view_by_city">
+      <table>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+        </tr>
+        <t t-foreach="pricelist" t-as="product">
+            <tr>
+              <td><t t-esc="product['name']"/></td>
+              <td>
+                <t t-if="'detail' in product" t-foreach="product['detail']" t-as="price">
+                  $ <t t-esc="price['price']"/>
+                  <t t-esc="price['uom']"/> /
+                </t>
+              </td>
+            </tr>
+          </t>
+      </table>
+      <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 90%;
+          margin: 0 auto;
+        }
+
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+      </style>
+    </template>
 </odoo>

@@ -217,7 +217,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12" style="margin-top:10px">
+                        <div class="col-lg-12 d-none" style="margin-top:10px" id="flexCheckBillingAddressContainer">
                            <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckBillingAddress"/>
                             <label class="form-check-label" for="flexCheckBillingAddress" 

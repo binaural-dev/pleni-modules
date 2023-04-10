@@ -144,6 +144,7 @@
                 <a href='#' aria-label="Remove from cart" title="Remove from cart" class='js_delete_product no-decoration'> 
                 <i class='fa fa-trash-o fa-2x'></i></a>
             </td>
+
         </xpath>
         <xpath expr="//td[hasclass('td-price')]" position="replace">
             <td class="text-center td-price d-css-none-3mit" name="price">
@@ -192,6 +193,24 @@
       <script type="text/javascript">
         let element = document.getElementsByClassName('show-only-mobile')[0];
         element.style.removeProperty("display");
+
+          setTimeout(function(){
+            let delete_elements_array = [];
+
+            document.querySelectorAll("div[class='text-center td-price pt-3'] span[style='white-space: nowrap;'] span.oe_currency_value").forEach(function (element, index) {
+                if (element.innerText  == "0,00") {
+                    delete_elements_array.push(index)
+                }
+		    });
+
+            document.querySelectorAll(".fa.fa-trash-o.fa-2x").forEach(function (element, index) {
+                if (delete_elements_array.includes(index)) {
+                    element.parentElement.click()
+                    delete_elements_array.shift(); 
+                }
+		    });
+          },2000)
+
       </script>
     </xpath>
     <xpath expr="//div[@id='o_cart_summary']/div[1]/a[2]" position="attributes">

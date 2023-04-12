@@ -197,19 +197,17 @@
           <th>Producto</th>
           <th>Precio</th>
         </tr>
-          <t t-foreach="pricelist" t-as="product">
-            <tr t-if="product.fixed_price != 0.0">
-              <td><t t-esc="product.product_id.name"/></td>
+        <t t-foreach="pricelist" t-as="product">
+            <tr>
+              <td><t t-esc="product['name']"/></td>
               <td>
-                <t t-foreach='product.product_id.product_uom_ids' t-as='uom'>
-                  <t t-set="real_qty" t-value="1 / uom.factor"></t>
-                    <div>
-                      $ <t t-esc="round(product.fixed_price*real_qty,2)"/> <span t-esc="uom.name"></span>
-                    </div>
+                <t t-if="'detail' in product" t-foreach="product['detail']" t-as="price">
+                  $ <t t-esc="price['price']"/>
+                  <t t-esc="price['uom']"/> /
                 </t>
               </td>
             </tr>
-        </t>
+          </t>
       </table>
       <style>
         table {
@@ -229,5 +227,36 @@
           background-color: #dddddd;
         }
       </style>
+    </template>
+
+    <template id="processing_payment">
+      <t t-call="website.layout">
+        <div id="parent">
+          <div id="child" style="font-size:20px;">
+            Tu pago está siendo procesado, en unos minutos podrás visualizar tu pedido
+          </div>
+          <div class="clearfix text-center" id="back_button">
+            <button class="btn btn-primary as-btn mt-4 text-center">
+                Regresar al Inicio
+            </button>
+          </div>
+        </div>
+      </t>
+      <style>
+        #parent {
+          position: absolute;
+          top: 50%; right: 50%;
+          transform: translate(50%,-50%);
+        }
+        #child {
+          margin: auto auto;
+        }
+      </style>
+      <script type="text/javascript">
+        document.getElementById("back_button").onclick = function() {  
+          let url =  location.protocol + '//' + location.host;
+          window.location.replace(url);
+        };
+      </script>
     </template>
 </odoo>

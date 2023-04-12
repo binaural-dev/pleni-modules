@@ -197,7 +197,7 @@
           setTimeout(function(){
             let delete_elements_array = [];
 
-            document.querySelectorAll("span[data-oe-model='sale.order.line'] span.oe_currency_value").forEach(function (element, index) {
+            document.querySelectorAll("div[class='text-center td-price pt-3'] span[style='white-space: nowrap;'] span.oe_currency_value").forEach(function (element, index) {
                 if (element.innerText  == "0,00") {
                     delete_elements_array.push(index)
                 }
@@ -324,57 +324,6 @@
       </xpath>
   </template>
 
-  <!-- <template id="footer_about_us" inherit_id="website.layout">
-    <xpath expr="//div[@id='footer']/section[1]/div[1]/div[1]" position="attributes">
-              <attribute name="style">justify-content: space-between;</attribute>
-    </xpath>
-
-    <xpath expr="//div[@id='footer']/section[1]/div[1]/div[1]/div[1]" position="attributes">
-            <attribute name="class" separator=" " add="col-lg-5" remove="col-lg-4"/>
-            <attribute name="style">line-height: 1;</attribute>
-    </xpath>
-    <xpath expr="//div[@id='footer']/section[1]/div[1]/div[1]/div[1]/h5[1]" position="attributes">
-            <attribute name="style">font-weight: bold;</attribute>
-    </xpath>
-
-    <xpath expr="//div[@id='footer']/section[1]/div[1]/div[1]/div[2]/h5[1]" position="replace">
-            <h5 style="font-weight: bold;">Encuéntranos en</h5>
-    </xpath>
-    <xpath expr="//div[hasclass('s_share')]/a[2]" position="attributes">
-        <attribute name="style">color: white;</attribute>
-    </xpath>
-    <xpath expr="//div[hasclass('s_share')]/a[3]" position="attributes">
-        <attribute name="style">color: white;</attribute>
-    </xpath>
-    <xpath expr="//div[hasclass('s_share')]/a[4]" position="attributes">
-        <attribute name="style">color: white;</attribute>
-        <style>
-            .fa-twitter-square {
-                color: white;
-            }
-        </style>
-    </xpath>
-
-    <xpath expr="//div[@id='footer']/section[1]/div[1]/div[1]/div[3]" position="attributes">
-            <attribute name="class" separator=" " add="col-lg-2" remove="col-lg-4"/>
-    </xpath>
-    <xpath expr="//div[@id='footer']/section[1]/div[1]/div[1]/div[3]/h5[1]" position="attributes">
-            <attribute name="style">font-weight: bold;</attribute>
-    </xpath>
-    <xpath expr="//ul[@class='list-unstyled']/li[1]/a[1]" position="attributes">
-          <attribute name="style">color: white;</attribute>
-    </xpath>
-    <xpath expr="//ul[@class='list-unstyled']/li[2]/a[1]" position="attributes">
-          <attribute name="style">color: white;</attribute>
-    </xpath>
-    <xpath expr="//ul[@class='list-unstyled']/li[3]/a[1]" position="attributes">
-          <attribute name="style">color: white;</attribute>
-    </xpath>
-    <xpath expr="//ul[@class='list-unstyled']/li[4]/a[1]" position="attributes">
-          <attribute name="style">color: white;</attribute>
-    </xpath>
-  </template> -->
-
   <template id="payment_button_disabled" inherit_id="payment.payment_tokens_list">
     <xpath expr="//div[hasclass('mt-2')][2]/button[1]" position="replace">
         <button t-if="mode == 'payment'" id="o_payment_form_pay" type="submit"
@@ -388,6 +337,7 @@
                 <i class="fa fa-lock"/> Pay
             </t>
         </button>
+
         <script type="text/javascript">
             setTimeout(function(){
                 document.getElementById('o_payment_form_pay').removeAttribute("disabled");
@@ -396,28 +346,11 @@
         </script>
     </xpath>
   </template>
-  <!-- <template id="hidden_delivery_cost" inherit_id="website_sale_delivery.payment_delivery_methods">
-    <xpath expr="//t[2]/span[1]" position="attributes">
-      <attribute name="style">display: none;</attribute>
-    </xpath>
-  </template> -->
 
   <template id="website_empty_cart" inherit_id="website_sale.cart">
       <xpath expr="//div[hasclass('clearfix')]" position="attributes">
           <attribute name="style">padding-bottom: 10px;</attribute>
       </xpath>
   </template>
-  <!-- <template id="custom_ecommerce_delivery_total" inherit_id="website_sale_delivery.cart_delivery" name="Custom ecommerce delivery total">
-    <xpath expr="//tr[@id='order_delivery']" position="replace">
-      <tr id="order_delivery" t-if="website_sale_order">
-        <td class="text-right border-0 text-muted"  title="Delivery will be updated after choosing a new delivery method">Entrega:</td>
-        <td class="text-xl-right border-0 text-muted" >
-              <span t-field="website_sale_order.amount_delivery" class="monetary_field" style="white-space: nowrap;" t-options='{
-                "widget": "monetary",
-                "display_currency": website_sale_order.currency_id,
-            }'/>
-        </td>
-      </tr>
-    </xpath>
-  </template> -->
+
 </odoo>

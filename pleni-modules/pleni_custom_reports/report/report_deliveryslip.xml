@@ -15,8 +15,7 @@
                   <t t-if="partner.commercial_name">
                     <div style="white-space: nowrap; margin-right: 0px;">
                       <strong t-field="partner.commercial_name"></strong>
-                      <strong t-esc="o._get_sale_order_count(partner.parent_id)"></strong>
-                      <strong t-esc="o.search_exists_so_with_partner()"></strong>
+                      <strong t-esc="o._get_sale_order_count(partner)"></strong>
                     </div>
                   </t>
                   <div style="white-space: nowrap; margin-right: 0px;">
@@ -24,12 +23,12 @@
                     <span t-field="partner.rif" style="white-space: nowrap; margin-left: 5px; padding: 0;" />
                   </div>
                   <strong>Dirección de Entrega:</strong>
-                  <div style="margin: 0; padding: 0; white-space: nowrap;">
+                  <div style="margin: 0; padding: 0;">
                     <span t-field="partner.street" />
                   </div>
-                  <div style="margin: 0; padding: 0; white-space: nowrap;">
+                  <div style="margin: 0; padding: 0;">
                     <span t-field="partner.street2" style="margin: 0; padding: 0;" />
-                  </div>
+                  </div>
                   <div style="margin: 0; padding: 0; white-space: nowrap;">
                     <span t-field="partner.city" />
                     <span t-field="partner.state_id.code" />

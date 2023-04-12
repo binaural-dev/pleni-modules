@@ -118,8 +118,11 @@ class WebsiteSaleInherit(WebsiteSale):
 
 		return list_price
 
-	@http.route(['/processing_payment'], type='http', auth="public", website=True, csrf=False)
-	def processing_payment(self, access_token=None, **kw):
+	@http.route(['/processing_payment/<int:sale_order_id>'], type='http', auth="public", website=True, csrf=False)
+	def processing_payment(self,sale_order_id, access_token=None, **kw):
 		values = {}
 
+		order = request.env['sale.order'].sudo().browse(sale_order_id)
+
+		values['order'] = order
 		return request.render("pleni_shop.processing_payment", values)

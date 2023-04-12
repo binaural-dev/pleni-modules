@@ -181,16 +181,16 @@
             <t t-set="show_payment_methods_value" t-value="website_sale_order.show_payment_methods()"/>
             <input type="hidden" id="show_payment_methods" t-att-value="show_payment_methods_value"/>
 
-            <script type="text/javascript">
+            <!-- <script type="text/javascript">
                 if (document.getElementById("show_payment_methods").value == 'false') {
                     document.getElementById("payment_method").style.display = 'none';
                 }
 
-            </script>
+            </script> -->
         </xpath>
 
 
-        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" position="before">
+        <!-- <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" position="before">
             <div>
                 <t t-set="pay_url" t-value="website_sale_order.get_payment_url()"/>
                 <input type="hidden" id="pay_url" t-att-value="pay_url"/>
@@ -225,7 +225,7 @@
                 }
 
             </script>
-        </xpath>
+        </xpath> -->
 
         <xpath expr="//div[hasclass('oe_cart')]/div[@class='card']/div[1]" position="before">
             <div class="card-header text-white" style="background-color: #E4AE25; font-size: 14px; font-weight:bold">

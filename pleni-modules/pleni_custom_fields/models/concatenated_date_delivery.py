@@ -131,7 +131,7 @@ class StockPickingInherit(models.Model):
     def _get_sale_order_count(self, partner_id):
             sale_order_count = self.env['sale.order'].search_count([('partner_id', '=', partner_id.id), ('state', 'not in', ['draft', 'cancel'])])
             # return sale_order_count
-            if sale_order_count >= 4:
+            if sale_order_count <= 4:
                 return "CLIENTE NUEVO"
             else:
                 return ""

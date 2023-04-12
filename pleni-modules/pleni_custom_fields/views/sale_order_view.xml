@@ -19,7 +19,7 @@
     <field name="inherit_id" ref="sale.view_order_form" />
     <field name="arch" type="xml">
       <xpath expr="//field[@name='partner_shipping_id']" position="after">
-        <label for="date_delivery_view" string="Fecha de Entrega" />
+        <label for="date_delivery_view" string="Fecha Programada de Entrega" />
         <div class="o_row">
           <field name="date_delivery_view" attrs="{'readonly': False}" required="1" />
           <span class="text-muted" attrs="{'invisible': [('effective_date', '!=', False), ('commitment_date', '!=', False)]}">
@@ -28,9 +28,10 @@
           </span>
         </div>
         <field name="am_pm" required="1" />
-      </xpath>
-      <xpath expr="//label[@for='commitment_date']" position="attributes">
-        <attribute name="invisible">1</attribute>
+        <label for="commitment_date"/>
+        <div class="o_row">
+          <field name="commitment_date" attrs="{'readonly': True}" required="1" />
+        </div>
       </xpath>
       <xpath expr="//group[@name='sale_shipping']/div[hasclass('o_row')]" position="attributes">
         <attribute name="invisible">1</attribute>

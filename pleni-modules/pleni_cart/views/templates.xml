@@ -337,8 +337,6 @@
                 <i class="fa fa-lock"/> Pay
             </t>
         </button>
-        <t t-esc="pms"></t>
-        <t t-esc="mode"></t>
 
         <script type="text/javascript">
             setTimeout(function(){

@@ -117,3 +117,9 @@ class WebsiteSaleInherit(WebsiteSale):
 				list_price[idx]['detail'].pop(index)
 
 		return list_price
+
+	@http.route(['/processing_payment'], type='http', auth="public", website=True, csrf=False)
+	def processing_payment(self, access_token=None, **kw):
+		values = {}
+
+		return request.render("pleni_shop.processing_payment", values)

@@ -15,38 +15,23 @@ class SaleOrderInherit(models.Model):
                 line.product_template_id.times_sold += line.product_uom_qty
         return res
 
-    def get_payment_url(self):
-        moves = self.env["account.move"].search([('invoice_origin', '=', self.name )])
-        print("moveeeeeeeeeeeeeeeeeeeeeeeees", moves)
-        payments = []
-        total = 0
-        totalForeign = 0
-
-        for move in moves:
-            _total = move.amount_residual
-            if _total == 0:
-                print("paso aqui 0")
-                return ''
-                # raise ValidationError(_("The payment %s is already paid") % move.name)
-            _totalForeign = move.amount_residual * move.foreign_currency_id.rate
-            print("jjjjjjjjjjjjjjjjjj", move.id, move.name, _total)
-            payments.append({"id": move.id, "name": move.name, "amount": _total})
-
-            total += _total
-            totalForeign += _totalForeign
-
-        if len(payments) == 0:
-            print("paso len aqui 0")
-            return ''
-            # raise ValidationError(_("There are no payments to pay"))
-
+    def get_payment_url(self): 
         payload = {
-            "user": {"id": record.partner_id.id, "name": record.partner_id.name},
+            "user": {
+                "id": self.partner_id.id, 
+                "name": self.partner_id.name
+            },
             "payment": {
-                "instantPayment": False,
-                "paidElements": payments,
-                "amount": total,
-                "amountBs": totalForeign,
+                "instantPayment": True,
+                "paidElements": [
+                    {
+                        "id": self.id,
+                        "name": self.name,
+                        "amount": self.amount_total
+                    }
+                ],
+                "amount": self.amount_total,
+                "amountBs": self.amount_total * self.currency_rate,
             },
             "exp": datetime.now(tz=timezone.utc) + timedelta(hours=24)
         }
@@ -56,3 +41,10 @@ class SaleOrderInherit(models.Model):
         )
 
         return payment_url
+
+    def show_payment_methods(self):
+
+        if self.partner_id.property_payment_term_id.id != 1:
+            return 'true'
+
+        return 'false'

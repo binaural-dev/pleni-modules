@@ -228,4 +228,22 @@
         }
       </style>
     </template>
+
+    <template id="processing_payment">
+      <div id="parent">
+        <div id="child">
+          Tu pago está siendo procesado, en unos minutos podrás visualizar tu pedido
+        </div>
+      </div>
+      <style>
+        #parent {
+          position: absolute;
+          top: 50%; right: 50%;
+          transform: translate(50%,-50%);
+        }
+        #child {
+          margin: auto auto;
+        }
+      </style>
+    </template>
 </odoo>

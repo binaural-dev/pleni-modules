@@ -16,6 +16,7 @@
                     <div style="white-space: nowrap; margin-right: 0px;">
                       <strong t-field="partner.commercial_name"></strong>
                       <strong t-esc="o._get_sale_order_count(partner.parent_id)"></strong>
+                      <strong t-esc="o.search_exists_so_with_partner()"></strong>
                     </div>
                   </t>
                   <div style="white-space: nowrap; margin-right: 0px;">

@@ -230,11 +230,18 @@
     </template>
 
     <template id="processing_payment">
-      <div id="parent">
-        <div id="child">
-          Tu pago está siendo procesado, en unos minutos podrás visualizar tu pedido
+      <t t-call="website.layout">
+        <div id="parent">
+          <div id="child" style="font-size:20px;">
+            Tu pago está siendo procesado, en unos minutos podrás visualizar tu pedido
+          </div>
+          <div class="clearfix text-center" id="back_button">
+            <button class="btn btn-primary as-btn mt-4 text-center">
+                Regresar al Inicio
+            </button>
+          </div>
         </div>
-      </div>
+      </t>
       <style>
         #parent {
           position: absolute;
@@ -245,5 +252,11 @@
           margin: auto auto;
         }
       </style>
+      <script type="text/javascript">
+        document.getElementById("back_button").onclick = function() {  
+          let url =  location.protocol + '//' + location.host;
+          window.location.replace(url);
+        };
+      </script>
     </template>
 </odoo>

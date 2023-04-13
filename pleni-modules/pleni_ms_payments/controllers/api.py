@@ -94,7 +94,8 @@ class SaleOrderInfo(http.Controller):
         if sale_order:
             sale_order.write({
                 'payment_state': payment_state,
-                'payment_methods': [(4, acquirer_id)]
+                # 'payment_methods': [(4, acquirer_id)]
+                'payment_methods': acquirer_id,
             })
             updated_sale_order = request.env['sale.order'].sudo().search([('id', '=', id)])
             return {

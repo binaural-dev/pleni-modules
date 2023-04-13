@@ -90,18 +90,12 @@ class SaleOrderInfo(http.Controller):
                 "code": 400,
                 "message": "Payment method is required"
             }
-        
-        if sale_order.payment_state:
-            return {
-                "code": 400,
-                "message": "Sale order already has a payment state"
-            }
 
         
         if sale_order:
             sale_order.write({
                 'payment_state': payment_state,
-                'payment_methods': [(4, acquirer_id)]
+                'payment_methods': [(1, acquirer_id)]
                 # 'payment_methods': acquirer_id,
             })
             updated_sale_order = request.env['sale.order'].sudo().search([('id', '=', id)])

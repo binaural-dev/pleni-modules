@@ -276,11 +276,11 @@
                                                 <span class="text-success">Verificado</span>
                                               </t>
 
-                                              <t t-if="order.payment_state == 'verification_in_process'">
+                                              <t t-if="order.payment_state == 'partial'">
                                                 <span class="text-warning">Verificación En proceso</span>
                                               </t>
 
-                                              <t t-if="order.payment_state == 'to_be_checked'">
+                                              <t t-if="order.payment_state == 'pending'">
                                                 <span class="text-warning">Por verificar</span>
                                               </t>
                                             </t>

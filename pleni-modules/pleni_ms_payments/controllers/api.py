@@ -66,9 +66,9 @@ class SaleOrderInfo(http.Controller):
         # Get body data
         data = request.jsonrequest
         payment_state = data['payment_state']
-        # payment_method = data['payment_method']
-        # acquirer_id = payment_methods[payment_method]
-        acquirer_id = data['acquirer_id']
+        payment_method = data['payment_method']
+        acquirer_id = payment_methods[payment_method]
+        # acquirer_id = data['acquirer_id']
 
         # If not payment state
         if not payment_state:
@@ -94,8 +94,8 @@ class SaleOrderInfo(http.Controller):
         if sale_order:
             sale_order.write({
                 'payment_state': payment_state,
-                # 'payment_methods': [(4, acquirer_id)]
-                'payment_methods': acquirer_id,
+                'payment_methods': [(4, acquirer_id)]
+                # 'payment_methods': acquirer_id,
             })
             updated_sale_order = request.env['sale.order'].sudo().search([('id', '=', id)])
             return {

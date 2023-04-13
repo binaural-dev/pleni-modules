@@ -161,41 +161,45 @@
             </script>
         </xpath>
 
-        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']/h3[1]" position="replace">
-            <div class="card-header text-white mt-5" style="background-color: #E4AE25; font-size: 14px; font-weight:bold">
-                3) Métodos de pago
-            </div>
-            <style>
-                .text-muted.ml-3 {
-                    height: 5px;
-                }
 
-                form .card {
-                    margin-bottom: 20px;
-                }
-            </style>
+        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']/h3[1]" position="attributes">
+            <attribute name="style">display: none !important;</attribute>
+        </xpath>
+
+
+        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" 
+            position="after">
+            <script type="text/javascript">
+                setTimeout(function () {
+                    document.querySelectorAll("#payment_method form div.card").forEach((element) => {
+                        element.style.display = 'none'
+                    })
+                }, 500);
+            </script>
         </xpath>
 
         <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" position="inside">
 
             <t t-set="show_payment_methods_value" t-value="website_sale_order.show_payment_methods()"/>
             <input type="hidden" id="show_payment_methods" t-att-value="show_payment_methods_value"/>
+            <input type="hidden" id="sale_order_id" t-att-value="website_sale_order.id"/>
 
-            <!-- <script type="text/javascript">
+            <script type="text/javascript">
                 if (document.getElementById("show_payment_methods").value == 'false') {
-                    document.getElementById("payment_method").style.display = 'none';
+                    document.getElementById("o_payment_form_pay").style.display = 'none';
+                    document.getElementById("pay_button_container").style.textAlign = 'center';
                 }
 
-            </script> -->
+            </script>
         </xpath>
 
 
-        <!-- <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" position="before">
+        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" position="before">
             <div>
                 <t t-set="pay_url" t-value="website_sale_order.get_payment_url()"/>
                 <input type="hidden" id="pay_url" t-att-value="pay_url"/>
 
-                <div style="text-align: center;">
+                <div style="text-align: right;" id="pay_button_container">
                     <a id="pay_button">
                         <div class="btn btn-primary as-btn my-5">
                             Pagar Ahora
@@ -217,15 +221,16 @@
                     if (newWindow) {
                         if (newWindow.closed) {
                             clearInterval(timer);
+                            let sale_order_id = document.getElementById("sale_order_id").value
                             let url =  location.protocol + '//' + location.host 
-                                    + '/processing_payment';
+                                    + '/processing_payment/'+ sale_order_id;
                             window.location.replace(url);
                         }
                     }
                 }
 
             </script>
-        </xpath> -->
+        </xpath>
 
         <xpath expr="//div[hasclass('oe_cart')]/div[@class='card']/div[1]" position="before">
             <div class="card-header text-white" style="background-color: #E4AE25; font-size: 14px; font-weight:bold">

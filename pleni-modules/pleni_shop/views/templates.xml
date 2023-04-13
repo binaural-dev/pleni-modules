@@ -231,27 +231,99 @@
 
     <template id="processing_payment">
       <t t-call="website.layout">
-        <div id="parent">
-          <div id="child" style="font-size:20px;">
-            Tu pago está siendo procesado, en unos minutos podrás visualizar tu pedido
-          </div>
-          <div class="clearfix text-center" id="back_button">
-            <button class="btn btn-primary as-btn mt-4 text-center">
-                Regresar al Inicio
-            </button>
-          </div>
+        <t t-set="additional_title">Tienda - Pago</t>
+        <div id="wrap">
+            <div class="container oe_website_sale py-2">
+                <div class="alert alert-success" role="alert">
+                  Un miembro de nuestro equipo se pondrá en contacto con usted para confirmar su pedido.
+                </div>
+                <h1>
+                  <span>Pedido</span> 
+                  <em t-field="order.name" /> 
+                </h1>
+
+                <div class="row">
+                    <div class="col-12 col-xl">
+                        <div class="oe_cart">
+                            <div class="oe_structure clearfix mt-3" id="oe_structure_website_sale_confirmation_1"/>
+                            <h3 class="text-left mt-3">
+                                <strong>Información del Pago:</strong>
+                            </h3>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2">
+                                          <span class="text-success font-weight-bold"> 
+                                            <i class="fa fa-fw fa-check-circle"/> Método de pago: 
+                                          </span>
+                                          <span class="font-weight-bold">
+                                            <t t-foreach="order.payment_methods" t-as="method">
+                                              <t t-esc="method.name" />
+                                            </t>
+                                          </span>
+                                        </td>
+                                        <td colspan="2">
+                                          <span class="font-weight-bold"> 
+                                            <i class="fa fa-credit-card"/> Status de pago: 
+                                          </span>
+                                          <span class="font-weight-bold">
+                                            <t t-if="order.payment_state == False">
+                                              <span class="text-danger">Sin pago encontrado</span>
+                                            </t>
+                                            <t t-else="">
+
+                                              <t t-if="order.payment_state == 'verified'">
+                                                <span class="text-success">Verificado</span>
+                                              </t>
+
+                                              <t t-if="order.payment_state == 'partial'">
+                                                <span class="text-warning">Verificación En proceso</span>
+                                              </t>
+
+                                              <t t-if="order.payment_state == 'pending'">
+                                                <span class="text-warning">Por verificar</span>
+                                              </t>
+                                            </t>
+
+                                          </span>
+                                        </td>
+                                        <td class="text-right" width="100">
+                                            <strong>Total:</strong>
+                                        </td>
+                                        <td class="text-right" width="100">
+                                            <strong t-field="order.amount_total" 
+                                              t-options="{'widget': 'monetary', 'display_currency': order.pricelist_id.currency_id}" />
+                                            <strong>
+                                              <div>
+                                                <span id="exchange-bs">
+                                                Bs. <t t-esc="round(order.amount_total * order.currency_rate, 2)" />
+                                                </span>
+                                              </div>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="card mt-3">
+                              <div class="card-body">
+                                <t t-set="same_shipping" t-value="bool(order.partner_shipping_id==order.partner_id or only_services)" />
+                                <div><b>Facturación <t t-if="same_shipping and not only_services"> &amp; Envío</t>: </b><span t-esc='order.partner_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')" class="address-inline"/></div>
+                                <div t-if="not same_shipping and not only_services" groups="sale.group_delivery_invoice_address"><b>Envío: </b><span t-esc='order.partner_shipping_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')"  class="address-inline"/></div>
+                              </div>
+                            </div>
+                            <div class="oe_structure mt-3" id="oe_structure_website_sale_confirmation_2"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="oe_structure" id="oe_structure_website_sale_confirmation_3"/>
+            <div class="clearfix text-center" id="back_button">
+              <button class="btn btn-primary as-btn mt-4 text-center">
+                  Regresar al Inicio
+              </button>
+            </div>
         </div>
       </t>
-      <style>
-        #parent {
-          position: absolute;
-          top: 50%; right: 50%;
-          transform: translate(50%,-50%);
-        }
-        #child {
-          margin: auto auto;
-        }
-      </style>
       <script type="text/javascript">
         document.getElementById("back_button").onclick = function() {  
           let url =  location.protocol + '//' + location.host;

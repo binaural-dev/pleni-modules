@@ -35,8 +35,9 @@ class SaleOrderInherit(models.Model):
             },
             "exp": datetime.now(tz=timezone.utc) + timedelta(hours=24)
         }
-        signature = 'swTN5VGPpQjiC7FRDWaDqBVBvNklutZu'
-        payment_url = 'https://stag-pay.pleni.app/' + str(
+
+        signature = self.env.company.api_pleni_payments_token
+        payment_url = self.env.company.api_pleni_payments_url + str(
             jwt.encode(payload, signature)
         )
 

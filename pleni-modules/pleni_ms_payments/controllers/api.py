@@ -16,12 +16,12 @@ payment_status = [
 # Dictionary for payment methods
 payment_methods = {
     'cash': 14,
-    'credit_card': 29,
-    'pago_movil': 15,
+    'stripe': 29,
+    'pagomovil': 15,
     'zelle': 19,
-    'punto_de_venta': 16,
-    'transferencia_bs': 17,
-    'transferencia_usd': 18,
+    'pos': 16,
+    'transferBs': 17,
+    'transferUSD': 18,
     'c2p': 34
 }
 

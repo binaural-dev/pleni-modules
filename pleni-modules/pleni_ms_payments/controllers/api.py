@@ -91,6 +91,13 @@ class SaleOrderInfo(http.Controller):
                 "message": "Payment method is required"
             }
         
+        if sale_order.payment_state:
+            return {
+                "code": 400,
+                "message": "Sale order already has a payment state"
+            }
+
+        
         if sale_order:
             sale_order.write({
                 'payment_state': payment_state,

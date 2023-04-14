@@ -7,6 +7,7 @@
         <t t-call="web.external_layout">
           <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
           <t t-set="partner" t-value="o.partner_id or (o.move_lines and o.move_lines[0].partner_id) or False" />
+          <t t-set="sub-partner" t-value="o.partner_shipping_id" />
           <t t-set="item_index" t-value="0" />
           <t t-if="partner" name="partner_header">
             <div id="client_data" class="container p-0" style="font-size: medium; margin: 0; margin-bottom: 32px;">
@@ -48,6 +49,9 @@
                   <div class="d-flex justify-content-start">
                     <span t-field="o.sale_id.client_notes" />
                   </div>
+                </div>
+                <div style="margin: 0; padding: 0; white-space: nowrap;font-size:18px;font-weight:bold">
+                  <span t-esc="sub_partner._get_day_name(invoice.scheduled_date_account)"/>
                 </div>
               </div>
             </div>

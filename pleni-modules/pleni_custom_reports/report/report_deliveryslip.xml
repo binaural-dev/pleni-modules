@@ -50,7 +50,7 @@
                   </div>
                 </div>
                 <div style="margin: 0; padding: 0; white-space: nowrap;font-size:18px;font-weight:bold">
-                  <span t-esc="partner._get_day_name(0.scheduled_date_account)"/>
+                  <span t-esc="partner._get_day_name(o.scheduled_date_account)"/>
                 </div>
               </div>
             </div>

@@ -28,16 +28,18 @@ class SaleOrderInherit(models.Model):
 
     @api.depends('commitment_date')
     def _compute_only_date(self):
+        if self.commitment_date:
+            self.am_pm = 'am' if self.commitment_date.hour < 16 else 'pm'
         for element in self:
-            if element.commitment_date and not element.date_delivery_view:
-                element.date_delivery_view = element.commitment_date
-            else:
-                element.commitment_date = element.date_delivery_view
+            element.date_delivery_view = element.commitment_date
 
     def write(self, vals):
         date_delivery_view = vals['date_delivery_view'] if 'date_delivery_view' in vals else self.date_delivery_view
         am_pm = vals['am_pm'] if 'am_pm' in vals else self.am_pm
         vals['commitment_date'] = date_delivery_view
+
+        order = self.env['sale.order'].search([('order_id', '=', self.id)])
+        order.write({'commitment_date': date_delivery_view, 'am_pm': am_pm})
 
         for picking in self.picking_ids:
             picking.scheduled_date_stock = date_delivery_view

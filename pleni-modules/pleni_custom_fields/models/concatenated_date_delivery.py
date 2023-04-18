@@ -38,8 +38,8 @@ class SaleOrderInherit(models.Model):
         am_pm = vals['am_pm'] if 'am_pm' in vals else self.am_pm
         vals['commitment_date'] = date_delivery_view
 
-        order = self.env['sale.order'].search([('order_id', '=', self.id)])
-        order.write({'commitment_date': date_delivery_view, 'am_pm': am_pm})
+        # order = self.env['sale.order'].search([('order_id', '=', self.id)])
+        # order.write({'commitment_date': date_delivery_view, 'am_pm': am_pm})
 
         for picking in self.picking_ids:
             picking.scheduled_date_stock = date_delivery_view

@@ -128,7 +128,7 @@ class WebsiteSaleInherit(WebsiteSale):
 		return request.render("pleni_shop.processing_payment", values)
 
 	@http.route(['/get_payment_state/<int:sale_order_id>'], type='http', auth="public", website=True, csrf=False)
-	def processing_payment(self,sale_order_id, access_token=None, **kw):
+	def get_payment_state(self,sale_order_id, access_token=None, **kw):
 		order = request.env['sale.order'].sudo().browse(sale_order_id)
 
-		return 'true' if order.get_payment_state else 'false'
+		return 'true' if order.payment_state else 'false'

@@ -75,6 +75,9 @@ class ResPartnerInherit(models.Model):
     # sale_order_count = fields.Char(compute='_get_sale_order_count', string='Sale Order Count')
 
     def _get_day_name(self, delivery_date):
+        if not delivery_date:
+            return ''
+        
         day = delivery_date.strftime("%A")
         
         if day == 'Monday' and self.monday_open:

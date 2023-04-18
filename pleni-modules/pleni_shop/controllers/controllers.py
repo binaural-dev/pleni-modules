@@ -71,7 +71,7 @@ class WebsiteSaleInherit(WebsiteSale):
 		for obj in pricelist:
 			if obj.fixed_price != 0.0:
 				for uom in obj.product_id.product_uom_ids:
-					real_qty = round(1 / uom.factor,2)
+					real_qty = float_round(1 / uom.factor,2)
 
 					if obj.min_quantity <=  real_qty:
 

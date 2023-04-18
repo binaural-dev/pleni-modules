@@ -213,7 +213,8 @@
                 document.getElementById("pay_button").onclick = function() {  
                     newWindow = window.open(document.getElementById("pay_url").value);
                     setInterval(checkChild, 5000);
-                };  
+                }; 
+         
 
                 const timer = setInterval(checkChild, 5000);
 

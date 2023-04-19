@@ -357,6 +357,7 @@
           <th>
               <span># Pedido</span>
           </th>
+          <th></th>
           <th style="margin: auto; text-align: center;">Estatus</th>
           <th style="margin: auto; text-align: right;">Total</th>
           <th style="margin: auto; text-align: center;">Order Date</th>
@@ -368,6 +369,18 @@
 			<t t-foreach="orders" t-as="order">
         <tr>
           <td><a t-att-href="order.get_portal_url()"><t t-esc="order.name"/></a></td>
+          <td style="margin: auto; text-align: center;">
+            <t t-set="status" t-value="order._get_delivery_status()"/>
+            <t t-set="status_order" t-value="order.state"/>
+            <t t-if="status not in ['cancel'] and status_order not in ['cancel']">
+              <button class="btn btn-primary as-btn repeat_this_cart" 
+                t-att-data-sale_order_id="order.id" >
+                  <span class="fa fa-repeat" />
+                  <span class="fa fa-shopping-cart" />
+              </button>
+            </t>
+
+          </td>
           <td style="margin: auto; text-align: center;">
 						<!-- ORDERS_DELIVERY_STATUS = ['draft', 'waiting', 'confirmed', 'assigned', 'done', 'cancel'] -->
 						<t t-set="status" t-value="order._get_delivery_status()"/>

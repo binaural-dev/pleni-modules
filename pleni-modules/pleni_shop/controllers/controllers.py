@@ -2,6 +2,7 @@
 from asyncio.log import logger
 from odoo import http, api, SUPERUSER_ID
 from odoo.http import request, route
+from odoo.tools import float_compare, float_round
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 import json
 
@@ -69,7 +70,7 @@ class WebsiteSaleInherit(WebsiteSale):
 		new_list = []
 
 		for obj in pricelist:
-			if not float_compare(obj.fixed_price, 0, 0.0) == 0:
+			if float_compare(obj.fixed_price, 0, 0.0):
 				for uom in obj.product_id.product_uom_ids:
 					real_qty = float_round(1 / uom.factor,2)
 
@@ -95,6 +96,7 @@ class WebsiteSaleInherit(WebsiteSale):
 								new_list[index]['detail'].append({ 'price': obj.fixed_price, 'uom': uom.name})
 
 		new_list = self.remove_duplicated(new_list)
+		self.reverse_sales_presentation(new_list)
 
 		values = {
             'pricelist': new_list
@@ -116,6 +118,12 @@ class WebsiteSaleInherit(WebsiteSale):
 			if price['price'] < list_price[idx]['detail'][index]['price']:
 				list_price[idx]['detail'].pop(index)
 
+		return list_price
+
+	def reverse_sales_presentation(self,list_price):
+		for idx, item in enumerate(list_price):
+			list_price[idx]['detail'] = item['detail'][::-1]
+	
 		return list_price
 
 	@http.route(['/processing_payment/<int:sale_order_id>'], type='http', auth="public", website=True, csrf=False)

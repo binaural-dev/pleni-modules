@@ -173,6 +173,12 @@
                   </a>
               </div>
               <div class="column">
+                <button id="repeat_previous_cart" class="btn btn-secondary mb32 as-btn">
+                    <span class="fa fa-repeat" />
+                    Repetir Carrito Anterior
+                </button>
+              </div>
+              <div class="column">
                     <a role="button" t-if="website_sale_order and website_sale_order.website_order_line"
                         style=""
                         class="btn btn-primary float-right as-btn show-only-mobile" href="/shop/checkout?express=1">

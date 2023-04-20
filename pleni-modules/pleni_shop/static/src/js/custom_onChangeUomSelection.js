@@ -11,7 +11,21 @@ odoo.define('pleni_shop.custom_onChangeUomSelection', function (require) {
         events: _.extend({}, VariantMixin.events || {}, {
             'change .cart_type_select': '_onChangeUomSelection',
             'click #empty_cart': '_onClickButtonCart',
+            'click #repeat_previous_cart': '_onClickButtonRepeatPreviousCart',
+            'click .repeat_this_cart': '_onClickButtonRepeatThisCart',
         }),
+        start: function() {
+            self = this;
+            self._getIsNewClient();
+        },
+        _getIsNewClient: async function(ev) {
+            let isNewClient = await ajax.rpc('/getIsNewClient');
+            if (isNewClient){
+                $.each($('#repeat_previous_cart'), function (index, item) {
+                    $(item).css('display', 'none')
+                });
+            }
+        },
         /**
         * @private
         */
@@ -56,6 +70,21 @@ odoo.define('pleni_shop.custom_onChangeUomSelection', function (require) {
                 window.location.href = '/shop?'
             }
          },
+         _onClickButtonRepeatPreviousCart: async function(){
+            let resp = await ajax.rpc('/repeat_previous_cart');
+            if(resp){
+                window.location.href = '/shop/cart'
+            }
+        },
+        _onClickButtonRepeatThisCart: async function(event){
+            const sale_order_id = $(event.currentTarget).data("sale_order_id")
+            let resp = await ajax.rpc('/repeat_this_cart',{
+                sale_order_id: sale_order_id
+            });
+            if(resp){
+                window.location.href = '/shop/cart'
+            }
+        },
     });
 
 });

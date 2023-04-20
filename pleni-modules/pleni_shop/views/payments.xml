@@ -213,18 +213,36 @@
                 document.getElementById("pay_button").onclick = function() {  
                     newWindow = window.open(document.getElementById("pay_url").value);
                     setInterval(checkChild, 5000);
-                };  
+                }; 
+         
 
                 const timer = setInterval(checkChild, 5000);
 
-                function checkChild() {
+                async function checkChild() {
                     if (newWindow) {
+                        
                         if (newWindow.closed) {
                             clearInterval(timer);
                             let sale_order_id = document.getElementById("sale_order_id").value
                             let url =  location.protocol + '//' + location.host 
                                     + '/processing_payment/'+ sale_order_id;
-                            window.location.replace(url);
+
+                            let urlPaymentStatus = location.protocol + '//' + location.host 
+                                    + '/get_payment_state/'+ sale_order_id;
+
+                            let paymentStatus = false;
+                            await $.get(
+                                urlPaymentStatus,
+                                function(data) {
+                                    if (data == 'true') {
+                                        paymentStatus = true;
+                                    }
+                                }
+                            );
+
+                            if (paymentStatus){
+                                window.location.replace(url);
+                            }
                         }
                     }
                 }

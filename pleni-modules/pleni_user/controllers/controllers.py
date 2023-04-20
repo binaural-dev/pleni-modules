@@ -386,7 +386,7 @@ class WebsiteSale(http.Controller):
             partner_id = user.partner_id.id
             last_order = request.env['sale.order'].sudo().search(
                 [
-                    ('state', '=', 'sent'),
+                    ('state', 'in', ('sent', 'sale')),
                     ('partner_id', '=', partner_id)
                 ]
                 , order='id desc'

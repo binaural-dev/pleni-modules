@@ -195,15 +195,23 @@
       <table>
         <tr>
           <th>Producto</th>
-          <th>Precio</th>
+          <th>Precio -  A partir de </th>
         </tr>
         <t t-foreach="pricelist" t-as="product">
             <tr>
               <td><t t-esc="product['name']"/></td>
               <td>
-                <t t-if="'detail' in product" t-foreach="product['detail']" t-as="price">
-                  $ <t t-esc="price['price']"/>
-                  <t t-esc="price['uom']"/> /
+                <t t-if="'detail' in product">
+                  <t t-set="count" t-value="0"/>
+                  <t t-set="array_length" t-value="len(product['detail'])"/>
+                  <t t-foreach="product['detail']" t-as="price">
+                    <t t-set="count" t-value="count+1"/>
+                    $ <t t-esc="price['price']"/>
+                    <t t-esc="price['uom']"/>
+                    <t t-if="array_length > count">
+                      /
+                    </t>
+                  </t>
                 </t>
               </td>
             </tr>

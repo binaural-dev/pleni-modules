@@ -420,7 +420,7 @@ class WebsiteSale(http.Controller):
         return False
 
     @http.route(['/repeat_this_cart'], type='json', auth="public", website=True)
-    def _get_repeat_previous_cart(self, sale_order_id):
+    def _get_repeat_this_cart(self, sale_order_id):
         if request.session.uid:
             user = request.env['res.users'].sudo().browse(request.session.uid)
             partner_id = user.partner_id.id

@@ -193,6 +193,7 @@ class AccountMoveInherit(models.Model):
         string='Fecha Programada de Entrega')
     am_pm = fields.Selection(
         [('am', 'AM'), ('pm', 'PM')], string="Bloque de Hora de Entrega")
+    sale_client_order_ref = fields.Char(string="Referencia de Cliente")
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -202,6 +203,7 @@ class AccountMoveInherit(models.Model):
                     [('name', '=', element['invoice_origin'])])
                 element['scheduled_date_account'] = sale.date_delivery_view
                 element['am_pm'] = sale.am_pm
+                element['sale_client_order_ref'] = sale.client_order_ref if sale.client_order_ref else 'No aplica'
         res = super(AccountMoveInherit, self).create(vals_list)
         return res
 

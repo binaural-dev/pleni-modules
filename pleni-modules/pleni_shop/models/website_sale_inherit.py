@@ -90,5 +90,24 @@ class WebsiteSaleController(WebsiteSale):
         PaymentProcessing.add_payment_transaction(transaction)
         request.session['__website_sale_last_tx_id'] = transaction.id
 
-        order.write({'payment_methods': [(4, acquirer_id)] }) 
+        order.write({'payment_methods': [(4, acquirer_id)] })
+
+        if delivery_date and delivery_hour:
+            commitment_date = self.get_commitment_date_format(order.date_delivery_view, order.am_pm)
+            order.update({
+                'commitment_date': commitment_date
+            })
         return transaction.render_sale_button(order)
+
+    def get_commitment_date_format(self, date_delivery_view, am_pm):
+        if date_delivery_view and am_pm:
+            # 8 + 4 System hour
+            hour = 8 + 4 if am_pm == 'am' else 13 + 4
+            return datetime(
+                date_delivery_view.year, 
+                date_delivery_view.month,
+                date_delivery_view.day,
+                hour,0,0 
+            )
+
+        return False

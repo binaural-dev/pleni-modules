@@ -150,7 +150,7 @@
                     let currentDate = new Date();
                     let date = localStorage.getItem('dateInit');
 
-                    if (currentDate - Date.parse(date) > 60000) {
+                    if (currentDate - Date.parse(date) > 900000) {
                         location.reload(); 
                     }
                 };
@@ -161,19 +161,93 @@
             </script>
         </xpath>
 
-        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']/h3[1]" position="replace">
-            <div class="card-header text-white mt-5" style="background-color: #E4AE25; font-size: 14px; font-weight:bold">
-                3) Métodos de pago
-            </div>
-            <style>
-                .text-muted.ml-3 {
-                    height: 5px;
+
+        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']/h3[1]" position="attributes">
+            <attribute name="style">display: none !important;</attribute>
+        </xpath>
+
+
+        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" 
+            position="after">
+            <script type="text/javascript">
+                setTimeout(function () {
+                    document.querySelectorAll("#payment_method form div.card").forEach((element) => {
+                        element.style.display = 'none'
+                    })
+                }, 500);
+            </script>
+        </xpath>
+
+        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" position="inside">
+
+            <t t-set="show_payment_methods_value" t-value="website_sale_order.show_payment_methods()"/>
+            <input type="hidden" id="show_payment_methods" t-att-value="show_payment_methods_value"/>
+            <input type="hidden" id="sale_order_id" t-att-value="website_sale_order.id"/>
+
+            <script type="text/javascript">
+                if (document.getElementById("show_payment_methods").value == 'false') {
+                    document.getElementById("o_payment_form_pay").style.display = 'none';
+                    document.getElementById("pay_button_container").style.textAlign = 'center';
                 }
 
-                form .card {
-                    margin-bottom: 20px;
+            </script>
+        </xpath>
+
+
+        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" position="before">
+            <div>
+                <t t-set="pay_url" t-value="website_sale_order.get_payment_url()"/>
+                <input type="hidden" id="pay_url" t-att-value="pay_url"/>
+
+                <div style="text-align: right;" id="pay_button_container">
+                    <a id="pay_button">
+                        <div class="btn btn-primary as-btn my-5">
+                            Pagar Ahora
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <script type="text/javascript">
+                let newWindow;
+
+                document.getElementById("pay_button").onclick = function() {  
+                    newWindow = window.open(document.getElementById("pay_url").value);
+                    setInterval(checkChild, 5000);
+                }; 
+         
+
+                const timer = setInterval(checkChild, 5000);
+
+                async function checkChild() {
+                    if (newWindow) {
+                        
+                        if (newWindow.closed) {
+                            clearInterval(timer);
+                            let sale_order_id = document.getElementById("sale_order_id").value
+                            let url =  location.protocol + '//' + location.host 
+                                    + '/processing_payment/'+ sale_order_id;
+
+                            let urlPaymentStatus = location.protocol + '//' + location.host 
+                                    + '/get_payment_state/'+ sale_order_id;
+
+                            let paymentStatus = false;
+                            await $.get(
+                                urlPaymentStatus,
+                                function(data) {
+                                    if (data == 'true') {
+                                        paymentStatus = true;
+                                    }
+                                }
+                            );
+
+                            if (paymentStatus){
+                                window.location.replace(url);
+                            }
+                        }
+                    }
                 }
-            </style>
+
+            </script>
         </xpath>
 
         <xpath expr="//div[hasclass('oe_cart')]/div[@class='card']/div[1]" position="before">

@@ -2,6 +2,7 @@
 from asyncio.log import logger
 from odoo import http, api, SUPERUSER_ID
 from odoo.http import request, route
+from odoo.tools import float_compare, float_round
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 import json
 
@@ -58,7 +59,7 @@ class WebsiteSaleInherit(WebsiteSale):
 		if not city:
 			return request.render("pleni_shop.pricelist_view_by_city", values)
 
-		pricelist = request.env['product.pricelist.item'].sudo().search([('pricelist_id', '=', city.id)])
+		pricelist = request.env['product.pricelist.item'].sudo().search([('pricelist_id', '=', city.id)], order='min_quantity asc')
 
 		if not pricelist:
 			return request.render("pleni_shop.pricelist_view_by_city", values)
@@ -69,12 +70,73 @@ class WebsiteSaleInherit(WebsiteSale):
 		new_list = []
 
 		for obj in pricelist:
-			if obj.name not in product_names:
-				new_list.append(obj)
-				product_names.add(obj.name)
-				
+			if float_compare(obj.fixed_price, 0, 0.0):
+				for uom in obj.product_id.product_uom_ids:
+					real_qty = float_round(1 / uom.factor,2)
+
+					if obj.min_quantity <=  real_qty:
+
+						if obj.product_id.name not in product_names:
+							new_list.append({
+								'name': obj.product_id.name,
+								'detail': [
+									{
+										'price': obj.fixed_price,
+										'uom': uom.name
+									}
+								]
+							})
+							product_names.add(obj.product_id.name)
+						else:
+							new_price = { 'price': obj.fixed_price, 'uom': uom.name}
+
+							index = next(i for i, x in enumerate(new_list) if x['name'] == obj.product_id.name)
+					
+							if new_price not in new_list[index]['detail']:
+								new_list[index]['detail'].append({ 'price': obj.fixed_price, 'uom': uom.name})
+
+		new_list = self.remove_duplicated(new_list)
+		self.reverse_sales_presentation(new_list)
+
 		values = {
             'pricelist': new_list
         }
 
 		return request.render("pleni_shop.pricelist_view_by_city", values)
+
+	def remove_duplicated(self,list_price):
+		for idx, item in enumerate(list_price):
+			for count, price in enumerate(item['detail']):
+				index = next(i for i, x in enumerate(item['detail']) if x['uom'] == price['uom'])
+				if count ==  index:
+					continue
+
+			if list_price[idx]['detail'][index]['price'] < price['price']:
+				price['price'] = list_price[idx]['detail'][index]['price']
+				list_price[idx]['detail'].pop(index)
+			
+			if price['price'] < list_price[idx]['detail'][index]['price']:
+				list_price[idx]['detail'].pop(index)
+
+		return list_price
+
+	def reverse_sales_presentation(self,list_price):
+		for idx, item in enumerate(list_price):
+			list_price[idx]['detail'] = item['detail'][::-1]
+	
+		return list_price
+
+	@http.route(['/processing_payment/<int:sale_order_id>'], type='http', auth="public", website=True, csrf=False)
+	def processing_payment(self,sale_order_id, access_token=None, **kw):
+		values = {}
+
+		order = request.env['sale.order'].sudo().browse(sale_order_id)
+
+		values['order'] = order
+		return request.render("pleni_shop.processing_payment", values)
+
+	@http.route(['/get_payment_state/<int:sale_order_id>'], type='http', auth="public", website=True, csrf=False)
+	def get_payment_state(self,sale_order_id, access_token=None, **kw):
+		order = request.env['sale.order'].sudo().browse(sale_order_id)
+
+		return 'true' if order.payment_state else 'false'

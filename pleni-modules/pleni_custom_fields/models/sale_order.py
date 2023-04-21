@@ -22,11 +22,12 @@ class SaleOrderInherit(models.Model):
 
     new_client = fields.Integer(string='¿Cliente Nuevo?', compute='_get_sale_order_count')
 
-    def _get_sale_order_count(self, partner_id):
-            sale_order_count = self.env['sale.order'].search_count([('partner_id', '=', partner_id.id), ('state', 'not in', ['draft', 'cancel'])])
+    def _get_sale_order_count(self, partner):
+            current_parent = partner.parent_id if partner.parent_id else partner
+            sale_order_count = self.env['sale.order'].search_count([('partner_id', '=', current_parent.id), ('state', 'not in', ['draft', 'cancel'])])
             # return sale_order_count
             if sale_order_count <= 4:
-                return "CN"
+                return "CLIENTE NUEVO"
             else:
                 return ""
 
@@ -35,11 +36,12 @@ class AccountMoveInherit(models.Model):
 
     new_client = fields.Integer(string='¿Cliente Nuevo?', compute='_get_sale_order_count')
 
-    def _get_sale_order_count(self, partner_id):
-            sale_order_count = self.env['sale.order'].search_count([('partner_id', '=', partner_id.id), ('state', 'not in', ['draft', 'cancel'])])
+    def _get_sale_order_count(self, partner):
+            current_parent = partner.parent_id if partner.parent_id else partner
+            sale_order_count = self.env['sale.order'].search_count([('partner_id', '=', current_parent.id), ('state', 'not in', ['draft', 'cancel'])])
             # return sale_order_count
             if sale_order_count <= 4:
-                return "CN"
+                return "CLIENTE NUEVO"
             else:
                 return ""
             
@@ -48,10 +50,11 @@ class StockPickingInherit(models.Model):
 
     new_client = fields.Integer(string='¿Cliente Nuevo?', compute='_get_sale_order_count')
 
-    def _get_sale_order_count(self, partner_id):
-            sale_order_count = self.env['sale.order'].search_count([('partner_id', '=', partner_id.id), ('state', 'not in', ['draft', 'cancel'])])
+    def _get_sale_order_count(self, partner):
+            current_parent = partner.parent_id if partner.parent_id else partner
+            sale_order_count = self.env['sale.order'].search_count([('partner_id', '=', current_parent.id), ('state', 'not in', ['draft', 'cancel'])])
             # return sale_order_count
             if sale_order_count <= 4:
-                return "CN"
+                return "CLIENTE NUEVO"
             else:
                 return ""

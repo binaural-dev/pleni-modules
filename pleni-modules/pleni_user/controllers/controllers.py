@@ -379,6 +379,79 @@ class WebsiteSale(http.Controller):
             return True
         return False
 
+    @http.route(['/repeat_previous_cart'], type='json', auth="public", website=True)
+    def _get_repeat_previous_cart(self):
+        if request.session.uid:
+            user = request.env['res.users'].sudo().browse(request.session.uid)
+            partner_id = user.partner_id.id
+            last_order = request.env['sale.order'].sudo().search(
+                [
+                    ('state', 'in', ('sent', 'sale')),
+                    ('partner_id', '=', partner_id)
+                ]
+                , order='id desc'
+            )
+            if len(last_order) > 0:
+                sale_order = last_order[0]
+                products = request.env['sale.order.line'].sudo().search([
+                    ('order_id', '=', sale_order.id),
+                    ('is_service', '=', False)
+                ])
+                order = request.website.sale_get_order(force_create=1)
+                orderLines = [line.product_id.id for line in order.order_line]
+                for element in products:
+                    if element.product_id.id in orderLines:
+                        line = request.env['sale.order.line'].sudo().search([('order_id', '=', order.id),
+                                                                            ('product_id', '=', element.product_id.id)])
+                        line.write({
+                            'product_uom_qty': line.product_uom_qty + element.product_uom_qty
+                        })
+                        continue
+                    values = {
+                        'product_id': element.product_id.id,
+                        'order_id': order.id,
+                        'name': element.product_id.name,
+                        'product_uom_qty': element.product_uom_qty,
+                        'price_unit': element.price_total,
+                    }
+
+                    request.env['sale.order.line'].sudo().create(values)
+                return True
+        return False
+
+    @http.route(['/repeat_this_cart'], type='json', auth="public", website=True)
+    def _get_repeat_this_cart(self, sale_order_id):
+        if request.session.uid:
+            user = request.env['res.users'].sudo().browse(request.session.uid)
+            partner_id = user.partner_id.id
+            sale_order = request.env['sale.order'].sudo().browse(sale_order_id)
+            products = request.env['sale.order.line'].sudo().search([
+                ('order_id', '=', sale_order.id),
+                ('is_service', '=', False)
+            ])
+            order = request.website.sale_get_order(force_create=1)
+            orderLines = [line.product_id.id for line in order.order_line]
+            for element in products:
+                if element.product_id.id in orderLines:
+                    line = request.env['sale.order.line'].sudo().search([('order_id', '=', order.id),
+                                                                        ('product_id', '=', element.product_id.id)])
+
+                    line.write({
+                        'product_uom_qty': line.product_uom_qty + element.product_uom_qty
+                    })
+                    continue
+                values = {
+                    'product_id': element.product_id.id,
+                    'order_id': order.id,
+                    'name': element.product_id.name,
+                    'product_uom_qty': element.product_uom_qty,
+                    'price_unit': element.price_total,
+                }
+
+                request.env['sale.order.line'].sudo().create(values)
+            return True
+        return False
+
 class WebsiteSaleWishlist(WebsiteSale):
     def _get_pricelist_context(self):
         pricelist_context = dict(request.env.context)

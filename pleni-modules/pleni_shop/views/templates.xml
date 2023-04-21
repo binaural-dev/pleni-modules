@@ -195,21 +195,27 @@
       <table>
         <tr>
           <th>Producto</th>
-          <th>Precio</th>
+          <th>Precio -  A partir de </th>
         </tr>
-          <t t-foreach="pricelist" t-as="product">
-            <tr t-if="product.fixed_price != 0.0">
-              <td><t t-esc="product.product_id.name"/></td>
+        <t t-foreach="pricelist" t-as="product">
+            <tr>
+              <td><t t-esc="product['name']"/></td>
               <td>
-                <t t-foreach='product.product_id.product_uom_ids' t-as='uom'>
-                  <t t-set="real_qty" t-value="1 / uom.factor"></t>
-                    <div>
-                      $ <t t-esc="round(product.fixed_price*real_qty,2)"/> <span t-esc="uom.name"></span>
-                    </div>
+                <t t-if="'detail' in product">
+                  <t t-set="count" t-value="0"/>
+                  <t t-set="array_length" t-value="len(product['detail'])"/>
+                  <t t-foreach="product['detail']" t-as="price">
+                    <t t-set="count" t-value="count+1"/>
+                    $ <t t-esc="price['price']"/>
+                    <t t-esc="price['uom']"/>
+                    <t t-if="array_length > count">
+                      /
+                    </t>
+                  </t>
                 </t>
               </td>
             </tr>
-        </t>
+          </t>
       </table>
       <style>
         table {
@@ -229,5 +235,108 @@
           background-color: #dddddd;
         }
       </style>
+    </template>
+
+    <template id="processing_payment">
+      <t t-call="website.layout">
+        <t t-set="additional_title">Tienda - Pago</t>
+        <div id="wrap">
+            <div class="container oe_website_sale py-2">
+                <div class="alert alert-success" role="alert">
+                  Un miembro de nuestro equipo se pondrá en contacto con usted para confirmar su pedido.
+                </div>
+                <h1>
+                  <span>Pedido</span> 
+                  <em t-field="order.name" /> 
+                </h1>
+
+                <div class="row">
+                    <div class="col-12 col-xl">
+                        <div class="oe_cart">
+                            <div class="oe_structure clearfix mt-3" id="oe_structure_website_sale_confirmation_1"/>
+                            <h3 class="text-left mt-3">
+                                <strong>Información del Pago:</strong>
+                            </h3>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2">
+                                          <span class="text-success font-weight-bold"> 
+                                            <i class="fa fa-fw fa-check-circle"/> Método de pago: 
+                                          </span>
+                                          <span class="font-weight-bold">
+                                            <t t-foreach="order.payment_methods" t-as="method">
+                                              <t t-esc="method.name" />
+                                            </t>
+                                          </span>
+                                        </td>
+                                        <td colspan="2">
+                                          <span class="font-weight-bold"> 
+                                            <i class="fa fa-credit-card"/> Status de pago: 
+                                          </span>
+                                          <span class="font-weight-bold">
+                                            <t t-if="order.payment_state == False">
+                                              <span class="text-danger">Sin pago encontrado</span>
+                                            </t>
+                                            <t t-else="">
+
+                                              <t t-if="order.payment_state == 'verified'">
+                                                <span class="text-success">Verificado</span>
+                                              </t>
+
+                                              <t t-if="order.payment_state == 'partial'">
+                                                <span class="text-warning">Verificación En proceso</span>
+                                              </t>
+
+                                              <t t-if="order.payment_state == 'pending'">
+                                                <span class="text-warning">Por verificar</span>
+                                              </t>
+                                            </t>
+
+                                          </span>
+                                        </td>
+                                        <td class="text-right" width="100">
+                                            <strong>Total:</strong>
+                                        </td>
+                                        <td class="text-right" width="100">
+                                            <strong t-field="order.amount_total" 
+                                              t-options="{'widget': 'monetary', 'display_currency': order.pricelist_id.currency_id}" />
+                                            <strong>
+                                              <div>
+                                                <span id="exchange-bs">
+                                                Bs. <t t-esc="round(order.amount_total * order.currency_rate, 2)" />
+                                                </span>
+                                              </div>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="card mt-3">
+                              <div class="card-body">
+                                <t t-set="same_shipping" t-value="bool(order.partner_shipping_id==order.partner_id or only_services)" />
+                                <div><b>Facturación <t t-if="same_shipping and not only_services"> &amp; Envío</t>: </b><span t-esc='order.partner_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')" class="address-inline"/></div>
+                                <div t-if="not same_shipping and not only_services" groups="sale.group_delivery_invoice_address"><b>Envío: </b><span t-esc='order.partner_shipping_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')"  class="address-inline"/></div>
+                              </div>
+                            </div>
+                            <div class="oe_structure mt-3" id="oe_structure_website_sale_confirmation_2"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="oe_structure" id="oe_structure_website_sale_confirmation_3"/>
+            <div class="clearfix text-center" id="back_button">
+              <button class="btn btn-primary as-btn mt-4 text-center">
+                  Regresar al Inicio
+              </button>
+            </div>
+        </div>
+      </t>
+      <script type="text/javascript">
+        document.getElementById("back_button").onclick = function() {  
+          let url =  location.protocol + '//' + location.host;
+          window.location.replace(url);
+        };
+      </script>
     </template>
 </odoo>

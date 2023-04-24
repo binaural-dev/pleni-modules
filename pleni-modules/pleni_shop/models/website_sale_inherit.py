@@ -99,10 +99,10 @@ class WebsiteSaleController(WebsiteSale):
             })
         return transaction.render_sale_button(order)
 
-    def get_commitment_date_format(self, date_delivery_view, am_pm):
+    def get_commitment_date_format(self, date_delivery_view, am_pm, partner_id):
         if date_delivery_view and am_pm:
             # 8 + 4 System hour
-            hour = 8 + 4 if am_pm == 'am' else 13 + 4
+            hour = 12 + 4 if am_pm == 'am' else 5 + 4
             return datetime(
                 date_delivery_view.year, 
                 date_delivery_view.month,
@@ -110,4 +110,74 @@ class WebsiteSaleController(WebsiteSale):
                 hour,0,0 
             )
 
+        return False
+
+    def get_partner_hours(self, partner_id, delivery_date, am_pm):
+        partner = request.env['res.partner'].browse(partner_id)
+        day = delivery_date.strftime("%A")
+
+        days_open = {
+            'Monday': partner.monday_open,
+            'Tuesday': partner.tuesday_open,
+            'Wednesday': partner.wednesday_open,
+            'Thursday': partner.thursday_open,
+            'Friday': partner.friday_open,
+            'Saturday': partner.saturday_open,
+            'Sunday': partner.sunday_open
+        }
+
+        days_from = {
+            'Monday': partner.monday_from,
+            'Tuesday': partner.tuesday_from,
+            'Wednesday': partner.wednesday_from,
+            'Thursday': partner.thursday_from,
+            'Friday': partner.friday_from,
+            'Saturday': partner.saturday_from,
+            'Sunday': partner.sunday_from
+        }
+
+        days_to = {
+            'Monday': partner.monday_to,
+            'Tuesday': partner.tuesday_to,
+            'Wednesday': partner.wednesday_to,
+            'Thursday': partner.thursday_to,
+            'Friday': partner.friday_to,
+            'Saturday': partner.saturday_to,
+            'Sunday': partner.sunday_to
+        }
+
+        if days_open[day]:
+            if am_pm == 'am':
+                time = datetime.strptime(days_from[day], '%H:%M')
+                if 8 <= time.hour <= 12:
+                    return datetime(
+                        date_delivery_view.year, 
+                        date_delivery_view.month,
+                        date_delivery_view.day,
+                        time.hour,0,0 
+                    )
+
+        
+        if day == 'Monday' and partner.monday_open:
+
+            return f'Lunes: {self.monday_from}-{self.monday_to}'
+
+        if day == 'Tuesday' and partner.tuesday_open:
+            return f'Martes: {self.tuesday_from}-{self.tuesday_to}'
+        
+        if day == 'Wednesday' and partner.wednesday_open:
+            return f'Miércoles: {self.wednesday_from}-{self.wednesday_to}'
+                
+        if day == 'Thursday' and partner.thursday_open:
+            return f'Jueves: {self.thursday_from}-{self.thursday_to}'
+
+        if day == 'Friday' and partner.friday_open:
+            return f'Viernes: {self.friday_from}-{self.friday_to}'
+
+        if day == 'Saturday' and partner.saturday_open:
+            return f'Sábado: {self.saturday_from}-{self.saturday_to}'
+
+        if day == 'Sunday' and partner.sunday_open:
+            return f'Domingo: {self.sunday_from}-{self.sunday_to}'
+        
         return False

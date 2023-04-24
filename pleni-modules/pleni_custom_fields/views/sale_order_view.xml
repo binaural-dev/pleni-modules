@@ -21,7 +21,7 @@
       <xpath expr="//field[@name='partner_shipping_id']" position="after">
         <label for="date_delivery_view" attrs="{'invisible': False}" string="Fecha Programada de Entrega" />
         <div class="o_row">
-          <field name="date_delivery_view" attrs="{'invisible': False, 'readonly': False}" required="1" />
+          <field name="date_delivery_view" attrs="{'invisible': False}" required="1" />
           <span class="text-muted" attrs="{'invisible': [('effective_date', '!=', False), ('commitment_date', '!=', False)]}">
             Esperado:
             <field name="expected_date" attrs="{'invisible': False}" widget="date" />

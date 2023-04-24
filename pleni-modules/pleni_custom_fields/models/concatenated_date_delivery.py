@@ -22,7 +22,7 @@ class SaleOrderInherit(models.Model):
                 record.is_new_client = False
 
     date_delivery_view = fields.Date(
-        string='Fecha Programada de Entrega', compute='_compute_only_date', store=True)
+        string='Fecha Programada de Entrega', store=True)
     am_pm = fields.Selection(
         [('am', 'AM'), ('pm', 'PM')], string="Bloque de Hora de Entrega")
 

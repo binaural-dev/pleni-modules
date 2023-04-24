@@ -404,7 +404,7 @@ class WebsiteSale(http.Controller):
                         line = request.env['sale.order.line'].sudo().search([('order_id', '=', order.id),
                                                                             ('product_id', '=', element.product_id.id)])
                         line.write({
-                            'product_uom_qty': line.product_uom_qty + element.product_uom_qty
+                            'product_uom_qty': element.product_uom_qty
                         })
                         continue
                     values = {
@@ -437,7 +437,7 @@ class WebsiteSale(http.Controller):
                                                                         ('product_id', '=', element.product_id.id)])
 
                     line.write({
-                        'product_uom_qty': line.product_uom_qty + element.product_uom_qty
+                        'product_uom_qty': element.product_uom_qty
                     })
                     continue
                 values = {

@@ -167,7 +167,7 @@
         </xpath>
 
 
-        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" 
+        <!-- <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" 
             position="after">
             <script type="text/javascript">
                 setTimeout(function () {
@@ -176,7 +176,7 @@
                     })
                 }, 500);
             </script>
-        </xpath>
+        </xpath> -->
 
         <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" position="inside">
 
@@ -184,17 +184,17 @@
             <input type="hidden" id="show_payment_methods" t-att-value="show_payment_methods_value"/>
             <input type="hidden" id="sale_order_id" t-att-value="website_sale_order.id"/>
 
-            <script type="text/javascript">
+            <!-- <script type="text/javascript">
                 if (document.getElementById("show_payment_methods").value == 'false') {
                     document.getElementById("o_payment_form_pay").style.display = 'none';
                     document.getElementById("pay_button_container").style.textAlign = 'center';
                 }
 
-            </script>
+            </script> -->
         </xpath>
 
 
-        <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" position="before">
+        <!-- <xpath expr="//div[hasclass('oe_cart')]/div[@id='payment_method']" position="before">
             <div>
                 <t t-set="pay_url" t-value="website_sale_order.get_payment_url()"/>
                 <input type="hidden" id="pay_url" t-att-value="pay_url"/>
@@ -248,7 +248,7 @@
                 }
 
             </script>
-        </xpath>
+        </xpath> -->
 
         <xpath expr="//div[hasclass('oe_cart')]/div[@class='card']/div[1]" position="before">
             <div class="card-header text-white" style="background-color: #E4AE25; font-size: 14px; font-weight:bold">

@@ -71,7 +71,10 @@ odoo.define('pleni_shop.custom_onChangeUomSelection', function (require) {
             }
          },
          _onClickButtonRepeatPreviousCart: async function(){
+            let loading = document.getElementById('loading_pleni')
+            loading.classList.add('loading-pleni')
             let resp = await ajax.rpc('/repeat_previous_cart');
+            loading.classList.remove('loading-pleni')
             if(resp){
                 window.location.href = '/shop/cart'
             }

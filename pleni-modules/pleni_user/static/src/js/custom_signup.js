@@ -39,7 +39,7 @@ odoo.define('pleni_user.custom_signup', function (require) {
             'input #login' : '_onChangeEmail',
             'focusout #telephone': '_onChangeTelephone',
             'input #confirm_password' : '_onChangeConfirmPassword',
-            'input #dispatcher_instructions' : '_onChangeDispatcherInstructions',
+            'input #street' : '_onChangeDispatcherInstructions',
             'click #flexCheckBillingAddress': '_showBillingAddress',
         },
         /**

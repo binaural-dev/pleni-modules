@@ -93,7 +93,11 @@ class WebsiteSaleController(WebsiteSale):
         order.write({'payment_methods': [(4, acquirer_id)] })
 
         if delivery_date and delivery_hour:
-            commitment_date = self.get_commitment_date_format(order.date_delivery_view, order.am_pm)
+            commitment_date = self.get_partner_hours(
+                order.partner_id,
+                order.date_delivery_view, 
+                order.am_pm
+            )
             order.update({
                 'commitment_date': commitment_date
             })
@@ -101,6 +105,7 @@ class WebsiteSaleController(WebsiteSale):
 
     def get_commitment_date_format(self, date_delivery_view, am_pm, partner_id):
         if date_delivery_view and am_pm:
+            
             # 8 + 4 System hour
             hour = 12 + 4 if am_pm == 'am' else 5 + 4
             return datetime(
@@ -112,8 +117,7 @@ class WebsiteSaleController(WebsiteSale):
 
         return False
 
-    def get_partner_hours(self, partner_id, delivery_date, am_pm):
-        partner = request.env['res.partner'].browse(partner_id)
+    def get_partner_hours(self, partner, delivery_date, am_pm):
         day = delivery_date.strftime("%A")
 
         days_open = {
@@ -148,36 +152,50 @@ class WebsiteSaleController(WebsiteSale):
 
         if days_open[day]:
             if am_pm == 'am':
-                time = datetime.strptime(days_from[day], '%H:%M')
+                time = datetime.strptime(days_to[day], '%H:%M')
                 if 8 <= time.hour <= 12:
                     return datetime(
-                        date_delivery_view.year, 
-                        date_delivery_view.month,
-                        date_delivery_view.day,
+                        delivery_date.year, 
+                        delivery_date.month,
+                        delivery_date.day,
                         time.hour,0,0 
                     )
+                else:
+                    return datetime(
+                        delivery_date.year, 
+                        delivery_date.month,
+                        delivery_date.day,
+                        12,0,0 
+                    )
+            else:
+                time = datetime.strptime(days_to[day], '%H:%M')
+                if 13 <= time.hour <= 17:
+                    return datetime(
+                        delivery_date.year, 
+                        delivery_date.month,
+                        delivery_date.day,
+                        time.hour,0,0 
+                    )
+                else:
+                    return datetime(
+                        delivery_date.year, 
+                        delivery_date.month,
+                        delivery_date.day,
+                        17,0,0 
+                    )
 
-        
-        if day == 'Monday' and partner.monday_open:
-
-            return f'Lunes: {self.monday_from}-{self.monday_to}'
-
-        if day == 'Tuesday' and partner.tuesday_open:
-            return f'Martes: {self.tuesday_from}-{self.tuesday_to}'
-        
-        if day == 'Wednesday' and partner.wednesday_open:
-            return f'Miércoles: {self.wednesday_from}-{self.wednesday_to}'
-                
-        if day == 'Thursday' and partner.thursday_open:
-            return f'Jueves: {self.thursday_from}-{self.thursday_to}'
-
-        if day == 'Friday' and partner.friday_open:
-            return f'Viernes: {self.friday_from}-{self.friday_to}'
-
-        if day == 'Saturday' and partner.saturday_open:
-            return f'Sábado: {self.saturday_from}-{self.saturday_to}'
-
-        if day == 'Sunday' and partner.sunday_open:
-            return f'Domingo: {self.sunday_from}-{self.sunday_to}'
-        
-        return False
+        else:
+            if am_pm == 'am':
+                return datetime(
+                    delivery_date.year, 
+                    delivery_date.month,
+                    delivery_date.day,
+                    12,0,0 
+                )
+            else:
+                return datetime(
+                    delivery_date.year, 
+                    delivery_date.month,
+                    delivery_date.day,
+                    17,0,0 
+                )
